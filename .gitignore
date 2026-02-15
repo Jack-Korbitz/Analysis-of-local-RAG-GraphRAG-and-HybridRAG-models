@@ -28,6 +28,14 @@ wheels/
 .env.local
 *.env
 
+# Data directories (large files)
+data/raw/*
+data/processed/*
+data/benchmarks/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/benchmarks/.gitkeep
+
 # IDEs
 .vscode/
 .idea/
