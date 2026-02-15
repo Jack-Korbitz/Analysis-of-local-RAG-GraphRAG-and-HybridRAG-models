@@ -1,14 +1,14 @@
 # Ollama Models (Local)
 ollama_models:
-  - name: "gemma2:27b"
+  - name: "gemma3:27b"
     type: "ollama"
     temperature: 0.7
     
-  - name: "qwen2.5:32b"
+  - name: "gpt-oss:20b"
     type: "ollama"
     temperature: 0.7
     
-  - name: "llama3.1:70b"
+  - name: "qwen3:30b"
     type: "ollama"
     temperature: 0.7
 
