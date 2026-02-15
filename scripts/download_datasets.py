@@ -56,7 +56,7 @@ def main():
     
     # t2-ragbench configs: ['FinQA', 'ConvFinQA', 'TAT-DQA']
     # Let's download FinQA as it's a good financial QA benchmark
-    t2_configs = ['FinQA']
+    t2_configs = ['FinQA', 'ConvFinQA', 'TAT-DQA']
     
     for config in t2_configs:
         download_dataset(
@@ -67,12 +67,9 @@ def main():
     
     # galileo-ai/ragbench configs: multiple domains
     # Let's download a diverse set for good coverage
-    galileo_configs = [
-        'hotpotqa',    # Multi-hop reasoning
-        'finqa',       # Financial QA
-        'pubmedqa',    # Medical/scientific
-        'msmarco',     # Web search QA
-    ]
+    galileo_configs = ['covidqa', 'cuad', 'delucionqa', 'emanual', 'expertqa', 
+                   'finqa', 'hagrid', 'hotpotqa', 'msmarco', 'pubmedqa', 
+                   'tatqa', 'techqa']
     
     for config in galileo_configs:
         download_dataset(
