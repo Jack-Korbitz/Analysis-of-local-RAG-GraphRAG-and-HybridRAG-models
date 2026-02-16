@@ -9,7 +9,7 @@ import os
 def explore_dataset(dataset_path, dataset_name):
     """Load and explore a dataset"""
     print(f"\n{'='*60}")
-    print(f"🔍 Exploring: {dataset_name}")
+    print(f"Exploring: {dataset_name}")
     print(f"{'='*60}")
     
     try:
@@ -19,26 +19,26 @@ def explore_dataset(dataset_path, dataset_name):
         split_name = list(dataset.keys())[0]
         data = dataset[split_name]
         
-        print(f"\n📊 Dataset Structure:")
+        print(f"\nDataset Structure:")
         print(f"  Split: {split_name}")
         print(f"  Total examples: {len(data)}")
         print(f"  Columns: {data.column_names}")
         
         # Show first example
-        print(f"\n📝 First Example:")
+        print(f"\nFirst Example:")
         first_example = data[0]
         print(json.dumps(first_example, indent=2, default=str))
         
         # Show one more example for context
         if len(data) > 1:
-            print(f"\n📝 Second Example:")
+            print(f"\nSecond Example:")
             second_example = data[1]
             print(json.dumps(second_example, indent=2, default=str))
         
         return dataset
         
     except Exception as e:
-        print(f"❌ Error loading {dataset_name}: {e}")
+        print(f"Error loading {dataset_name}: {e}")
         return None
 
 def main():
@@ -48,19 +48,19 @@ def main():
     
     # List all downloaded datasets
     if not os.path.exists(base_dir):
-        print(f"❌ No datasets found in {base_dir}")
+        print(f"No datasets found in {base_dir}")
         print("Run download_datasets.py first!")
         return
     
     datasets = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and not d.startswith('.')]
     
     if not datasets:
-        print(f"❌ No datasets found in {base_dir}")
+        print(f"No datasets found in {base_dir}")
         print("Run download_datasets.py first!")
         return
     
     print("="*60)
-    print("🚀 Exploring RAGbench Datasets")
+    print("Exploring RAGbench Datasets")
     print("="*60)
     print(f"\nFound {len(datasets)} dataset(s):")
     for ds in datasets:
@@ -72,7 +72,7 @@ def main():
         explore_dataset(dataset_path, dataset_name)
     
     print("\n" + "="*60)
-    print("✨ Exploration Complete!")
+    print("Exploration Complete!")
     print("="*60)
 
 if __name__ == "__main__":

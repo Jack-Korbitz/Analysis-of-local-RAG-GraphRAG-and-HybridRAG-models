@@ -62,17 +62,17 @@ def run_baseline_test(model_name: str, dataset_path: str, num_samples: int = 5):
         
         # Print first result as example
         if i == 0:
-            print(f"\n📝 Example Question:")
+            print(f"\nExample Question:")
             print(f"   Q: {question[:100]}...")
             print(f"   Ground Truth: {ground_truth}")
             print(f"   Model Answer: {result['response'][:100]}...")
-            print(f"   ⏱️  {result['latency_ms']}ms")
+            print(f"   {result['latency_ms']}ms")
     
     # Calculate stats
     avg_latency = sum(r['latency_ms'] for r in results) / len(results)
     success_rate = sum(r['success'] for r in results) / len(results) * 100
     
-    print(f"\n📊 Results for {model_name}:")
+    print(f"\nResults for {model_name}:")
     print(f"   Questions answered: {len(results)}")
     print(f"   Success rate: {success_rate:.1f}%")
     print(f"   Avg latency: {avg_latency:.2f}ms")
@@ -84,7 +84,7 @@ def main():
     """Run baseline benchmark on all models"""
     
     print("="*60)
-    print("🚀 BASELINE BENCHMARK (No RAG)")
+    print("BASELINE BENCHMARK (No RAG)")
     print("="*60)
     print("Testing direct question-answering without retrieval")
     
@@ -104,7 +104,7 @@ def main():
             results = run_baseline_test(model, dataset_path, num_samples)
             all_results[model] = results
         except Exception as e:
-            print(f"\n❌ Error testing {model}: {e}")
+            print(f"\nError testing {model}: {e}")
             continue
     
     # Save results
@@ -116,11 +116,11 @@ def main():
         json.dump(all_results, f, indent=2)
     
     print(f"\n{'='*60}")
-    print(f"✅ Results saved to: {output_file}")
+    print(f"Results saved to: {output_file}")
     print(f"{'='*60}")
     
     # Print comparison
-    print(f"\n📊 MODEL COMPARISON:")
+    print(f"\nMODEL COMPARISON:")
     print(f"{'Model':<20} {'Avg Latency (ms)':<20} {'Success Rate'}")
     print("-" * 60)
     

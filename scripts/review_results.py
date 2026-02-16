@@ -30,8 +30,8 @@ def review_results(results_file: str):
         question = all_results[first_model][q_idx]['question']
         ground_truth = all_results[first_model][q_idx]['ground_truth']
         
-        print(f"\n📝 Question: {question}")
-        print(f"\n✅ Ground Truth: {ground_truth}")
+        print(f"\nQuestion: {question}")
+        print(f"\nGround Truth: {ground_truth}")
         
         print(f"\n{'Model Answers:':_<80}")
         
@@ -39,7 +39,7 @@ def review_results(results_file: str):
             answer = results[q_idx]['model_answer']
             latency = results[q_idx]['latency_ms']
             
-            print(f"\n🤖 {model_name} ({latency:.0f}ms):")
+            print(f"\n{model_name} ({latency:.0f}ms):")
             print(f"   {answer[:200]}...")  # First 200 chars
 
 
@@ -47,7 +47,7 @@ def main():
     results_file = "results/metrics/baseline_results.json"
     
     if not Path(results_file).exists():
-        print(f"❌ Results file not found: {results_file}")
+        print(f"Results file not found: {results_file}")
         print("Run run_baseline_benchmark.py first!")
         return
     

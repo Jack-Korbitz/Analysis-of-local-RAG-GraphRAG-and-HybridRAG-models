@@ -15,7 +15,7 @@ def download_dataset(dataset_name, config_name, save_dir):
         save_dir: Directory to save the dataset
     """
     print(f"\n{'='*60}")
-    print(f"📥 Downloading: {dataset_name} - {config_name}")
+    print(f"Downloading: {dataset_name} - {config_name}")
     print(f"{'='*60}")
     
     try:
@@ -28,10 +28,10 @@ def download_dataset(dataset_name, config_name, save_dir):
         # Save to disk
         dataset.save_to_disk(save_dir)
         
-        print(f"✅ Successfully downloaded to: {save_dir}")
+        print(f"Successfully downloaded to: {save_dir}")
         
         # Show dataset info
-        print(f"\n📊 Dataset Info:")
+        print(f"\nDataset Info:")
         print(f"  Splits: {list(dataset.keys())}")
         for split_name, split_data in dataset.items():
             print(f"  {split_name}: {len(split_data)} examples")
@@ -41,7 +41,7 @@ def download_dataset(dataset_name, config_name, save_dir):
         return dataset
         
     except Exception as e:
-        print(f"❌ Error downloading {dataset_name}/{config_name}: {e}")
+        print(f"Error downloading {dataset_name}/{config_name}: {e}")
         return None
 
 def main():
@@ -51,7 +51,7 @@ def main():
     base_dir = "data/benchmarks"
     
     print("="*60)
-    print("🚀 RAGbench Dataset Download")
+    print("RAGbench Dataset Download")
     print("="*60)
     
     # t2-ragbench configs: ['FinQA', 'ConvFinQA', 'TAT-DQA']
