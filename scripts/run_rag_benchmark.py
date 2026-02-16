@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RAG Benchmark - Test models WITH retrieval augmentation
+RAG Benchmark - Test models WITH retrieval augmentation (IMPROVED WITH CHUNKING)
 """
 
 import sys
@@ -14,17 +14,19 @@ from tqdm import tqdm
 from pathlib import Path
 
 
-def index_dataset_contexts(retriever: RAGRetriever, dataset_path: str, max_docs: int = 100):
+def index_dataset_contexts(retriever: RAGRetriever, dataset_path: str, max_examples: int = 200):
     """
-    Index the context documents from the dataset
+    Index the context documents from the dataset WITH CHUNKING
     
     Args:
         retriever: RAG retriever instance
         dataset_path: Path to dataset
-        max_docs: Maximum number of documents to index
+        max_examples: Maximum number of dataset examples to process
     """
+    from src.utils.chunking import DocumentChunker
+    
     print(f"\n{'='*60}")
-    print("Indexing Dataset Contexts")
+    print("Indexing Dataset Contexts WITH CHUNKING")
     print(f"{'='*60}")
     
     # Load dataset
@@ -32,52 +34,55 @@ def index_dataset_contexts(retriever: RAGRetriever, dataset_path: str, max_docs:
     split_name = list(dataset.keys())[0]
     data = dataset[split_name]
     
-    # Extract unique contexts (avoid duplicates)
-    contexts_dict = {}
-    metadatas_dict = {}
+    # Take subset of examples
+    examples = data.select(range(min(max_examples, len(data))))
     
-    for i, example in enumerate(tqdm(data, desc="Extracting contexts")):
-        if len(contexts_dict) >= max_docs:
-            break
-        
-        # Get context (handle different dataset formats)
-        context = example.get('context', '')
-        
-        if not context or len(context) < 50:  # Skip very short contexts
-            continue
-        
-        # Use context as key to avoid duplicates
-        context_id = example.get('context_id', f"ctx_{i}")
-        
-        if context_id not in contexts_dict:
-            contexts_dict[context_id] = context
-            metadatas_dict[context_id] = {
-                'context_id': context_id,
-                'company': example.get('company_name', 'Unknown'),
-                'year': example.get('report_year', 'Unknown'),
-                'source': 'dataset'
-            }
+    print(f"\nProcessing {len(examples)} examples from dataset")
     
-    # Convert to lists
-    contexts = list(contexts_dict.values())
-    metadatas = list(metadatas_dict.values())
+    # Initialize chunker (smaller chunks = better retrieval)
+    chunker = DocumentChunker(
+        chunk_size=400,      # Smaller chunks
+        chunk_overlap=100     # Good overlap
+    )
     
-    print(f"\n📊 Found {len(contexts)} unique contexts to index")
+    # Chunk all contexts
+    print(f"\nChunking contexts...")
+    all_chunks = chunker.chunk_dataset_contexts(
+        list(examples),
+        context_field='context'
+    )
+    
+    print(f"\nCreated {len(all_chunks)} chunks from {len(examples)} examples")
+    print(f"   Avg chunks per example: {len(all_chunks) / len(examples):.1f}")
+    
+    # Deduplicate chunks by text (avoid indexing duplicates)
+    unique_chunks = {}
+    for chunk in all_chunks:
+        text = chunk['text']
+        if text not in unique_chunks:
+            unique_chunks[text] = chunk
+    
+    chunks_list = list(unique_chunks.values())
+    print(f"\nAfter deduplication: {len(chunks_list)} unique chunks")
+    
+    # Extract texts and metadatas
+    texts = [chunk['text'] for chunk in chunks_list]
+    metadatas = [chunk['metadata'] for chunk in chunks_list]
     
     # Index in batches
-    batch_size = 50
-    for i in range(0, len(contexts), batch_size):
-        batch_contexts = contexts[i:i+batch_size]
+    batch_size = 100
+    for i in range(0, len(texts), batch_size):
+        batch_texts = texts[i:i+batch_size]
         batch_metadatas = metadatas[i:i+batch_size]
         
-        print(f"\n📚 Indexing batch {i//batch_size + 1}/{(len(contexts)-1)//batch_size + 1}...")
-        retriever.index_documents(batch_contexts, batch_metadatas, batch_size=32)
+        print(f"\nIndexing batch {i//batch_size + 1}/{(len(texts)-1)//batch_size + 1}...")
+        retriever.index_documents(batch_texts, batch_metadatas, batch_size=32)
     
-    print(f"\n✅ Indexed {len(contexts)} contexts")
+    print(f"\nIndexed {len(texts)} chunks")
     
     # Save the index
-    retriever.save("finqa_rag_index")
-    print(f"💾 Saved index to disk")
+    retriever.save("finqa_rag_chunked_index")
+    print(f"Saved chunked index to disk")
 
 
 def run_rag_test(
@@ -140,20 +145,20 @@ def run_rag_test(
         
         # Print first result as example
         if i == 0:
-            print(f"\n📝 Example Question:")
+            print(f"\nExample Question:")
             print(f"   Q: {question[:100]}...")
             print(f"   Ground Truth: {ground_truth}")
-            print(f"\n📄 Retrieved Context (first 200 chars):")
+            print(f"\nRetrieved Context (first 200 chars):")
             print(f"   {context[:200]}...")
-            print(f"\n🤖 Model Answer:")
+            print(f"\nModel Answer:")
             print(f"   {result['response'][:150]}...")
-            print(f"   ⏱️  {result['latency_ms']}ms")
+            print(f"   Latency: {result['latency_ms']}ms")
     
     # Calculate stats
     avg_latency = sum(r['latency_ms'] for r in results) / len(results)
     success_rate = sum(r['success'] for r in results) / len(results) * 100
     
-    print(f"\n📊 Results for {model_name} (RAG):")
+    print(f"\nResults for {model_name} (RAG):")
     print(f"   Questions answered: {len(results)}")
     print(f"   Success rate: {success_rate:.1f}%")
     print(f"   Avg latency: {avg_latency:.2f}ms")
@@ -165,23 +170,23 @@ def main():
     """Run RAG benchmark on all models"""
     
     print("="*60)
-    print("🚀 RAG BENCHMARK (With Retrieval)")
+    print("RAG BENCHMARK (With Retrieval + CHUNKING)")
     print("="*60)
     
     # Initialize RAG retriever
-    retriever = RAGRetriever(collection_name="finqa_rag")
+    retriever = RAGRetriever(collection_name="finqa_rag_chunked")
     
     # Dataset to use
     dataset_path = "data/benchmarks/t2-ragbench-FinQA"
     
     # Try to load existing index
-    print("\n🔍 Checking for existing index...")
-    if not retriever.load("finqa_rag_index"):
-        print("\n📚 No existing index found. Building new index...")
+    print("\nChecking for existing chunked index...")
+    if not retriever.load("finqa_rag_chunked_index"):
+        print("\nNo existing chunked index found. Building new index...")
         retriever.vector_store.clear()
-        index_dataset_contexts(retriever, dataset_path, max_docs=100)
+        index_dataset_contexts(retriever, dataset_path, max_examples=200)
     else:
-        print("✅ Loaded existing index")
+        print("Loaded existing chunked index")
         print(f"   {retriever.get_stats()}")
     
     # Models to test
@@ -203,7 +208,7 @@ def main():
             )
             all_results[model] = results
         except Exception as e:
-            print(f"\n❌ Error testing {model}: {e}")
+            print(f"\nError testing {model}: {e}")
             import traceback
             traceback.print_exc()
             continue
@@ -212,16 +217,16 @@ def main():
     output_dir = Path("results/metrics")
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    output_file = output_dir / "rag_results.json"
+    output_file = output_dir / "rag_chunked_results.json"
     with open(output_file, 'w') as f:
         json.dump(all_results, f, indent=2)
     
     print(f"\n{'='*60}")
-    print(f"✅ Results saved to: {output_file}")
+    print(f"Results saved to: {output_file}")
     print(f"{'='*60}")
     
     # Print comparison
-    print(f"\n📊 MODEL COMPARISON (RAG):")
+    print(f"\nMODEL COMPARISON (RAG with Chunking):")
     print(f"{'Model':<20} {'Avg Latency (ms)':<20} {'Success Rate'}")
     print("-" * 60)
     
@@ -235,7 +240,7 @@ def main():
     baseline_file = output_dir / "baseline_results.json"
     if baseline_file.exists():
         print(f"\n{'='*60}")
-        print("📊 BASELINE vs RAG COMPARISON")
+        print("BASELINE vs RAG (Chunked) COMPARISON")
         print(f"{'='*60}")
         
         with open(baseline_file, 'r') as f:
