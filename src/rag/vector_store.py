@@ -32,7 +32,7 @@ class VectorStore:
         self.metadatas = []
         self.ids = []
         
-        print(f"✅ Vector store initialized (FAISS)")
+        print(f"   Vector store initialized (FAISS)")
         print(f"   Embedding dimension: {embedding_dim}")
         print(f"   Documents in store: {self.index.ntotal}")
     
@@ -70,7 +70,7 @@ class VectorStore:
         self.metadatas.extend(metadatas)
         self.ids.extend(ids)
         
-        print(f"✅ Added {len(documents)} documents to vector store")
+        print(f"   Added {len(documents)} documents to vector store")
         print(f"   Total documents: {self.index.ntotal}")
     
     def search(
@@ -130,7 +130,7 @@ class VectorStore:
                 'embedding_dim': self.embedding_dim
             }, f)
         
-        print(f"✅ Saved vector store to {self.persist_dir}")
+        print(f"  Saved vector store to {self.persist_dir}")
     
     def load(self, name: str = "faiss_index"):
         """Load index and metadata from disk"""
@@ -138,7 +138,7 @@ class VectorStore:
         metadata_path = self.persist_dir / f"{name}.pkl"
         
         if not index_path.exists() or not metadata_path.exists():
-            print(f"⚠️  No saved index found at {self.persist_dir}")
+            print(f"   No saved index found at {self.persist_dir}")
             return False
         
         # Load FAISS index
@@ -152,7 +152,7 @@ class VectorStore:
             self.ids = data['ids']
             self.embedding_dim = data['embedding_dim']
         
-        print(f"✅ Loaded vector store from {self.persist_dir}")
+        print(f"  Loaded vector store from {self.persist_dir}")
         print(f"   Documents: {self.index.ntotal}")
         return True
     
@@ -162,7 +162,7 @@ class VectorStore:
         self.documents = []
         self.metadatas = []
         self.ids = []
-        print(f"✅ Cleared vector store")
+        print(f"  Cleared vector store")
     
     def get_stats(self) -> Dict:
         """Get store statistics"""
@@ -201,11 +201,11 @@ def main():
     ]
     
     # Embed documents
-    print("\n📝 Embedding documents...")
+    print("\n  Embedding documents...")
     embeddings = embedder.embed_batch(documents)
     
     # Add to vector store
-    print("\n💾 Adding to vector store...")
+    print("\n  Adding to vector store...")
     vector_store.add_documents(
         documents=documents,
         embeddings=embeddings,
@@ -213,27 +213,27 @@ def main():
     )
     
     # Test search
-    print("\n🔍 Testing search...")
+    print("\n  Testing search...")
     query = "What is the capital of France?"
     query_embedding = embedder.embed_text(query)
     
     results = vector_store.search(query_embedding, top_k=3)
     
-    print(f"\n✅ Query: '{query}'")
-    print(f"\n📊 Top 3 Results:")
+    print(f"\n  Query: '{query}'")
+    print(f"\n  Top 3 Results:")
     for i, (doc, distance) in enumerate(zip(results['documents'], results['distances'])):
         print(f"\n{i+1}. Similarity: {distance:.4f}")
         print(f"   {doc}")
     
     # Test save/load
-    print("\n💾 Testing save/load...")
+    print("\n  Testing save/load...")
     vector_store.save("test_index")
     
     new_store = VectorStore(embedding_dim=embedder.embedding_dim)
     new_store.load("test_index")
     
     # Stats
-    print(f"\n📈 Stats: {vector_store.get_stats()}")
+    print(f"\n  Stats: {vector_store.get_stats()}")
 
 
 if __name__ == "__main__":

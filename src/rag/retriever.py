@@ -29,7 +29,7 @@ class RAGRetriever:
             embedding_model_name: Name of sentence-transformers model
             collection_name: Name for vector store collection
         """
-        print("🚀 Initializing RAG Retriever...")
+        print("Initializing RAG Retriever...")
         
         # Initialize embeddings
         self.embedder = EmbeddingModel(embedding_model_name)
@@ -40,7 +40,7 @@ class RAGRetriever:
             persist_dir=f"data/vector_db/{collection_name}"
         )
         
-        print("✅ RAG Retriever ready!")
+        print("RAG Retriever ready!")
     
     def index_documents(
         self,
@@ -56,7 +56,7 @@ class RAGRetriever:
             metadatas: Optional metadata for each document
             batch_size: Batch size for embedding
         """
-        print(f"\n📚 Indexing {len(documents)} documents...")
+        print(f"\nIndexing {len(documents)} documents...")
         
         # Embed documents
         embeddings = self.embedder.embed_batch(documents, batch_size=batch_size)
@@ -68,7 +68,7 @@ class RAGRetriever:
             metadatas=metadatas
         )
         
-        print(f"✅ Indexed {len(documents)} documents")
+        print(f"Indexed {len(documents)} documents")
     
     def retrieve(
         self,
@@ -177,12 +177,12 @@ def main():
     
     query = "What was Analog Devices' interest expense in 2009?"
     
-    print(f"\n📝 Query: {query}")
+    print(f"\nQuery: {query}")
     
     # Get top 3 results
     results = retriever.retrieve(query, top_k=3)
     
-    print(f"\n📊 Top 3 Retrieved Documents:")
+    print(f"\nTop 3 Retrieved Documents:")
     for i, (doc, dist, meta) in enumerate(zip(
         results['documents'],
         results['distances'],

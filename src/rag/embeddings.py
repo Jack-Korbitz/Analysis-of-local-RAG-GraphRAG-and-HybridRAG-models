@@ -20,7 +20,7 @@ class EmbeddingModel:
         print(f"Loading embedding model: {model_name}...")
         self.model = SentenceTransformer(model_name)
         self.model_name = model_name
-        print(f"✅ Embedding model loaded: {model_name}")
+        print(f"Embedding model loaded: {model_name}")
     
     def embed_text(self, text: str) -> np.ndarray:
         """
@@ -70,7 +70,7 @@ def main():
     text = "What is the capital of France?"
     embedding = embedder.embed_text(text)
     
-    print(f"\n✅ Embedded text: '{text}'")
+    print(f"\nEmbedded text: '{text}'")
     print(f"   Embedding shape: {embedding.shape}")
     print(f"   Embedding dim: {embedder.embedding_dim}")
     print(f"   First 5 values: {embedding[:5]}")
@@ -83,7 +83,7 @@ def main():
     ]
     
     embeddings = embedder.embed_batch(texts)
-    print(f"\n✅ Embedded {len(texts)} texts")
+    print(f"\nEmbedded {len(texts)} texts")
     print(f"   Batch shape: {embeddings.shape}")
 
 
