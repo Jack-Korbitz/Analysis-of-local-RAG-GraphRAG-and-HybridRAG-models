@@ -14,6 +14,10 @@ import threading
 import time
 from datetime import datetime, timedelta
 
+# Ensure to run this line of code before executing code & open docker desktop
+# docker-compose up -d
+# Check after 30 seconds to ensure its running with: 
+# docker ps
 
 class ParallelBenchmarkRunner:
     def __init__(self, models, datasets, num_samples=15, max_workers=3):
@@ -32,7 +36,7 @@ class ParallelBenchmarkRunner:
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             result = client.generate(
                 prompt=example['question'],
-                max_tokens=200
+                max_tokens=2000
             )
             
             if not result.get('success', False):
@@ -93,7 +97,7 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_context(
                 question=example['question'],
                 context=context,
-                max_tokens=200
+                max_tokens=2000
             )
             
             if not result.get('success', False):
@@ -168,7 +172,7 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_context(
                 question=example['question'],
                 context=context,
-                max_tokens=200
+                max_tokens=2000
             )
             
             if not result.get('success', False):
@@ -245,7 +249,7 @@ class ParallelBenchmarkRunner:
     
     def print_summary(self):
         print("\n" + "="*60)
-        print("FAST BENCHMARK SUMMARY")
+        print("BENCHMARK SUMMARY")
         print("="*60)
         
         for approach in ['baseline', 'rag', 'graphrag']:
@@ -288,22 +292,17 @@ def main():
         max_workers=3
     )
     
-    print("="*60)
-    print("FAST PARALLEL BENCHMARK - SMALLER MODELS")
+    print("BENCHMARK")
     print("="*60)
     print(f"\nStarted at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"\nNew faster models (8-12B parameters):")
     for model in models:
         print(f"  - {model}")
-    print(f"\nExpected speed improvement: 3-5x faster than 20-30B models")
     print(f"\nBenchmark Configuration:")
     print(f"  Models: {len(models)}")
     print(f"  Datasets: {len(datasets)}")
     print(f"  Questions per dataset: {runner.num_samples}")
     print(f"  Total questions: {len(models) * len(datasets) * runner.num_samples}")
-    print(f"  Max tokens: 200")
-    print(f"\nEstimated time: 8-15 minutes")
-    print(f"\nStarting benchmark...")
     
     runner.run_baseline()
     runner.run_rag()
