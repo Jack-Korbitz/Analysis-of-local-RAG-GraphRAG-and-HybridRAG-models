@@ -72,36 +72,42 @@ class GraphRetriever:
 
         return entities
 
+    _COMPANY_SUFFIXES = [
+        ', inc.', ', inc', ', corp.', ', corp', ', llc', ', ltd.', ', ltd',
+        ' incorporated', ' corporation', ' company', ' group', ' holdings',
+        ' inc.', ' inc', ' corp.', ' corp', ' llc', ' ltd.', ' ltd'
+    ]
+
+    def _strip_company_suffix(self, name: str) -> str:
+        name_lower = name.lower().strip()
+        for suffix in self._COMPANY_SUFFIXES:
+            if name_lower.endswith(suffix):
+                name_lower = name_lower[:-len(suffix)].strip()
+                break
+        return name_lower
+
     def find_company_in_graph(self, query: str) -> Optional[str]:
-        """
-        Find the most relevant company name from the graph for a query
-
-        Args:
-            query: User query string
-
-        Returns:
-            Company name if found, None otherwise
-        """
-        # Get all companies from graph
         companies = self.neo4j.query_graph(
             "MATCH (c:Company) RETURN c.name as name"
         )
 
         query_lower = query.lower()
 
-        # Check each company name against query
         for record in companies:
             company_name = record['name']
-            # Check if company name or parts of it appear in query
             company_lower = company_name.lower()
-            company_parts = company_lower.split()
+            company_stripped = self._strip_company_suffix(company_name)
 
             # Full name match
             if company_lower in query_lower:
                 return company_name
 
-            # Partial match (first significant word)
-            for part in company_parts:
+            # Stripped name match (e.g. "Analog Devices" matches "Analog Devices, Inc.")
+            if company_stripped and company_stripped in query_lower:
+                return company_name
+
+            # Partial match on significant words
+            for part in company_stripped.split():
                 if len(part) > 4 and part in query_lower:
                     return company_name
 

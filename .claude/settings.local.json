@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(du -sh *)"
+      "Bash(du -sh *)",
+      "Bash(python -c \":*)"
     ]
   }
 }

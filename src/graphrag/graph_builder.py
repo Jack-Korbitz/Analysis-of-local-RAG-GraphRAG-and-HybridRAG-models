@@ -154,15 +154,10 @@ If no metrics found, return {{"metrics": []}}"""
                         for keyword, metric_name in metric_keywords.items():
                             if keyword in label:
                                 normalized_value = abs(value)
-                                
-                                if normalized_value < 100:
-                                    if 'billion' in line.lower():
-                                        normalized_value = normalized_value * 1000
-                                    elif 'thousand' in line.lower():
-                                        normalized_value = normalized_value / 1000
-                                elif normalized_value < 10000:
-                                    pass
-                                else:
+
+                                if 'billion' in line.lower():
+                                    normalized_value = normalized_value * 1000
+                                elif 'thousand' in line.lower():
                                     normalized_value = normalized_value / 1000
                                 
                                 if normalized_value > 0:
@@ -371,7 +366,7 @@ If no metrics found, return {{"metrics": []}}"""
 
                 self.neo4j.create_document(
                     doc_id=doc_id,
-                    text=context[:500],
+                    text=context[:2000],
                     properties={
                         'company': company,
                         'year': year,

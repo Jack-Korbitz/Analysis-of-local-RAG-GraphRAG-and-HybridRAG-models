@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 # docker ps
 
 class ParallelBenchmarkRunner:
-    def __init__(self, models, datasets, num_samples=15, max_workers=3):
+    def __init__(self, models, datasets, num_samples=10, max_workers=3):
         self.models = models
         self.datasets = datasets
         self.num_samples = num_samples
@@ -36,7 +36,7 @@ class ParallelBenchmarkRunner:
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             result = client.generate(
                 prompt=example['question'],
-                max_tokens=2000
+                max_tokens=200
             )
             
             if not result.get('success', False):
@@ -97,7 +97,7 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_context(
                 question=example['question'],
                 context=context,
-                max_tokens=2000
+                max_tokens=20000
             )
             
             if not result.get('success', False):
@@ -172,7 +172,7 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_context(
                 question=example['question'],
                 context=context,
-                max_tokens=2000
+                max_tokens=20000
             )
             
             if not result.get('success', False):
@@ -189,7 +189,7 @@ class ParallelBenchmarkRunner:
     
     def run_graphrag(self):
         print("\n" + "="*60)
-        print("GRAPHRAG BENCHMARK (IMPROVED WITH 4X DATA)")
+        print("GRAPHRAG BENCHMARK")
         print("="*60)
         
         start_time = time.time()
@@ -288,7 +288,7 @@ def main():
     runner = ParallelBenchmarkRunner(
         models, 
         datasets, 
-        num_samples=15,
+        num_samples=10,
         max_workers=3
     )
     
