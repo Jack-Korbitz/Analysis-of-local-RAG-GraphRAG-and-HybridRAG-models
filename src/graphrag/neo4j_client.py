@@ -1,7 +1,3 @@
-"""
-Neo4j client for GraphRAG
-"""
-
 from neo4j import GraphDatabase
 from typing import List, Dict, Optional
 from dotenv import load_dotenv

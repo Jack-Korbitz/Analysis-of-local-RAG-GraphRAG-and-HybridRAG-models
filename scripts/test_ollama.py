@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# Test script to verify Ollama is running and models are accessible
-
-
 import ollama
 
 def test_ollama_connection():

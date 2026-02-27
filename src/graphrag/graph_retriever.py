@@ -1,7 +1,3 @@
-"""
-Graph Retriever - Retrieves relevant context from Neo4j knowledge graph
-"""
-
 import sys
 from pathlib import Path
 project_root = Path(__file__).parent.parent.parent

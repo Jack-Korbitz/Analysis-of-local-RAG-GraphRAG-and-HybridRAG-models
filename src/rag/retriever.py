@@ -1,7 +1,3 @@
-"""
-RAG Retriever - Combines embeddings and vector store
-"""
-
 import sys
 from pathlib import Path
 

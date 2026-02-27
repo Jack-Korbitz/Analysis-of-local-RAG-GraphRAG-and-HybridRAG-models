@@ -1,7 +1,3 @@
-"""
-Vector Store using FAISS
-"""
-
 import faiss
 import numpy as np
 import pickle

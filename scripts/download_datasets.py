@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# Download RAGbench datasets from Hugging Face
-
 from datasets import load_dataset
 import os
 from pathlib import Path
