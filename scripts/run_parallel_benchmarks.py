@@ -93,11 +93,11 @@ class ParallelBenchmarkRunner:
         client = OllamaClient(model, temperature=0.1)
         
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
-            context = retriever.retrieve_context_string(example['question'], top_k=5)
+            context = retriever.retrieve_context_string(example['question'], top_k=8)
             result = client.generate_with_context(
                 question=example['question'],
                 context=context,
-                max_tokens=20000
+                max_tokens=500
             )
             
             if not result.get('success', False):
@@ -166,13 +166,13 @@ class ParallelBenchmarkRunner:
     def _run_model_graphrag(self, model, dataset_name, retriever, samples):
         results = []
         client = OllamaClient(model, temperature=0.1)
-        
+
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             context = retriever.retrieve_context_string(example['question'], top_k=5)
-            result = client.generate_with_context(
+            result = client.generate_with_graph_context(
                 question=example['question'],
                 context=context,
-                max_tokens=20000
+                max_tokens=500
             )
             
             if not result.get('success', False):
@@ -312,7 +312,7 @@ def main():
     total_elapsed = time.time() - overall_start
     
     print("\n" + "="*60)
-    print("FAST BENCHMARK COMPLETE!")
+    print("BENCHMARK COMPLETE!")
     print("="*60)
     print(f"\nCompleted at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Total runtime: {timedelta(seconds=int(total_elapsed))}")

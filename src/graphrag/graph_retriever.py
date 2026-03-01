@@ -55,10 +55,10 @@ class GraphRetriever:
         metric_keywords = {
             'interest_expense': ['interest expense', 'interest cost'],
             'net_income': ['net income', 'net earnings', 'net profit'],
-            'revenue': ['revenue', 'revenues', 'sales', 'net sales'],
-            'operating_expenses': ['operating expense', 'operating cost'],
-            'cash_and_equivalents': ['cash', 'cash equivalent'],
             'net_revenue': ['net revenue'],
+            'revenue': ['revenue', 'revenues', 'net sales'],
+            'operating_expenses': ['operating expense', 'operating cost'],
+            'cash_and_equivalents': ['cash and cash equivalents', 'cash equivalent'],
             'total_assets': ['total assets'],
             'earnings_per_share': ['earnings per share', 'eps'],
             'depreciation': ['depreciation'],
@@ -92,26 +92,27 @@ class GraphRetriever:
         )
 
         query_lower = query.lower()
+        best_match = None
+        best_match_len = 0
 
         for record in companies:
             company_name = record['name']
             company_lower = company_name.lower()
             company_stripped = self._strip_company_suffix(company_name)
 
-            # Full name match
+            # Full name match - prefer longest match to avoid "Entergy" beating "Entergy Louisiana"
             if company_lower in query_lower:
-                return company_name
+                if len(company_lower) > best_match_len:
+                    best_match = company_name
+                    best_match_len = len(company_lower)
 
             # Stripped name match (e.g. "Analog Devices" matches "Analog Devices, Inc.")
-            if company_stripped and company_stripped in query_lower:
-                return company_name
+            elif company_stripped and company_stripped in query_lower:
+                if len(company_stripped) > best_match_len:
+                    best_match = company_name
+                    best_match_len = len(company_stripped)
 
-            # Partial match on significant words
-            for part in company_stripped.split():
-                if len(part) > 4 and part in query_lower:
-                    return company_name
-
-        return None
+        return best_match
 
     def retrieve_by_entity(self, query: str, top_k: int = 5) -> List[Dict]:
         """
@@ -134,7 +135,7 @@ class GraphRetriever:
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
             -[:FOR_YEAR]->(y:Year {value: $year})
             WHERE m.name = $metric_type
-            RETURN c.name as company, m.name as metric,
+            RETURN DISTINCT c.name as company, m.name as metric,
                    m.value as value, y.value as year,
                    'company_year_metric' as strategy
             LIMIT $top_k
@@ -152,7 +153,7 @@ class GraphRetriever:
             cypher = """
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
             -[:FOR_YEAR]->(y:Year {value: $year})
-            RETURN c.name as company, m.name as metric,
+            RETURN DISTINCT c.name as company, m.name as metric,
                    m.value as value, y.value as year,
                    'company_year' as strategy
             LIMIT $top_k
@@ -164,12 +165,13 @@ class GraphRetriever:
             })
             results.extend(records)
 
-        # Strategy 3: Company only (all years, all metrics)
-        if company and not results:
+        # Strategy 3: Company only (all years) - only when no year was in the query
+        # If a year was specified but not found, returning wrong-year data hurts accuracy
+        if company and not results and not entities['year']:
             cypher = """
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
             -[:FOR_YEAR]->(y:Year)
-            RETURN c.name as company, m.name as metric,
+            RETURN DISTINCT c.name as company, m.name as metric,
                    m.value as value, y.value as year,
                    'company_only' as strategy
             ORDER BY y.value DESC
@@ -181,12 +183,12 @@ class GraphRetriever:
             })
             results.extend(records)
 
-        # Strategy 4: Metric type only (all companies)
-        if entities['metric_type'] and not results:
+        # Strategy 4: Metric type only (all companies) - skip if year specified and unmet
+        if entities['metric_type'] and not results and not entities['year']:
             cypher = """
             MATCH (c:Company)-[:HAS_METRIC]->(m:Metric {name: $metric_type})
             -[:FOR_YEAR]->(y:Year)
-            RETURN c.name as company, m.name as metric,
+            RETURN DISTINCT c.name as company, m.name as metric,
                    m.value as value, y.value as year,
                    'metric_only' as strategy
             ORDER BY y.value DESC
@@ -198,21 +200,38 @@ class GraphRetriever:
             })
             results.extend(records)
 
-        # Strategy 5: Document text search fallback
+        # Strategy 5: Document text search fallback (always runs when structured search fails)
         if not results:
-            cypher = """
-            MATCH (d:Document)-[:ABOUT]->(c:Company)
-            WHERE toLower(d.text) CONTAINS toLower($search_term)
-            RETURN c.name as company, d.text as text,
-                   d.year as year, 'document_search' as strategy
-            LIMIT $top_k
-            """
-            search_term = company or entities['metric_type'] or query[:50]
-            records = self.neo4j.query_graph(cypher, {
-                'search_term': search_term,
-                'top_k': top_k
-            })
-            results.extend(records)
+            if company and entities['year']:
+                # Search for company documents filtered by year
+                cypher = """
+                MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+                WHERE d.year = $year
+                RETURN c.name as company, d.text as text,
+                       d.year as year, 'document_search' as strategy
+                LIMIT $top_k
+                """
+                records = self.neo4j.query_graph(cypher, {
+                    'company': company,
+                    'year': entities['year'],
+                    'top_k': top_k
+                })
+                results.extend(records)
+
+            if not results:
+                search_term = company or entities['metric_type'] or query[:50]
+                cypher = """
+                MATCH (d:Document)-[:ABOUT]->(c:Company)
+                WHERE toLower(d.text) CONTAINS toLower($search_term)
+                RETURN c.name as company, d.text as text,
+                       d.year as year, 'document_search' as strategy
+                LIMIT $top_k
+                """
+                records = self.neo4j.query_graph(cypher, {
+                    'search_term': search_term,
+                    'top_k': top_k
+                })
+                results.extend(records)
 
         return results
 
@@ -295,7 +314,7 @@ class GraphRetriever:
                     f"Year: {record.get('year', 'Unknown')}"
                 )
                 context_parts.append(
-                    f"   Text: {record.get('text', '')[:200]}..."
+                    f"   Text: {record.get('text', '')[:500]}..."
                 )
 
         return "\n".join(context_parts)

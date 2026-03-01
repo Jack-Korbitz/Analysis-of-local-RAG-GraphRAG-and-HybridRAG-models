@@ -43,30 +43,53 @@ def aggregate_by_model(results_dict):
 
 
 def check_accuracy(answer, ground_truth):
-    answer_lower = str(answer).lower()
-    gt_str = str(ground_truth).lower().replace('.0', '')
-    
-    if gt_str in answer_lower:
-        return True
-    
     import re
-    answer_numbers = re.findall(r'-?\d+\.?\d*', answer_lower)
-    gt_numbers = re.findall(r'-?\d+\.?\d*', gt_str)
-    
-    if gt_numbers and answer_numbers:
-        try:
-            gt_val = float(gt_numbers[0])
-            for ans_num in answer_numbers:
-                ans_val = float(ans_num)
-                if abs(gt_val) < 1:
-                    if abs(ans_val - gt_val) / max(abs(gt_val), 0.001) < 0.05:
-                        return True
-                else:
-                    if abs(ans_val - gt_val) < 0.1:
-                        return True
-        except ValueError:
-            pass
-    
+
+    answer_str = str(answer).lower()
+    gt_str = str(ground_truth).lower().replace('.0', '')
+
+    # Normalize: strip commas from numbers (41,932 → 41932)
+    answer_norm = re.sub(r'(\d),(\d)', r'\1\2', answer_str)
+    gt_norm = re.sub(r'(\d),(\d)', r'\1\2', gt_str)
+
+    # Direct string containment after normalization
+    if gt_norm in answer_norm:
+        return True
+
+    # Extract all numbers from both strings
+    answer_numbers = re.findall(r'-?\d+\.?\d*', answer_norm)
+    gt_numbers = re.findall(r'-?\d+\.?\d*', gt_norm)
+
+    if not gt_numbers or not answer_numbers:
+        return False
+
+    try:
+        gt_val = float(gt_numbers[0])
+
+        for ans_num in answer_numbers:
+            ans_val = float(ans_num)
+
+            # Exact numeric match
+            if gt_val == ans_val:
+                return True
+
+            # Percentage ↔ decimal (gt=0.35 matches ans=35, or gt=35 matches ans=0.35)
+            if 0 < abs(gt_val) < 1 and abs(ans_val - gt_val * 100) < 0.5:
+                return True
+            if 0 < abs(ans_val) < 1 and abs(ans_val * 100 - gt_val) < 0.5:
+                return True
+
+            # Relative tolerance for large numbers (within 1%)
+            if abs(gt_val) >= 100 and abs(gt_val - ans_val) / abs(gt_val) < 0.01:
+                return True
+
+            # Absolute tolerance for small numbers (within 0.5)
+            if abs(gt_val) < 100 and abs(ans_val - gt_val) < 0.5:
+                return True
+
+    except ValueError:
+        pass
+
     return False
 
 
