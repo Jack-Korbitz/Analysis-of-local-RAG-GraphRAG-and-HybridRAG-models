@@ -1,0 +1,560 @@
+{
+  "llama3.1:8b_finqa": [
+    {
+      "question": "What was Analog Devices reported interest expense for fiscal year 2009, as listed in its annual report?",
+      "ground_truth": "3.8",
+      "answer": "$3.8 million",
+      "latency_ms": 5592.93
+    },
+    {
+      "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
+      "ground_truth": "1",
+      "answer": "To answer this question, we need to calculate the total fair value of restricted stock and restricted stock units vested during 2012.\n\n[Record 1] shows a table summarizing restricted stock and restricted stock unit activity for the fiscal year ended March 31, 2012. The table has two columns: \"number of shares (in thousands)\" and \"weighted average grant date fair value (per share)\". However, this record is incomplete as it only shows part of the table.\n\n[Record 2] is identical to Record 1, so we still can't determine the total fair value.\n\n[Record 3] also appears to be an incomplete version of the same table. However, if we assume that all three records are supposed to show the complete table, we might be able to extract some information from them.\n\nUnfortunately, without a complete record or more specific information about the performance milestones and their impact on equity awards, it's not possible to accurately calculate the total fair value of restricted stock and restricted stock units vested during 2012.",
+      "latency_ms": 2065.53
+    },
+    {
+      "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
+      "ground_truth": "41932.20338983051",
+      "answer": "$42,500 million \n\nCalculation: The percentage of total operating expenses attributed to aircraft fuel expense is 23.6%. To find the total operating expenses, we can set up a proportion: \n(23.6 / 100) = ($9896 million / x), where x represents the total operating expenses.\nSolving for x gives us:\nx = $42,500 million",
+      "latency_ms": 16283.14
+    },
+    {
+      "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
+      "ground_truth": "0.5323169340734545",
+      "answer": "I'm unable to answer this question because it is not related to Abiomed or the provided knowledge graph records.",
+      "latency_ms": 456.46
+    },
+    {
+      "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
+      "ground_truth": "-0.032186459489456136",
+      "answer": "I don't have access to records for 2008.",
+      "latency_ms": 14898.45
+    },
+    {
+      "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
+      "ground_truth": "0.9765625",
+      "answer": "To calculate the percentage growth, we need to find the total revenue for 2009 and 2010.\n\nTotal revenue in 2009: $14703.00 + $33.00 + $15135.00 + $432.00 = $18403.00 million\nTotal revenue in 2010: (no record available)\n\nHowever, since we don't have the total revenue for 2010, we can't calculate the percentage growth directly.\n\nBut, if we assume that the question is asking about the percentage change from Record 1 to Record 4 (which are both related to revenue and likely represent different aspects of Citigroup's financials), we can proceed with a calculation:\n\nPercentage growth = ((New Value - Old Value) / Old Value) * 100\n= (($15135.00 - $14703.00) / $14703.00) * 100\n= (4.32%)\n\n\nNote: This is an assumption, and the actual answer may require more information or clarification on what \"fair value of loans held-for-sale carried at LOCOM\" refers to in this context.",
+      "latency_ms": 2222.34
+    },
+    {
+      "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
+      "ground_truth": "7.385",
+      "answer": "To calculate the expected annual amortization expense, we need to first determine the total amount of intangible assets. \n\nRecord 3 shows that in 2014, American Tower had $59174 million in total assets.\n\nHowever, Record 1 and Record 2 show that in 2014, American Tower also had $23848 million in total assets and $550000 million in interest expense respectively. But we don't have information about the intangible assets specifically. \n\nRecord 5 shows that in 2012, American Tower had $8763 million in total assets.\n\nSince Record 4 shows a higher value of total assets ($57536 million) than Record 5 for the same year (2012), and Record 3 shows a higher value of total assets ($59174 million) than Record 1 for the same year (2014), we can assume that the correct values are in Record 3 and Record 4.\n\nThe difference between these two values is $59174 - $57536 = $1638 million. This could be considered as the intangible assets, assuming that other assets have increased over time.\n\nNow, to calculate the annual amortization expense, we divide this amount by 20 years:\n\n$1638 million / 20 = $81.9 million",
+      "latency_ms": 17565.08
+    },
+    {
+      "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
+      "ground_truth": "0.6363377271107945",
+      "answer": "To answer this question, we need to calculate the net income from all records.\n\nRecord 1: $1786.20 million\nRecord 2: $86.70 million\nRecord 3: $10.00 million\nTotal Net Income: $1786.20 + $86.70 + $10.00 = $1882.90 million\n\nHowever, the question is asking for a percentage of net earnings equivalent to the net cash provided by operating activities, which is not directly available in the records.\n\nSince we don't have the required information, I will provide an answer that indicates this limitation:\n\n0%",
+      "latency_ms": 16604.04
+    },
+    {
+      "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
+      "ground_truth": "96.55172413793103",
+      "answer": "No data available.",
+      "latency_ms": 12374.84
+    },
+    {
+      "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
+      "ground_truth": "56.57146477",
+      "answer": "$175 million.\n\nThe share repurchase in the quarter ending December 29, 2018, reduces the cash balance of Cadence Design Systems by $175 million. This reduction affects the net change in cash from financing activity for the company.",
+      "latency_ms": 678.18
+    }
+  ],
+  "gemma3:12b_finqa": [
+    {
+      "question": "What was Analog Devices reported interest expense for fiscal year 2009, as listed in its annual report?",
+      "ground_truth": "3.8",
+      "answer": "$3.80 million",
+      "latency_ms": 11511.31
+    },
+    {
+      "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
+      "ground_truth": "1",
+      "answer": "The provided records do not contain the information needed to answer the question.",
+      "latency_ms": 624.59
+    },
+    {
+      "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
+      "ground_truth": "41932.20338983051",
+      "answer": "23.6%",
+      "latency_ms": 16516.03
+    },
+    {
+      "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
+      "ground_truth": "0.5323169340734545",
+      "answer": "The provided records do not contain information about Intel's total cash and investments or the proportion of available-for-sale investments.",
+      "latency_ms": 17531.94
+    },
+    {
+      "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
+      "ground_truth": "-0.032186459489456136",
+      "answer": "The provided records do not contain information about Entergy Louisiana, LLC's net revenue or operating revenues. Therefore, I cannot answer the question.",
+      "latency_ms": 17393.24
+    },
+    {
+      "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
+      "ground_truth": "0.9765625",
+      "answer": "The provided records do not contain information about the fair value of loans held-for-sale carried at LOCOM. Therefore, I cannot answer the question.",
+      "latency_ms": 16664.63
+    },
+    {
+      "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
+      "ground_truth": "7.385",
+      "answer": "The provided records do not contain information about amortization expense or intangibles. Therefore, I cannot answer the question.",
+      "latency_ms": 14385.17
+    },
+    {
+      "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
+      "ground_truth": "0.6363377271107945",
+      "answer": "The provided records do not contain information about net cash provided by operating activities. Therefore, I cannot answer the question.",
+      "latency_ms": 16294.66
+    },
+    {
+      "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
+      "ground_truth": "96.55172413793103",
+      "answer": "0",
+      "latency_ms": 17210.92
+    },
+    {
+      "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
+      "ground_truth": "56.57146477",
+      "answer": "175",
+      "latency_ms": 550.08
+    }
+  ],
+  "qwen3:8b_finqa": [
+    {
+      "question": "What was Analog Devices reported interest expense for fiscal year 2009, as listed in its annual report?",
+      "ground_truth": "3.8",
+      "answer": "3.80 million",
+      "latency_ms": 2094.56
+    },
+    {
+      "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
+      "ground_truth": "1",
+      "answer": "",
+      "latency_ms": 17358.36
+    },
+    {
+      "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
+      "ground_truth": "41932.20338983051",
+      "answer": "41931",
+      "latency_ms": 16082.23
+    },
+    {
+      "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
+      "ground_truth": "0.5323169340734545",
+      "answer": "The provided knowledge graph records do not include specific data about Intel's total cash and investments as of December 29, 2012, nor details about available-for-sale investments during that period. Therefore, the proportion cannot be determined from the given information.",
+      "latency_ms": 17729.04
+    },
+    {
+      "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
+      "ground_truth": "-0.032186459489456136",
+      "answer": "",
+      "latency_ms": 17625.03
+    },
+    {
+      "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
+      "ground_truth": "0.9765625",
+      "answer": "The knowledge graph records provided do not include data on the fair value of loans held-for-sale carried at LOCOM for Citigroup in 2009 or 2010. Therefore, the percentage growth cannot be calculated with the available information.",
+      "latency_ms": 14180.98
+    },
+    {
+      "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
+      "ground_truth": "7.385",
+      "answer": "",
+      "latency_ms": 16988.11
+    },
+    {
+      "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
+      "ground_truth": "0.6363377271107945",
+      "answer": "The question requires data on both net earnings (including specific components) and net cash provided by operating activities. However, the provided records only include net income figures ($1,786.20M, $86.70M, $10.00M) and no information about net cash from operating activities. Therefore, the necessary data to calculate the percentage is missing. \n\nAnswer: Insufficient data provided to calculate the percentage.",
+      "latency_ms": 16215.54
+    },
+    {
+      "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
+      "ground_truth": "96.55172413793103",
+      "answer": "The knowledge graph does not contain the required data to calculate the percentage decrease in deferred acquisition payments from 2011 to 2012 as outlined in the 2009 Notes to Consolidated Financial Statements. Therefore, the answer cannot be determined from the provided records.",
+      "latency_ms": 16091.8
+    },
+    {
+      "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
+      "ground_truth": "56.57146477",
+      "answer": "",
+      "latency_ms": 16547.93
+    }
+  ],
+  "llama3.1:8b_convfinqa": [
+    {
+      "question": "What was the net cash from operating activities for Jack Henry & Associates in the fiscal year ended June 30, 2009, as reported in their 2009 annual report?",
+      "ground_truth": "206588.0",
+      "answer": "To calculate the net cash from operating activities, we need to subtract the total assets from the sum of cash and equivalents and net income.\n\nCash and Equivalents: $206588.00 million\nNet Income: $103102.00 million\nTotal Assets: $14068.00 million\n\nNet Cash from Operating Activities = (Cash and Equivalents + Net Income) - Total Assets\n= ($206588.00 + $103102.00) - $14068.00\n= $309690.00 - $14068.00\n= $285722.00 million",
+      "latency_ms": 1213.38
+    },
+    {
+      "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
+      "ground_truth": "9362.2",
+      "answer": "$9378.20 million",
+      "latency_ms": 15345.21
+    },
+    {
+      "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
+      "ground_truth": "5363.0",
+      "answer": "There is no record available that provides information about Apple Inc.'s net sales for 2001 or any other specific data point related to the question. The provided records only mention stock performance comparisons and do not contain financial data such as net sales.",
+      "latency_ms": 762.97
+    },
+    {
+      "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
+      "ground_truth": "-24.05",
+      "answer": "To calculate the percentage change in the cumulative total return on investment, we need to find the data for 2004 and 2009.\n\nUnfortunately, there is no record available for 2004 or 2009. However, based on Record 3 (2013) and Record 4 (2016), which mention a \"five year comparison\" of shareowner return performance graph, we can assume that the data for 2009 would be part of this five-year period.\n\nSince there is no direct data available for 2004 or 2009, we cannot calculate the exact percentage change. However, based on the information provided in Record 3 (2013) and Record 4 (2016), which mention a \"five year comparison\" of shareowner return performance graph, we can infer that the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009 would be around 100% to 150%.\n\nBut since I need to provide a specific number, I will assume an average value of 125%.",
+      "latency_ms": 17682.52
+    },
+    {
+      "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
+      "ground_truth": "-8.94",
+      "answer": "Unfortunately, I don't have enough information to calculate the percentage change. The provided records do not contain data on the performance price of United Parcel Service's Class B common stock for December 31, 2004 or December 31, 2006.\n\nHowever, based on Record 3 (Year: 2013), it appears that the shareowner return performance graph is only available from 2007 to 2012.",
+      "latency_ms": 14800.32
+    },
+    {
+      "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
+      "ground_truth": "2530454.0",
+      "answer": "There is no information in the provided records about the number of shares of series A common stock that were subject to outstanding awards under the 2009 Global Incentive Plan as of December 31, 2010. The records only mention the plan's approval and its purpose but do not provide any specific details about the number of shares or awards issued under it.",
+      "latency_ms": 16441.58
+    },
+    {
+      "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
+      "ground_truth": "0.5",
+      "answer": "I can't access external knowledge graphs or provide specific financial data. Is there anything else I can help you with?",
+      "latency_ms": 352.02
+    },
+    {
+      "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
+      "ground_truth": "16.0",
+      "answer": "There is no record that provides information on Masco's warranty liability for both 2011 and 2012. Therefore, I cannot determine the change in Masco's warranty liability from 2011 to 2012.",
+      "latency_ms": 13944.52
+    },
+    {
+      "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
+      "ground_truth": "27729.0",
+      "answer": "0",
+      "latency_ms": 134.79
+    },
+    {
+      "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
+      "ground_truth": "4.5",
+      "answer": "20.3 million",
+      "latency_ms": 294.51
+    }
+  ],
+  "llama3.1:8b_tatqa": [
+    {
+      "question": "What was the amount of Income before income taxes for carpenter-technology-corp in the year ended June 30, 2019?",
+      "ground_truth": "216.0",
+      "answer": "To calculate Income before income taxes, we need to subtract Interest Expense from Revenue.\n\nInterest Expense = $28.30 million + $0.40 million = $28.70 million\nRevenue = $1.00 million + $5.10 million = $6.10 million\n\nIncome before income taxes = Revenue - Interest Expense\n= $6.10 million - $28.70 million\n= -$22.60 million",
+      "latency_ms": 16446.58
+    },
+    {
+      "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
+      "ground_truth": "140.3",
+      "answer": "0",
+      "latency_ms": 128.4
+    },
+    {
+      "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
+      "ground_truth": "2018.0",
+      "answer": "No answer can be provided as there is no relevant information in the knowledge graph.",
+      "latency_ms": 13880.24
+    },
+    {
+      "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
+      "ground_truth": "-8.1",
+      "answer": "0",
+      "latency_ms": 191.18
+    },
+    {
+      "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
+      "ground_truth": "-40.7",
+      "answer": "0%",
+      "latency_ms": 121.5
+    },
+    {
+      "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
+      "ground_truth": "2018-08-12",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 227.47
+    },
+    {
+      "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
+      "ground_truth": "4.173",
+      "answer": "0",
+      "latency_ms": 116.94
+    },
+    {
+      "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
+      "ground_truth": "-0.18",
+      "answer": "No answer can be provided as there is no relevant information in the knowledge graph.",
+      "latency_ms": 15786.22
+    },
+    {
+      "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
+      "ground_truth": "370.0",
+      "answer": "No information available.",
+      "latency_ms": 168.1
+    },
+    {
+      "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
+      "ground_truth": "1125.0",
+      "answer": "0",
+      "latency_ms": 116.04
+    }
+  ],
+  "gemma3:12b_convfinqa": [
+    {
+      "question": "What was the net cash from operating activities for Jack Henry & Associates in the fiscal year ended June 30, 2009, as reported in their 2009 annual report?",
+      "ground_truth": "206588.0",
+      "answer": "The provided records do not contain information about net cash from operating activities.",
+      "latency_ms": 14542.39
+    },
+    {
+      "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
+      "ground_truth": "9362.2",
+      "answer": "$9378.20 million",
+      "latency_ms": 16593.95
+    },
+    {
+      "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
+      "ground_truth": "5363.0",
+      "answer": "The provided records do not contain information about net sales for Apple Inc. in 2001, as reported in the 2002 financial year.",
+      "latency_ms": 944.99
+    },
+    {
+      "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
+      "ground_truth": "-24.05",
+      "answer": "The provided records do not contain information about the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009.",
+      "latency_ms": 14292.67
+    },
+    {
+      "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
+      "ground_truth": "-8.94",
+      "answer": "The provided records do not contain information about the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006.",
+      "latency_ms": 16519.89
+    },
+    {
+      "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
+      "ground_truth": "2530454.0",
+      "answer": "The provided records do not contain information about the number of shares of series A common stock subject to outstanding awards under the 2009 Global Incentive Plan.",
+      "latency_ms": 14570.72
+    },
+    {
+      "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
+      "ground_truth": "0.5",
+      "answer": "The provided records do not contain information about litigation reserves or mortgage-related expenses. Therefore, I cannot answer the question.",
+      "latency_ms": 16182.29
+    },
+    {
+      "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
+      "ground_truth": "16.0",
+      "answer": "The provided records do not contain information about Masco's warranty liability.",
+      "latency_ms": 11129.47
+    },
+    {
+      "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
+      "ground_truth": "27729.0",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 9137.62
+    },
+    {
+      "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
+      "ground_truth": "4.5",
+      "answer": "6.5",
+      "latency_ms": 521.23
+    }
+  ],
+  "qwen3:8b_convfinqa": [
+    {
+      "question": "What was the net cash from operating activities for Jack Henry & Associates in the fiscal year ended June 30, 2009, as reported in their 2009 annual report?",
+      "ground_truth": "206588.0",
+      "answer": "The provided records do not include data on \"net cash from operating activities.\" The available metrics (cash_and_equivalents, total_assets, revenue, net_income) are distinct from cash flow statements. **Answer: Not available in the provided data.**",
+      "latency_ms": 14832.81
+    },
+    {
+      "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
+      "ground_truth": "9362.2",
+      "answer": "",
+      "latency_ms": 16658.12
+    },
+    {
+      "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
+      "ground_truth": "5363.0",
+      "answer": "The provided knowledge graph records do not include any data on Apple Inc.'s net sales for 2001 or any other year. Therefore, the answer cannot be determined from the given information.",
+      "latency_ms": 14702.77
+    },
+    {
+      "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
+      "ground_truth": "-24.05",
+      "answer": "",
+      "latency_ms": 16622.1
+    },
+    {
+      "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
+      "ground_truth": "-8.94",
+      "answer": "The provided records do not include specific stock price data or percentage changes for United Parcel Service's Class B common stock between December 31, 2004",
+      "latency_ms": 16222.69
+    },
+    {
+      "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
+      "ground_truth": "2530454.0",
+      "answer": "The provided records do not include specific numerical data regarding the number of shares of series A common stock subject to outstanding awards under the 2009 Global Incentive Plan. Therefore, the answer cannot be determined from the given information.",
+      "latency_ms": 9553.49
+    },
+    {
+      "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
+      "ground_truth": "0.5",
+      "answer": "",
+      "latency_ms": 15497.18
+    },
+    {
+      "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
+      "ground_truth": "16.0",
+      "answer": "The provided records do not include any information about Masco's warranty liability for the years 2011 or 2012. Therefore, the change cannot be determined from the given data.",
+      "latency_ms": 4642.25
+    },
+    {
+      "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
+      "ground_truth": "27729.0",
+      "answer": "",
+      "latency_ms": 7053.42
+    },
+    {
+      "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
+      "ground_truth": "4.5",
+      "answer": "",
+      "latency_ms": 10197.24
+    }
+  ],
+  "gemma3:12b_tatqa": [
+    {
+      "question": "What was the amount of Income before income taxes for carpenter-technology-corp in the year ended June 30, 2019?",
+      "ground_truth": "216.0",
+      "answer": "The provided records do not contain information about Income before income taxes.",
+      "latency_ms": 15383.61
+    },
+    {
+      "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
+      "ground_truth": "140.3",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 676.9
+    },
+    {
+      "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
+      "ground_truth": "2018.0",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 9138.42
+    },
+    {
+      "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
+      "ground_truth": "-8.1",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 500.68
+    },
+    {
+      "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
+      "ground_truth": "-40.7",
+      "answer": "Not available.",
+      "latency_ms": 41562.12
+    },
+    {
+      "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
+      "ground_truth": "2018-08-12",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 366.57
+    },
+    {
+      "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
+      "ground_truth": "4.173",
+      "answer": "No relevant information found in the knowledge graph.",
+      "latency_ms": 9614.99
+    },
+    {
+      "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
+      "ground_truth": "-0.18",
+      "answer": "0\n",
+      "latency_ms": 280.56
+    },
+    {
+      "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
+      "ground_truth": "370.0",
+      "answer": "0\n",
+      "latency_ms": 9712.96
+    },
+    {
+      "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
+      "ground_truth": "1125.0",
+      "answer": "N/A\n",
+      "latency_ms": 277.05
+    }
+  ],
+  "qwen3:8b_tatqa": [
+    {
+      "question": "What was the amount of Income before income taxes for carpenter-technology-corp in the year ended June 30, 2019?",
+      "ground_truth": "216.0",
+      "answer": "",
+      "latency_ms": 6859.64
+    },
+    {
+      "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
+      "ground_truth": "140.3",
+      "answer": "314.0",
+      "latency_ms": 6608.18
+    },
+    {
+      "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
+      "ground_truth": "2018.0",
+      "answer": "The knowledge graph does not contain relevant information to determine the year Foreign reached its highest value in Carpenter Technology Corp's 2019 income before income taxes table.",
+      "latency_ms": 4976.01
+    },
+    {
+      "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
+      "ground_truth": "-8.1",
+      "answer": "",
+      "latency_ms": 9874.38
+    },
+    {
+      "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
+      "ground_truth": "-40.7",
+      "answer": "",
+      "latency_ms": 10196.83
+    },
+    {
+      "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
+      "ground_truth": "2018-08-12",
+      "answer": "",
+      "latency_ms": 10121.46
+    },
+    {
+      "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
+      "ground_truth": "4.173",
+      "answer": "",
+      "latency_ms": 10147.56
+    },
+    {
+      "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
+      "ground_truth": "-0.18",
+      "answer": "",
+      "latency_ms": 10117.38
+    },
+    {
+      "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
+      "ground_truth": "370.0",
+      "answer": "",
+      "latency_ms": 5318.95
+    },
+    {
+      "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
+      "ground_truth": "1125.0",
+      "answer": "",
+      "latency_ms": 5276.78
+    }
+  ]
+}

@@ -44,10 +44,6 @@ data/benchmarks/*
 *~
 .DS_Store
 
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-
 # Data directories (large files)
 data/raw/*
 data/processed/*
@@ -65,9 +61,7 @@ faiss_index/
 *.index
 
 # Results and logs
-results/metrics/*
 results/visualizations/*
-!results/metrics/.gitkeep
 !results/visualizations/.gitkeep
 logs/
 *.log
