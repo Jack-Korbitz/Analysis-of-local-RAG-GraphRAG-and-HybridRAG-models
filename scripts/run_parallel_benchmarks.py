@@ -36,7 +36,7 @@ class ParallelBenchmarkRunner:
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             result = client.generate(
                 prompt=example['question'],
-                max_tokens=200
+                max_tokens=500
             )
             
             if not result.get('success', False):
@@ -53,7 +53,7 @@ class ParallelBenchmarkRunner:
     
     def run_baseline(self):
         print("\n" + "="*60)
-        print("BASELINE BENCHMARK (PARALLEL)")
+        print("BASELINE BENCHMARK")
         print("="*60)
         
         start_time = time.time()
@@ -114,7 +114,7 @@ class ParallelBenchmarkRunner:
     
     def run_rag(self):
         print("\n" + "="*60)
-        print("VECTOR RAG BENCHMARK (IMPROVED V2 INDEXES)")
+        print("VECTOR RAG BENCHMARK")
         print("="*60)
         
         start_time = time.time()

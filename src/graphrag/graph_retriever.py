@@ -200,39 +200,50 @@ class GraphRetriever:
             })
             results.extend(records)
 
-        # Strategy 5: Document text search fallback (always runs when structured search fails)
-        if not results:
-            if company and entities['year']:
-                # Search for company documents filtered by year
-                cypher = """
-                MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
-                WHERE d.year = $year
-                RETURN c.name as company, d.text as text,
-                       d.year as year, 'document_search' as strategy
-                LIMIT $top_k
-                """
-                records = self.neo4j.query_graph(cypher, {
-                    'company': company,
-                    'year': entities['year'],
-                    'top_k': top_k
-                })
-                results.extend(records)
+        # Strategy 5: Document text — always appended when company is known.
+        # Structured metrics (S1-S4) only cover 23 canonical metrics; the raw document
+        # text contains the actual tables needed for most questions.
+        doc_results = []
+        if company and entities['year']:
+            cypher = """
+            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+            WHERE d.year = $year
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'document_search' as strategy
+            LIMIT 3
+            """
+            doc_results = self.neo4j.query_graph(cypher, {
+                'company': company,
+                'year': entities['year'],
+            })
 
-            if not results:
-                search_term = company or entities['metric_type'] or query[:50]
-                cypher = """
-                MATCH (d:Document)-[:ABOUT]->(c:Company)
-                WHERE toLower(d.text) CONTAINS toLower($search_term)
-                RETURN c.name as company, d.text as text,
-                       d.year as year, 'document_search' as strategy
-                LIMIT $top_k
-                """
-                records = self.neo4j.query_graph(cypher, {
-                    'search_term': search_term,
-                    'top_k': top_k
-                })
-                results.extend(records)
+        if not doc_results and company:
+            # Year not found or no year-filtered docs — get most recent docs
+            cypher = """
+            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'document_search' as strategy
+            ORDER BY d.year DESC
+            LIMIT 2
+            """
+            doc_results = self.neo4j.query_graph(cypher, {'company': company})
 
+        if not doc_results and not results:
+            # Last resort: full-text search
+            search_term = entities['metric_type'] or query[:50]
+            cypher = """
+            MATCH (d:Document)-[:ABOUT]->(c:Company)
+            WHERE toLower(d.text) CONTAINS toLower($search_term)
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'document_search' as strategy
+            LIMIT $top_k
+            """
+            doc_results = self.neo4j.query_graph(cypher, {
+                'search_term': search_term,
+                'top_k': top_k
+            })
+
+        results.extend(doc_results)
         return results
 
     def retrieve_documents_for_company(
@@ -314,7 +325,7 @@ class GraphRetriever:
                     f"Year: {record.get('year', 'Unknown')}"
                 )
                 context_parts.append(
-                    f"   Text: {record.get('text', '')[:500]}..."
+                    f"   Text: {record.get('text', '')[:1500]}"
                 )
 
         return "\n".join(context_parts)

@@ -89,14 +89,10 @@ def main():
     print("="*60)
     print("INDEX BUILDER")
     print("="*60)
-    print("\nBuilds RAG vector indexes and GraphRAG knowledge graph.")
-    print("Run this before running benchmarks.")
-    print("\n  RAG:      2000 examples per dataset, chunk size 300")
-    print("  GraphRAG: 2000 examples per dataset, rule-based extraction")
-    print("\nEstimated time: 15-20 minutes")
+   
 
     build_rag_indexes(datasets, max_examples=2000)
-    build_graphrag(datasets, max_examples=2000)
+    build_graphrag(datasets, max_examples=999999)  # use full dataset for graph building
 
     print("\n" + "="*60)
     print("INDEX BUILDING COMPLETE")

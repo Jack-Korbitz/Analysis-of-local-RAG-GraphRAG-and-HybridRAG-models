@@ -269,21 +269,15 @@ If no metrics found, return {{"metrics": []}}"""
                     value = float(match.replace(',', ''))
                     if 1900 <= value <= 2100:
                         continue
-                    
-                    if value > 100:
-                        value = value
-                    else:
-                        value = value * 1000
-                    
                     if value > 0:
                         metrics.append({
                             'name': metric_name,
-                            'value': value,
+                            'value': round(value, 2),
                             'unit': 'millions'
                         })
                 except ValueError:
                     continue
-        
+
         return metrics
     
     def _infer_unit_from_context(self, text: str, value: float) -> str:
@@ -314,6 +308,107 @@ If no metrics found, return {{"metrics": []}}"""
             return round(value * 1000, 2)
         else:
             return round(value, 2)
+
+    # Metric keyword map reused by multi-year parser
+    _TABLE_METRIC_MAP = {
+        'net revenue': 'net_revenue',
+        'total revenue': 'revenue',
+        'net sales': 'revenue',
+        'revenue': 'revenue',
+        'sales': 'revenue',
+        'net income': 'net_income',
+        'net earnings': 'net_income',
+        'net profit': 'net_income',
+        'interest expense': 'interest_expense',
+        'interest cost': 'interest_expense',
+        'total operating expenses': 'operating_expenses',
+        'operating expenses': 'operating_expenses',
+        'operating costs': 'operating_expenses',
+        'total assets': 'total_assets',
+        'cash and cash equivalents': 'cash_and_equivalents',
+        'cash and equivalents': 'cash_and_equivalents',
+        'depreciation': 'depreciation',
+        'capital expenditures': 'capital_expenditures',
+        'capital expenditure': 'capital_expenditures',
+        'gross profit': 'gross_profit',
+        'operating income': 'operating_income',
+        'cost of goods sold': 'cost_of_goods_sold',
+        'cost of sales': 'cost_of_goods_sold',
+        'cost of revenue': 'cost_of_goods_sold',
+    }
+
+    def parse_table_year_columns(self, text: str) -> list:
+        """
+        Parse markdown tables where column headers contain years.
+        Extracts (year, metric_name, value) for every year column found.
+        This gives multi-year coverage from a single document.
+        """
+        results = []
+        lines = [l for l in text.split('\n') if '|' in l]
+
+        if len(lines) < 2:
+            return results
+
+        # Find the first header row that contains at least one year
+        year_cols = {}   # col_index -> year
+        header_row_idx = None
+
+        for row_idx, line in enumerate(lines):
+            cells = [c.strip() for c in line.split('|')]
+            for col_idx, cell in enumerate(cells):
+                m = re.search(r'\b(19[9]\d|20[0-3]\d)\b', cell)
+                if m:
+                    year_cols[col_idx] = int(m.group())
+            if year_cols:
+                header_row_idx = row_idx
+                break
+
+        if not year_cols:
+            return results
+
+        # Parse data rows that follow the header
+        for line in lines[header_row_idx + 1:]:
+            # Skip separator rows (---|---|---)
+            if re.match(r'\|\s*[-:]+\s*\|', line):
+                continue
+
+            cells = [c.strip() for c in line.split('|')]
+
+            # First non-empty, non-separator cell is the metric label
+            metric_label = ''
+            for cell in cells:
+                if cell and not re.match(r'^[-:]+$', cell):
+                    metric_label = cell.lower()
+                    break
+
+            if not metric_label:
+                continue
+
+            # Map to canonical metric name (longest keyword match wins)
+            metric_name = None
+            best_len = 0
+            for keyword, canonical in self._TABLE_METRIC_MAP.items():
+                if keyword in metric_label and len(keyword) > best_len:
+                    metric_name = canonical
+                    best_len = len(keyword)
+
+            if not metric_name:
+                continue
+
+            # Extract value for each year column
+            for col_idx, year in year_cols.items():
+                if col_idx >= len(cells):
+                    continue
+                val_str = cells[col_idx].replace(',', '').replace('$', '').replace('(', '-').replace(')', '').strip()
+                try:
+                    val = float(val_str)
+                    if abs(val) < 0.01 or 1900 <= val <= 2100:
+                        continue
+                    results.append((year, metric_name, round(abs(val), 2)))
+                except ValueError:
+                    continue
+
+        return results
 
     def build_from_dataset(
         self,
@@ -396,6 +491,22 @@ If no metrics found, return {{"metrics": []}}"""
                                 'unit': metric.get('unit', 'unknown'),
                                 'source_doc': doc_id
                             }
+                        )
+                        metrics_created += 1
+                    except Exception:
+                        continue
+
+                # Multi-year extraction: parse year columns from table field (or context)
+                # This creates metrics for 2016/2017/2018 etc. from a single document
+                table_text = example.get('table', '') or context
+                for (metric_year, metric_name, metric_value) in self.parse_table_year_columns(table_text):
+                    try:
+                        self.neo4j.create_metric(
+                            name=metric_name,
+                            value=metric_value,
+                            year=metric_year,
+                            company=company,
+                            properties={'unit': 'millions', 'source_doc': doc_id}
                         )
                         metrics_created += 1
                     except Exception:
