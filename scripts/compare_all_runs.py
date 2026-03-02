@@ -1,4 +1,5 @@
 import sys
+import re
 import json
 from pathlib import Path
 
@@ -43,10 +44,10 @@ def aggregate_by_model(results_dict):
 
 
 def check_accuracy(answer, ground_truth):
-    import re
-
     answer_str = str(answer).lower()
-    gt_str = str(ground_truth).lower().replace('.0', '')
+    # Strip only trailing ".0" (e.g. "22929.0" → "22929").
+    # Do NOT use .replace('.0','') — that corrupts values like "-0.032..." → "-032..."
+    gt_str = re.sub(r'\.0$', '', str(ground_truth).lower())
 
     # Normalize: strip commas from numbers (41,932 → 41932)
     answer_norm = re.sub(r'(\d),(\d)', r'\1\2', answer_str)

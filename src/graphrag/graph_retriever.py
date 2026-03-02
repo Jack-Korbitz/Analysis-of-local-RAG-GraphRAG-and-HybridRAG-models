@@ -53,16 +53,26 @@ class GraphRetriever:
         query_lower = query.lower()
 
         metric_keywords = {
-            'interest_expense': ['interest expense', 'interest cost'],
-            'net_income': ['net income', 'net earnings', 'net profit'],
+            'interest_expense': ['interest expense', 'interest cost', 'interest paid'],
+            'net_income': ['net income', 'net earnings', 'net profit', 'net loss'],
             'net_revenue': ['net revenue'],
-            'revenue': ['revenue', 'revenues', 'net sales'],
-            'operating_expenses': ['operating expense', 'operating cost'],
-            'cash_and_equivalents': ['cash and cash equivalents', 'cash equivalent'],
+            'revenue': ['revenue', 'revenues', 'net sales', 'total sales', 'total revenue'],
+            'operating_expenses': ['operating expense', 'operating cost', 'operating expenditure', 'total operating'],
+            'cash_and_equivalents': ['cash and cash equivalents', 'cash equivalent', 'cash and investments'],
             'total_assets': ['total assets'],
-            'earnings_per_share': ['earnings per share', 'eps'],
-            'depreciation': ['depreciation'],
-            'capital_expenditures': ['capital expenditure', 'capex']
+            'earnings_per_share': ['earnings per share', 'eps', 'diluted eps', 'basic eps'],
+            'depreciation': ['depreciation', 'amortization', 'depreciation and amortization', 'd&a'],
+            'capital_expenditures': ['capital expenditure', 'capex', 'capital spending', 'purchases of property'],
+            'gross_profit': ['gross profit', 'gross margin', 'gross income'],
+            'operating_income': ['operating income', 'operating profit', 'income from operations'],
+            'stock_compensation': ['stock-based compensation', 'share-based compensation', 'stock compensation'],
+            'fuel_costs': ['fuel', 'fuel expense', 'fuel cost', 'aircraft fuel'],
+            'long_term_debt': ['long-term debt', 'long term debt', 'total debt'],
+            'available_for_sale': ['available-for-sale', 'available for sale'],
+            'tax_expense': ['income tax', 'tax expense', 'provision for income tax'],
+            'research_development': ['research and development', 'r&d', 'research & development'],
+            'cash_flow_operations': ['cash flow from operations', 'operating cash flow', 'net cash provided by operating'],
+            'dividends': ['dividends', 'dividend per share', 'dividends paid'],
         }
 
         for metric_name, keywords in metric_keywords.items():
@@ -127,9 +137,10 @@ class GraphRetriever:
         """
         entities = self.extract_query_entities(query)
         company = self.find_company_in_graph(query)
-        results = []
 
-        # Strategy 1: Company + Year + Metric lookup
+        # Strategy 1: Exact match — Company + Year + Metric.
+        # Return immediately if found: the answer is in the structured record,
+        # adding documents would only add noise.
         if company and entities['year'] and entities['metric_type']:
             cypher = """
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
@@ -146,28 +157,43 @@ class GraphRetriever:
                 'metric_type': entities['metric_type'],
                 'top_k': top_k
             })
-            results.extend(records)
+            if records:
+                return records
 
-        # Strategy 2: Company + Year lookup (all metrics)
-        if company and entities['year'] and not results:
+        # Strategy 2: Company + Year → go straight to document text.
+        # S1 failed, meaning the needed metric is not one of the 23 canonical types.
+        # Returning all S2 metrics (net_income, revenue, etc.) would add irrelevant
+        # numbers that anchor the LLM to the wrong values. Documents contain the
+        # full tables and are far more likely to hold the answer.
+        if company and entities['year']:
             cypher = """
-            MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
-            -[:FOR_YEAR]->(y:Year {value: $year})
-            RETURN DISTINCT c.name as company, m.name as metric,
-                   m.value as value, y.value as year,
-                   'company_year' as strategy
-            LIMIT $top_k
+            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+            WHERE d.year = $year
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'document_search' as strategy
+            LIMIT 3
             """
-            records = self.neo4j.query_graph(cypher, {
+            doc_results = self.neo4j.query_graph(cypher, {
                 'company': company,
                 'year': entities['year'],
-                'top_k': top_k
             })
-            results.extend(records)
+            if doc_results:
+                return doc_results
 
-        # Strategy 3: Company only (all years) - only when no year was in the query
-        # If a year was specified but not found, returning wrong-year data hurts accuracy
-        if company and not results and not entities['year']:
+        # Strategy 3: Company + most recent docs (no year in query or no year-filtered docs found)
+        if company and not entities['year']:
+            cypher = """
+            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'document_search' as strategy
+            ORDER BY d.year DESC
+            LIMIT 2
+            """
+            doc_results = self.neo4j.query_graph(cypher, {'company': company})
+            if doc_results:
+                return doc_results
+
+            # Also try structured metrics when no year specified
             cypher = """
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
             -[:FOR_YEAR]->(y:Year)
@@ -181,10 +207,11 @@ class GraphRetriever:
                 'company': company,
                 'top_k': top_k
             })
-            results.extend(records)
+            if records:
+                return records
 
-        # Strategy 4: Metric type only (all companies) - skip if year specified and unmet
-        if entities['metric_type'] and not results and not entities['year']:
+        # Strategy 4: Metric type only — no company identified
+        if entities['metric_type'] and not entities['year']:
             cypher = """
             MATCH (c:Company)-[:HAS_METRIC]->(m:Metric {name: $metric_type})
             -[:FOR_YEAR]->(y:Year)
@@ -198,53 +225,22 @@ class GraphRetriever:
                 'metric_type': entities['metric_type'],
                 'top_k': top_k
             })
-            results.extend(records)
+            if records:
+                return records
 
-        # Strategy 5: Document text — always appended when company is known.
-        # Structured metrics (S1-S4) only cover 23 canonical metrics; the raw document
-        # text contains the actual tables needed for most questions.
-        doc_results = []
-        if company and entities['year']:
-            cypher = """
-            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
-            WHERE d.year = $year
-            RETURN c.name as company, d.text as text,
-                   d.year as year, 'document_search' as strategy
-            LIMIT 3
-            """
-            doc_results = self.neo4j.query_graph(cypher, {
-                'company': company,
-                'year': entities['year'],
-            })
-
-        if not doc_results and company:
-            # Year not found or no year-filtered docs — get most recent docs
-            cypher = """
-            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
-            RETURN c.name as company, d.text as text,
-                   d.year as year, 'document_search' as strategy
-            ORDER BY d.year DESC
-            LIMIT 2
-            """
-            doc_results = self.neo4j.query_graph(cypher, {'company': company})
-
-        if not doc_results and not results:
-            # Last resort: full-text search
-            search_term = entities['metric_type'] or query[:50]
-            cypher = """
-            MATCH (d:Document)-[:ABOUT]->(c:Company)
-            WHERE toLower(d.text) CONTAINS toLower($search_term)
-            RETURN c.name as company, d.text as text,
-                   d.year as year, 'document_search' as strategy
-            LIMIT $top_k
-            """
-            doc_results = self.neo4j.query_graph(cypher, {
-                'search_term': search_term,
-                'top_k': top_k
-            })
-
-        results.extend(doc_results)
-        return results
+        # Strategy 5: Last resort full-text search
+        search_term = (company or entities['metric_type'] or query[:50])
+        cypher = """
+        MATCH (d:Document)-[:ABOUT]->(c:Company)
+        WHERE toLower(d.text) CONTAINS toLower($search_term)
+        RETURN c.name as company, d.text as text,
+               d.year as year, 'document_search' as strategy
+        LIMIT $top_k
+        """
+        return self.neo4j.query_graph(cypher, {
+            'search_term': search_term,
+            'top_k': top_k
+        })
 
     def retrieve_documents_for_company(
         self,
@@ -325,7 +321,7 @@ class GraphRetriever:
                     f"Year: {record.get('year', 'Unknown')}"
                 )
                 context_parts.append(
-                    f"   Text: {record.get('text', '')[:1500]}"
+                    f"   Text: {record.get('text', '')[:4000]}"
                 )
 
         return "\n".join(context_parts)

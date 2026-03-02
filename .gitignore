@@ -28,6 +28,9 @@ wheels/
 .env.local
 *.env
 
+# Claude Code
+.claude/
+
 # Data directories (large files)
 data/raw/*
 data/processed/*
@@ -43,12 +46,6 @@ data/benchmarks/*
 *.swo
 *~
 .DS_Store
-
-# Data directories (large files)
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
 
 # Neo4j data
 neo4j/data/
