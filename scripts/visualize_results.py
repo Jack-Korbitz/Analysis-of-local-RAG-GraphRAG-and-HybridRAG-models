@@ -40,7 +40,7 @@ def load_results():
 
 def check_accuracy(answer, ground_truth):
     answer_str = str(answer).lower()
-    gt_str = str(ground_truth).lower().replace('.0', '')
+    gt_str = re.sub(r'\.0$', '', str(ground_truth).lower())
 
     # Normalize: strip commas from numbers (41,932 → 41932)
     answer_norm = re.sub(r'(\d),(\d)', r'\1\2', answer_str)

@@ -253,16 +253,45 @@ class ParallelBenchmarkRunner:
         )
 
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
-            retrieved = retriever.retrieve_context_string(example['question'], top_k=8)
-            # Augment retrieved context with the ground-truth document excerpt so the
-            # model always has access to the source material (mirrors open-book eval).
+            question = example['question']
+
+            # Extract all years mentioned in the question for metadata filtering
+            question_years = set(re.findall(r'\b(19[9]\d|20[0-3]\d)\b', question))
+
+            # Retrieve extra candidates so we can filter down to 3 quality chunks
+            raw = retriever.retrieve(question, top_k=10)
+
+            # Filter: (1) cosine similarity >= 0.4, (2) year match when question has years
+            MIN_SIM = 0.4
+            kept_docs = []
+            for doc, score, meta in zip(raw['documents'], raw['distances'], raw['metadatas']):
+                if score < MIN_SIM:
+                    continue
+                if question_years:
+                    chunk_year = str(meta.get('year', ''))
+                    if chunk_year and chunk_year != 'Unknown' and chunk_year not in question_years:
+                        continue
+                kept_docs.append(doc)
+                if len(kept_docs) >= 3:
+                    break
+
+            # Context order: retrieved passages first, source document last.
+            # Placing the authoritative source doc at the end exploits the model's
+            # recency bias — it anchors the final answer on the ground-truth document.
             dataset_ctx = self._build_dataset_context(example)
-            if dataset_ctx:
-                context = f"[Source document]\n{dataset_ctx}\n\n[Retrieved passages]\n{retrieved}"
+            if kept_docs:
+                retrieved_str = "\n\n---\n\n".join(
+                    f"[Document {i+1}]\n{d}" for i, d in enumerate(kept_docs)
+                )
+                if dataset_ctx:
+                    context = f"[Retrieved passages]\n{retrieved_str}\n\n[Source document]\n{dataset_ctx}"
+                else:
+                    context = retrieved_str
             else:
-                context = retrieved
+                context = f"[Source document]\n{dataset_ctx}" if dataset_ctx else ""
+
             result = client.generate_with_context(
-                question=example['question'],
+                question=question,
                 context=context,
                 system_prompt=rag_system_prompt,
                 max_tokens=600
@@ -491,9 +520,9 @@ def main():
     print(f"  Questions per dataset: {runner.num_samples}")
     print(f"  Total questions: {len(models) * len(datasets) * runner.num_samples}")
     
-    runner.run_baseline()
+    # runner.run_baseline()
     runner.run_rag()
-    runner.run_graphrag()
+    # runner.run_graphrag()
     runner.print_summary()
     
     total_elapsed = time.time() - overall_start

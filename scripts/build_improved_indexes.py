@@ -25,7 +25,7 @@ def build_rag_indexes(datasets, max_examples=2000):
         examples = dataset[split].select(range(min(max_examples, len(dataset[split]))))
 
         print(f"Chunking {len(examples)} documents...")
-        chunker = DocumentChunker(chunk_size=300, chunk_overlap=75)
+        chunker = DocumentChunker(chunk_size=600, chunk_overlap=100)
         chunks = chunker.chunk_dataset_contexts(list(examples))
 
         unique_chunks = {}
