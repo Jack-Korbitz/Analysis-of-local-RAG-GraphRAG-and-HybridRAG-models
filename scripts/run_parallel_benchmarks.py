@@ -109,7 +109,7 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
 # docker ps
 
 class ParallelBenchmarkRunner:
-    def __init__(self, models, datasets, num_samples=20, max_workers=3):
+    def __init__(self, models, datasets, num_samples=100, max_workers=3):
         self.models = models
         self.datasets = datasets
         self.num_samples = num_samples
@@ -504,7 +504,7 @@ def main():
     runner = ParallelBenchmarkRunner(
         models, 
         datasets, 
-        num_samples=20,
+        num_samples=100,
         max_workers=3
     )
     
@@ -520,9 +520,9 @@ def main():
     print(f"  Questions per dataset: {runner.num_samples}")
     print(f"  Total questions: {len(models) * len(datasets) * runner.num_samples}")
     
-    # runner.run_baseline()
+    runner.run_baseline()
     runner.run_rag()
-    # runner.run_graphrag()
+    runner.run_graphrag()
     runner.print_summary()
     
     total_elapsed = time.time() - overall_start
