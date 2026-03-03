@@ -5,140 +5,140 @@
       "ground_truth": "3.8",
       "answer": "2.34%",
       "correct": false,
-      "latency_ms": 11707.06
+      "latency_ms": 10865.73
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
       "answer": "0.53",
       "correct": false,
-      "latency_ms": 427.38
+      "latency_ms": 396.59
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
       "answer": "23.6%",
       "correct": false,
-      "latency_ms": 466.08
+      "latency_ms": 425.47
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
       "answer": "0.54",
       "correct": false,
-      "latency_ms": 15896.63
+      "latency_ms": 14246.68
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
-      "answer": "-3.5%",
+      "answer": "-4.5%",
       "correct": false,
-      "latency_ms": 405.43
+      "latency_ms": 369.03
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
       "answer": "-1.8%",
       "correct": false,
-      "latency_ms": 598.58
+      "latency_ms": 562.4
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
       "answer": "0.375",
       "correct": false,
-      "latency_ms": 18795.29
+      "latency_ms": 17423.14
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
       "answer": "157%",
       "correct": false,
-      "latency_ms": 395.88
+      "latency_ms": 356.31
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
       "answer": "-11%",
       "correct": false,
-      "latency_ms": 505.2
+      "latency_ms": 463.11
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
       "answer": "0.8",
       "correct": false,
-      "latency_ms": 18944.77
+      "latency_ms": 17370.59
     },
     {
       "question": "What is the change in net assets of the General Mills Savings Plan from May 27, 2007, to May 25, 2008?",
       "ground_truth": "6.900000000000091",
       "answer": "-0.6 million",
       "correct": false,
-      "latency_ms": 507.12
+      "latency_ms": 453.8
     },
     {
       "question": "What is the total of home equity lines of credit in millions for both interest-only products and principal and interest products as of December 31, 2012?",
       "ground_truth": "22929.0",
       "answer": "15553 + 7376 = 22929",
-      "correct": false,
-      "latency_ms": 557.77
+      "correct": true,
+      "latency_ms": 520.96
     },
     {
       "question": "What percentage of the total reorganization items net for American Airlines Group in 2013 is attributed to labor-related deemed claims, which were provided to employees in exchange for their contributions to the successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.6527306967984934",
       "answer": "0.065",
       "correct": false,
-      "latency_ms": 19089.85
+      "latency_ms": 17360.15
     },
     {
       "question": "What is the percentage change in Entergy Texas, Inc.'s net revenue from $442.3 million in 2007 to $440.9 million in 2008, as reported in the company's 2008 financial discussion and analysis?",
       "ground_truth": "-0.003165272439520764",
       "answer": "-0.2%",
       "correct": false,
-      "latency_ms": 417.8
+      "latency_ms": 390.44
     },
     {
       "question": "In the 2014 annual report of Goldman Sachs, what percentage of total net revenues for the Investing & Lending segment in 2013 was attributed to debt securities and loans?",
       "ground_truth": "0.2774294670846395",
       "answer": "0.31",
       "correct": false,
-      "latency_ms": 435.59
+      "latency_ms": 430.02
     },
     {
       "question": "What percentage of American Airlines Group's total reorganization items, net, for the year ended December 31, 2013, consisted of labor-related deemed claims, which were provided to employees in exchange for their contributions to the company's successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.656439393939394",
       "answer": "0.65%",
       "correct": true,
-      "latency_ms": 16815.59
+      "latency_ms": 16774.97
     },
     {
       "question": "What percentage of Skyworks Solutions' total contractual payment obligations, as outlined in the 2011 annual report, was attributed to operating lease obligations, considering the total contractual payment obligations amounted to $186,792,000 and the operating lease obligations totaled $37,788,000?",
       "ground_truth": "0.20229988436335603",
       "answer": "0.202 or 20.2%",
       "correct": true,
-      "latency_ms": 458.55
+      "latency_ms": 454.43
     },
     {
       "question": "What percentage of WestRock Company's total long-term debt, including the current portion but excluding capital lease obligations, was scheduled to be paid in fiscal 2019, based on the contractual obligations table in the 2018 report?",
       "ground_truth": "0.12031793343268754",
-      "answer": "0.81%",
+      "answer": "0.08%",
       "correct": false,
-      "latency_ms": 474.46
+      "latency_ms": 467.59
     },
     {
       "question": "As of December 30, 2017, what percentage of Kraft Heinz's 83 manufacturing and processing facilities were leased?",
       "ground_truth": "0.03614457831325301",
       "answer": "3%",
       "correct": false,
-      "latency_ms": 17639.25
+      "latency_ms": 17657.35
     },
     {
       "question": "What percentage of the $439 million gain from the sale of Clearwire Corporation shares and Clearwire Communications, LLC interest, which was accounted for as available-for-sale marketable equity securities and an equity method investment, respectively, was recognized in the equity investments, net on Intel's consolidated statements of income for the year 2013?",
       "ground_truth": "0.9340425531914893",
       "answer": "7%",
       "correct": false,
-      "latency_ms": 348.31
+      "latency_ms": 368.21
     }
   ],
   "llama3.1:8b_convfinqa": [
@@ -147,140 +147,140 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 434.25
+      "latency_ms": 450.66
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 16955.28
+      "latency_ms": 15002.81
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 413.89
+      "latency_ms": 423.34
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
-      "answer": "-12.5%",
+      "answer": "-14.5%",
       "correct": false,
-      "latency_ms": 332.83
+      "latency_ms": 338.79
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
       "answer": "-11.51%",
       "correct": false,
-      "latency_ms": 17364.89
+      "latency_ms": 17427.38
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
       "answer": "2530454",
       "correct": true,
-      "latency_ms": 449.18
+      "latency_ms": 467.66
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "-1.5B",
       "correct": false,
-      "latency_ms": 496.22
+      "latency_ms": 487.09
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "$118 - $102 = $16",
-      "correct": false,
-      "latency_ms": 17575.14
+      "correct": true,
+      "latency_ms": 17507.18
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
       "answer": "27729",
       "correct": true,
-      "latency_ms": 489.34
+      "latency_ms": 461.57
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 480.91
+      "latency_ms": 492.44
     },
     {
       "question": "What was the total foreign currency transaction loss for AES Corporation in 2015, in millions?",
       "ground_truth": "-31.0",
       "answer": "-31",
       "correct": true,
-      "latency_ms": 15699.58
+      "latency_ms": 15474.4
     },
     {
       "question": "What is the difference between Entergy Mississippi, Inc.'s net revenue in 2008 and 2007, as reported in the 2008 Management's Financial Discussion and Analysis?",
       "ground_truth": "11.9",
       "answer": "$12.6 million",
       "correct": false,
-      "latency_ms": 335.97
+      "latency_ms": 338.59
     },
     {
       "question": "What is the number of Class B common stock shares issued on July 3, 2017, as a result of the business combination, multiplied by 1000?",
       "ground_truth": "1250.0",
       "answer": "717111 * 1000 = 717,111,000",
       "correct": false,
-      "latency_ms": 527.85
+      "latency_ms": 542.54
     },
     {
       "question": "What is the total amount available, in billions, under the committed credit facilities for AES subsidiaries as of December 31, 2011, including both facilities under construction and available revolving credit lines?",
       "ground_truth": "2.6",
       "answer": "2.4",
       "correct": false,
-      "latency_ms": 18773.44
+      "latency_ms": 16897.32
     },
     {
       "question": "What was the cumulative total return value of the KBW Bank Index at the end of 2016, as compared to the $100 initial investment in JPMorgan Chase & Co.'s 2016 Annual Report?",
       "ground_truth": "258.82",
       "answer": "258.82",
       "correct": true,
-      "latency_ms": 359.1
+      "latency_ms": 346.24
     },
     {
       "question": "What was the weighted average useful life for Adobe Inc.'s trademarks in 2018?",
       "ground_truth": "9.0",
       "answer": "9",
       "correct": true,
-      "latency_ms": 378.3
+      "latency_ms": 387.24
     },
     {
       "question": "What was the impact of total net charge-offs on the balance of the allowance for loan and lease losses at PNC Financial Services in 2014?",
       "ground_truth": "531.0",
       "answer": "-531",
       "correct": false,
-      "latency_ms": 506.43
+      "latency_ms": 17741.52
     },
     {
       "question": "What is the net change in value of the balance of asset allocation from 2016 to 2017 for BlackRock's multi-asset products?",
       "ground_truth": "19870.0",
-      "answer": "$17387",
-      "correct": false,
-      "latency_ms": 18179.82
+      "answer": "$196545 - $176675 = $19970",
+      "correct": true,
+      "latency_ms": 614.9
     },
     {
       "question": "What was the compensation expense recorded by Huntington Ingalls Industries for the year ended December 31, 2015, related to stock awards?",
       "ground_truth": "43.0",
       "answer": "$34 million",
       "correct": false,
-      "latency_ms": 388.86
+      "latency_ms": 17589.92
     },
     {
       "question": "What is the aggregate sum of American Tower's expected principal payments for long-term debt in 2003 and 2004?",
       "ground_truth": "399758.0",
       "answer": "268496 + 131262 = 399758",
-      "correct": false,
-      "latency_ms": 498.14
+      "correct": true,
+      "latency_ms": 483.84
     }
   ],
   "gemma3:12b_finqa": [
@@ -289,140 +289,140 @@
       "ground_truth": "3.8",
       "answer": "3.8",
       "correct": true,
-      "latency_ms": 17495.47
+      "latency_ms": 16235.89
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
       "answer": "3.3",
       "correct": false,
-      "latency_ms": 17013.63
+      "latency_ms": 15265.48
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
       "answer": "41880",
       "correct": true,
-      "latency_ms": 19773.81
+      "latency_ms": 18267.22
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
       "answer": "18086",
       "correct": false,
-      "latency_ms": 20024.14
+      "latency_ms": 18364.68
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
       "answer": "-7.1",
       "correct": false,
-      "latency_ms": 19521.29
+      "latency_ms": 18143.73
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
       "answer": "17.44",
       "correct": false,
-      "latency_ms": 18169.64
+      "latency_ms": 18138.71
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
       "answer": "0.4",
       "correct": false,
-      "latency_ms": 18013.5
+      "latency_ms": 18078.56
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
       "answer": "157",
       "correct": false,
-      "latency_ms": 17805.51
+      "latency_ms": 15874.82
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
       "answer": "34.8",
       "correct": false,
-      "latency_ms": 18467.29
+      "latency_ms": 18572.95
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
       "answer": "0.8",
       "correct": false,
-      "latency_ms": 18728.23
+      "latency_ms": 18335.61
     },
     {
       "question": "What is the change in net assets of the General Mills Savings Plan from May 27, 2007, to May 25, 2008?",
       "ground_truth": "6.900000000000091",
       "answer": "-3.9",
       "correct": false,
-      "latency_ms": 16708.58
+      "latency_ms": 16529.37
     },
     {
       "question": "What is the total of home equity lines of credit in millions for both interest-only products and principal and interest products as of December 31, 2012?",
       "ground_truth": "22929.0",
       "answer": "15553",
       "correct": false,
-      "latency_ms": 20138.99
+      "latency_ms": 17750.28
     },
     {
       "question": "What percentage of the total reorganization items net for American Airlines Group in 2013 is attributed to labor-related deemed claims, which were provided to employees in exchange for their contributions to the successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.6527306967984934",
       "answer": "1733/2655",
       "correct": false,
-      "latency_ms": 19024.3
+      "latency_ms": 18402.35
     },
     {
       "question": "What is the percentage change in Entergy Texas, Inc.'s net revenue from $442.3 million in 2007 to $440.9 million in 2008, as reported in the company's 2008 financial discussion and analysis?",
       "ground_truth": "-0.003165272439520764",
       "answer": "-0.27",
       "correct": false,
-      "latency_ms": 12031.54
+      "latency_ms": 18123.42
     },
     {
       "question": "In the 2014 annual report of Goldman Sachs, what percentage of total net revenues for the Investing & Lending segment in 2013 was attributed to debt securities and loans?",
       "ground_truth": "0.2774294670846395",
       "answer": "2165",
       "correct": false,
-      "latency_ms": 1470.98
+      "latency_ms": 13189.96
     },
     {
       "question": "What percentage of American Airlines Group's total reorganization items, net, for the year ended December 31, 2013, consisted of labor-related deemed claims, which were provided to employees in exchange for their contributions to the company's successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.656439393939394",
       "answer": "1733/2640",
       "correct": false,
-      "latency_ms": 1378.45
+      "latency_ms": 1402.35
     },
     {
       "question": "What percentage of Skyworks Solutions' total contractual payment obligations, as outlined in the 2011 annual report, was attributed to operating lease obligations, considering the total contractual payment obligations amounted to $186,792,000 and the operating lease obligations totaled $37,788,000?",
       "ground_truth": "0.20229988436335603",
       "answer": "20.2",
       "correct": false,
-      "latency_ms": 1335.57
+      "latency_ms": 1350.85
     },
     {
       "question": "What percentage of WestRock Company's total long-term debt, including the current portion but excluding capital lease obligations, was scheduled to be paid in fiscal 2019, based on the contractual obligations table in the 2018 report?",
       "ground_truth": "0.12031793343268754",
       "answer": "7.3",
       "correct": false,
-      "latency_ms": 1253.22
+      "latency_ms": 1261.67
     },
     {
       "question": "As of December 30, 2017, what percentage of Kraft Heinz's 83 manufacturing and processing facilities were leased?",
       "ground_truth": "0.03614457831325301",
       "answer": "3",
       "correct": false,
-      "latency_ms": 1155.14
+      "latency_ms": 1168.5
     },
     {
       "question": "What percentage of the $439 million gain from the sale of Clearwire Corporation shares and Clearwire Communications, LLC interest, which was accounted for as available-for-sale marketable equity securities and an equity method investment, respectively, was recognized in the equity investments, net on Intel's consolidated statements of income for the year 2013?",
       "ground_truth": "0.9340425531914893",
       "answer": "100",
       "correct": false,
-      "latency_ms": 1373.25
+      "latency_ms": 1374.31
     }
   ],
   "qwen3:8b_finqa": [
@@ -431,140 +431,140 @@
       "ground_truth": "3.8",
       "answer": "",
       "correct": false,
-      "latency_ms": 7394.47
+      "latency_ms": 6840.53
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
-      "answer": "3.3  \nThe stock-based compensation expense of $3.3 million exceeds the total fair value of vested restricted stock and units in 2012 ($1.5 million).",
+      "answer": "3.3  \n1.5  \n\nThe $3.3 million stock-based compensation expense exceeds the $1.5 million total fair value of vested shares.",
       "correct": false,
-      "latency_ms": 16833.01
+      "latency_ms": 15125.87
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
       "answer": "",
       "correct": false,
-      "latency_ms": 19847.02
+      "latency_ms": 18434.52
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
       "answer": "",
       "correct": false,
-      "latency_ms": 19884.62
+      "latency_ms": 18197.71
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
       "answer": "",
       "correct": false,
-      "latency_ms": 20173.31
+      "latency_ms": 18310.82
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
       "answer": "56.25",
       "correct": false,
-      "latency_ms": 17954.36
+      "latency_ms": 17611.78
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
       "answer": "",
       "correct": false,
-      "latency_ms": 18626.72
+      "latency_ms": 18644.72
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
       "answer": "157",
       "correct": false,
-      "latency_ms": 17827.56
+      "latency_ms": 15899.54
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
       "answer": "",
       "correct": false,
-      "latency_ms": 18157.97
+      "latency_ms": 18249.1
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
       "answer": "",
       "correct": false,
-      "latency_ms": 18457.36
+      "latency_ms": 18455.39
     },
     {
       "question": "What is the change in net assets of the General Mills Savings Plan from May 27, 2007, to May 25, 2008?",
       "ground_truth": "6.900000000000091",
       "answer": "6.9",
       "correct": true,
-      "latency_ms": 16638.36
+      "latency_ms": 16397.16
     },
     {
       "question": "What is the total of home equity lines of credit in millions for both interest-only products and principal and interest products as of December 31, 2012?",
       "ground_truth": "22929.0",
       "answer": "22929",
       "correct": true,
-      "latency_ms": 19770.18
+      "latency_ms": 17851.95
     },
     {
       "question": "What percentage of the total reorganization items net for American Airlines Group in 2013 is attributed to labor-related deemed claims, which were provided to employees in exchange for their contributions to the successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.6527306967984934",
       "answer": "",
       "correct": false,
-      "latency_ms": 19374.24
+      "latency_ms": 18425.95
     },
     {
       "question": "What is the percentage change in Entergy Texas, Inc.'s net revenue from $442.3 million in 2007 to $440.9 million in 2008, as reported in the company's 2008 financial discussion and analysis?",
       "ground_truth": "-0.003165272439520764",
       "answer": "",
       "correct": false,
-      "latency_ms": 18608.5
+      "latency_ms": 18357.48
     },
     {
       "question": "In the 2014 annual report of Goldman Sachs, what percentage of total net revenues for the Investing & Lending segment in 2013 was attributed to debt securities and loans?",
       "ground_truth": "0.2774294670846395",
       "answer": "",
       "correct": false,
-      "latency_ms": 27169.95
+      "latency_ms": 18164.38
     },
     {
       "question": "What percentage of American Airlines Group's total reorganization items, net, for the year ended December 31, 2013, consisted of labor-related deemed claims, which were provided to employees in exchange for their contributions to the company's successful reorganization, including reductions in pay and benefits?",
       "ground_truth": "0.656439393939394",
-      "answer": "",
+      "answer": "65.64",
       "correct": false,
-      "latency_ms": 10107.77
+      "latency_ms": 24613.59
     },
     {
       "question": "What percentage of Skyworks Solutions' total contractual payment obligations, as outlined in the 2011 annual report, was attributed to operating lease obligations, considering the total contractual payment obligations amounted to $186,792,000 and the operating lease obligations totaled $37,788,000?",
       "ground_truth": "0.20229988436335603",
       "answer": "",
       "correct": false,
-      "latency_ms": 11237.97
+      "latency_ms": 9978.96
     },
     {
       "question": "What percentage of WestRock Company's total long-term debt, including the current portion but excluding capital lease obligations, was scheduled to be paid in fiscal 2019, based on the contractual obligations table in the 2018 report?",
       "ground_truth": "0.12031793343268754",
       "answer": "",
       "correct": false,
-      "latency_ms": 11804.42
+      "latency_ms": 11049.71
     },
     {
       "question": "As of December 30, 2017, what percentage of Kraft Heinz's 83 manufacturing and processing facilities were leased?",
       "ground_truth": "0.03614457831325301",
       "answer": "",
       "correct": false,
-      "latency_ms": 10967.57
+      "latency_ms": 11372.24
     },
     {
       "question": "What percentage of the $439 million gain from the sale of Clearwire Corporation shares and Clearwire Communications, LLC interest, which was accounted for as available-for-sale marketable equity securities and an equity method investment, respectively, was recognized in the equity investments, net on Intel's consolidated statements of income for the year 2013?",
       "ground_truth": "0.9340425531914893",
       "answer": "100",
       "correct": false,
-      "latency_ms": 9255.8
+      "latency_ms": 7830.2
     }
   ],
   "llama3.1:8b_tatqa": [
@@ -573,140 +573,140 @@
       "ground_truth": "216.0",
       "answer": "216.0",
       "correct": true,
-      "latency_ms": 11192.31
+      "latency_ms": 13150.63
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
       "answer": "140.3",
       "correct": true,
-      "latency_ms": 251.01
+      "latency_ms": 232.21
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
       "answer": "19",
       "correct": false,
-      "latency_ms": 293.28
+      "latency_ms": 283.41
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
       "answer": "11.8 - 19.9 = -8.1",
-      "correct": false,
-      "latency_ms": 14963.59
+      "correct": true,
+      "latency_ms": 14619.74
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
       "answer": "11.8 / 19.9 = 0.59 or 59% decrease",
       "correct": false,
-      "latency_ms": 405.08
+      "latency_ms": 398.29
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
       "answer": "April 2018",
       "correct": false,
-      "latency_ms": 17835.3
+      "latency_ms": 14828.69
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
       "answer": "4.350%",
       "correct": false,
-      "latency_ms": 273.67
+      "latency_ms": 254.35
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
       "answer": "0.649%",
       "correct": false,
-      "latency_ms": 264.28
+      "latency_ms": 274.09
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "0.378",
       "correct": false,
-      "latency_ms": 15253.99
+      "latency_ms": 17727.4
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
       "answer": "2,250",
       "correct": false,
-      "latency_ms": 291.9
+      "latency_ms": 290.72
     },
     {
       "question": "What was the total revenue for VMware in the year ended January 31, 2020?",
       "ground_truth": "777.0",
       "answer": "777",
       "correct": true,
-      "latency_ms": 337.19
+      "latency_ms": 341.42
     },
     {
       "question": "What was VMware's net income for the year ended February 2, 2018?",
       "ground_truth": "234.0",
       "answer": "-0.56",
       "correct": false,
-      "latency_ms": 17621.81
+      "latency_ms": 14617.34
     },
     {
       "question": "What was the change in total revenue between 2018 and 2019 for VMware-inc?",
       "ground_truth": "165.0",
       "answer": "5%",
       "correct": false,
-      "latency_ms": 201.83
+      "latency_ms": 195.02
     },
     {
       "question": "In the consolidated statements of income for vmware-inc, for how many years did the total revenue exceed $500 million between February 2, 2018, and January 31, 2020?",
       "ground_truth": "2.0",
       "answer": "3",
       "correct": false,
-      "latency_ms": 246.37
+      "latency_ms": 235.67
     },
     {
       "question": "What was the percentage change in VMware's net income from $(832) million in 2019 to $(204) million in 2020?",
       "ground_truth": "-75.48",
-      "answer": "-44.6%",
+      "answer": "-34.5%",
       "correct": false,
-      "latency_ms": 15816.04
+      "latency_ms": 17679.23
     },
     {
       "question": "What were the total operating revenues for the year 2019 as reported in BCE Inc.'s 2019 Annual Report",
       "ground_truth": "23964.0",
       "answer": "23,964",
       "correct": true,
-      "latency_ms": 441.95
+      "latency_ms": 408.85
     },
     {
       "question": "How many types of services does BCE Inc. offer according to its 2019 Annual Report?",
       "ground_truth": "5.0",
       "answer": "5 \n\n(Wireless, Wireline data, Wireline voice, Media, Other wireline services)",
       "correct": true,
-      "latency_ms": 388.9
+      "latency_ms": 14960.66
     },
     {
       "question": "What is the average annual Total services revenue for BCE Inc. in the years 2018 and 2019?",
       "ground_truth": "20589.0",
       "answer": "20,439",
       "correct": true,
-      "latency_ms": 19573.27
+      "latency_ms": 242.05
     },
     {
       "question": "What was the total value of long-lived assets for Extreme Networks Inc. as of June 30, 2019?",
       "ground_truth": "176308.0",
       "answer": "176,308",
       "correct": true,
-      "latency_ms": 387.41
+      "latency_ms": 17585.7
     },
     {
       "question": "In what year did the long-lived assets in the Americas region exceed $150,000 thousand, according to the geographic distribution of long-lived assets for Extreme Networks Inc. in its 2019 report?",
       "ground_truth": "1.0",
       "answer": "2018",
       "correct": false,
-      "latency_ms": 253.2
+      "latency_ms": 235.5
     }
   ],
   "gemma3:12b_convfinqa": [
@@ -715,140 +715,140 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 17703.35
+      "latency_ms": 17244.77
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 1321.11
+      "latency_ms": 1356.89
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 1414.5
+      "latency_ms": 1434.16
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
       "answer": "-23.9",
       "correct": true,
-      "latency_ms": 1185.43
+      "latency_ms": 1196.6
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
       "answer": "91.06",
       "correct": false,
-      "latency_ms": 1291.81
+      "latency_ms": 1308.58
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
       "answer": "2530454",
       "correct": true,
-      "latency_ms": 1393.87
+      "latency_ms": 1410.07
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "4.1",
       "correct": false,
-      "latency_ms": 1381.03
+      "latency_ms": 1311.35
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "16",
       "correct": true,
-      "latency_ms": 75602.25
+      "latency_ms": 62413.05
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
       "answer": "27729",
       "correct": true,
-      "latency_ms": 15449.21
+      "latency_ms": 15096.93
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 18205.05
+      "latency_ms": 15180.24
     },
     {
       "question": "What was the total foreign currency transaction loss for AES Corporation in 2015, in millions?",
       "ground_truth": "-31.0",
       "answer": "-31",
       "correct": true,
-      "latency_ms": 15869.22
+      "latency_ms": 18313.38
     },
     {
       "question": "What is the difference between Entergy Mississippi, Inc.'s net revenue in 2008 and 2007, as reported in the 2008 Management's Financial Discussion and Analysis?",
       "ground_truth": "11.9",
       "answer": "10.",
       "correct": false,
-      "latency_ms": 18292.99
+      "latency_ms": 15305.21
     },
     {
       "question": "What is the number of Class B common stock shares issued on July 3, 2017, as a result of the business combination, multiplied by 1000?",
       "ground_truth": "1250.0",
       "answer": "717111",
       "correct": false,
-      "latency_ms": 16288.84
+      "latency_ms": 18126.58
     },
     {
       "question": "What is the total amount available, in billions, under the committed credit facilities for AES subsidiaries as of December 31, 2011, including both facilities under construction and available revolving credit lines?",
       "ground_truth": "2.6",
       "answer": "2.6",
       "correct": true,
-      "latency_ms": 19621.43
+      "latency_ms": 15264.59
     },
     {
       "question": "What was the cumulative total return value of the KBW Bank Index at the end of 2016, as compared to the $100 initial investment in JPMorgan Chase & Co.'s 2016 Annual Report?",
       "ground_truth": "258.82",
       "answer": "258.82",
       "correct": true,
-      "latency_ms": 19467.39
+      "latency_ms": 17984.02
     },
     {
       "question": "What was the weighted average useful life for Adobe Inc.'s trademarks in 2018?",
       "ground_truth": "9.0",
       "answer": "9",
       "correct": true,
-      "latency_ms": 1205.99
+      "latency_ms": 16073.65
     },
     {
       "question": "What was the impact of total net charge-offs on the balance of the allowance for loan and lease losses at PNC Financial Services in 2014?",
       "ground_truth": "531.0",
       "answer": "-531",
       "correct": false,
-      "latency_ms": 1556.99
+      "latency_ms": 1468.32
     },
     {
       "question": "What is the net change in value of the balance of asset allocation from 2016 to 2017 for BlackRock's multi-asset products?",
       "ground_truth": "19870.0",
       "answer": "49560",
       "correct": false,
-      "latency_ms": 1482.35
+      "latency_ms": 1565.72
     },
     {
       "question": "What was the compensation expense recorded by Huntington Ingalls Industries for the year ended December 31, 2015, related to stock awards?",
       "ground_truth": "43.0",
       "answer": "44",
       "correct": false,
-      "latency_ms": 1224.24
+      "latency_ms": 1147.02
     },
     {
       "question": "What is the aggregate sum of American Tower's expected principal payments for long-term debt in 2003 and 2004?",
       "ground_truth": "399758.0",
       "answer": "400",
       "correct": false,
-      "latency_ms": 1504.03
+      "latency_ms": 1267.68
     }
   ],
   "qwen3:8b_convfinqa": [
@@ -857,140 +857,140 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 9145.71
+      "latency_ms": 9047.69
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 9917.58
+      "latency_ms": 7991.27
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 11185.56
+      "latency_ms": 10951.22
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
       "answer": "-24.05",
       "correct": true,
-      "latency_ms": 11721.17
+      "latency_ms": 11489.97
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
       "answer": "-8.94",
       "correct": true,
-      "latency_ms": 11276.18
+      "latency_ms": 10920.6
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
       "answer": "2530454",
       "correct": true,
-      "latency_ms": 12100.14
+      "latency_ms": 9417.03
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "0.5",
       "correct": true,
-      "latency_ms": 7389.6
+      "latency_ms": 13796.87
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "16",
       "correct": true,
-      "latency_ms": 14171.46
+      "latency_ms": 15198.33
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
-      "answer": "27729",
-      "correct": true,
-      "latency_ms": 18260.43
+      "answer": "",
+      "correct": false,
+      "latency_ms": 18347.23
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 15916.35
+      "latency_ms": 15575.12
     },
     {
       "question": "What was the total foreign currency transaction loss for AES Corporation in 2015, in millions?",
       "ground_truth": "-31.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 18542.5
+      "latency_ms": 17862.03
     },
     {
       "question": "What is the difference between Entergy Mississippi, Inc.'s net revenue in 2008 and 2007, as reported in the 2008 Management's Financial Discussion and Analysis?",
       "ground_truth": "11.9",
       "answer": "11.9",
       "correct": true,
-      "latency_ms": 15998.04
+      "latency_ms": 15343.0
     },
     {
       "question": "What is the number of Class B common stock shares issued on July 3, 2017, as a result of the business combination, multiplied by 1000?",
       "ground_truth": "1250.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 19027.14
+      "latency_ms": 17921.67
     },
     {
       "question": "What is the total amount available, in billions, under the committed credit facilities for AES subsidiaries as of December 31, 2011, including both facilities under construction and available revolving credit lines?",
       "ground_truth": "2.6",
       "answer": "2.6",
       "correct": true,
-      "latency_ms": 18714.18
+      "latency_ms": 15658.31
     },
     {
       "question": "What was the cumulative total return value of the KBW Bank Index at the end of 2016, as compared to the $100 initial investment in JPMorgan Chase & Co.'s 2016 Annual Report?",
       "ground_truth": "258.82",
       "answer": "258.82",
       "correct": true,
-      "latency_ms": 24636.37
+      "latency_ms": 18414.65
     },
     {
       "question": "What was the weighted average useful life for Adobe Inc.'s trademarks in 2018?",
       "ground_truth": "9.0",
       "answer": "9",
       "correct": true,
-      "latency_ms": 9311.45
+      "latency_ms": 6225.5
     },
     {
       "question": "What was the impact of total net charge-offs on the balance of the allowance for loan and lease losses at PNC Financial Services in 2014?",
       "ground_truth": "531.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 13816.1
+      "latency_ms": 10665.46
     },
     {
       "question": "What is the net change in value of the balance of asset allocation from 2016 to 2017 for BlackRock's multi-asset products?",
       "ground_truth": "19870.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 13954.57
+      "latency_ms": 13505.76
     },
     {
       "question": "What was the compensation expense recorded by Huntington Ingalls Industries for the year ended December 31, 2015, related to stock awards?",
       "ground_truth": "43.0",
       "answer": "43",
       "correct": true,
-      "latency_ms": 13056.24
+      "latency_ms": 12686.01
     },
     {
       "question": "What is the aggregate sum of American Tower's expected principal payments for long-term debt in 2003 and 2004?",
       "ground_truth": "399758.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 10972.98
+      "latency_ms": 13255.41
     }
   ],
   "gemma3:12b_tatqa": [
@@ -999,140 +999,140 @@
       "ground_truth": "216.0",
       "answer": "216.0",
       "correct": true,
-      "latency_ms": 13190.21
+      "latency_ms": 11238.14
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
       "answer": "140.3",
       "correct": true,
-      "latency_ms": 1383.39
+      "latency_ms": 1181.49
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
       "answer": "19.9",
       "correct": false,
-      "latency_ms": 1259.42
+      "latency_ms": 1536.44
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
       "answer": "11.8",
       "correct": false,
-      "latency_ms": 1449.44
+      "latency_ms": 1438.96
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
       "answer": "-1.9",
       "correct": false,
-      "latency_ms": 1524.75
+      "latency_ms": 1184.09
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
       "answer": "April 2018",
       "correct": false,
-      "latency_ms": 1437.35
+      "latency_ms": 1500.05
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
       "answer": "4.350",
       "correct": false,
-      "latency_ms": 1474.2
+      "latency_ms": 71143.89
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
       "answer": "0.65",
       "correct": false,
-      "latency_ms": 79826.67
+      "latency_ms": 8977.33
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "344",
       "correct": false,
-      "latency_ms": 9017.66
+      "latency_ms": 9173.85
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
       "answer": "2938",
       "correct": false,
-      "latency_ms": 10039.94
+      "latency_ms": 9654.91
     },
     {
       "question": "What was the total revenue for VMware in the year ended January 31, 2020?",
       "ground_truth": "777.0",
       "answer": "777",
       "correct": true,
-      "latency_ms": 9848.14
+      "latency_ms": 9755.25
     },
     {
       "question": "What was VMware's net income for the year ended February 2, 2018?",
       "ground_truth": "234.0",
       "answer": "-234",
       "correct": false,
-      "latency_ms": 9113.37
+      "latency_ms": 9010.85
     },
     {
       "question": "What was the change in total revenue between 2018 and 2019 for VMware-inc?",
       "ground_truth": "165.0",
       "answer": "50.3",
       "correct": false,
-      "latency_ms": 9739.54
+      "latency_ms": 11400.58
     },
     {
       "question": "In the consolidated statements of income for vmware-inc, for how many years did the total revenue exceed $500 million between February 2, 2018, and January 31, 2020?",
       "ground_truth": "2.0",
       "answer": "3",
       "correct": false,
-      "latency_ms": 11742.01
+      "latency_ms": 11243.8
     },
     {
       "question": "What was the percentage change in VMware's net income from $(832) million in 2019 to $(204) million in 2020?",
       "ground_truth": "-75.48",
       "answer": "30.5",
       "correct": false,
-      "latency_ms": 12150.05
+      "latency_ms": 11730.07
     },
     {
       "question": "What were the total operating revenues for the year 2019 as reported in BCE Inc.'s 2019 Annual Report",
       "ground_truth": "23964.0",
       "answer": "23964",
       "correct": true,
-      "latency_ms": 12044.74
+      "latency_ms": 11416.41
     },
     {
       "question": "How many types of services does BCE Inc. offer according to its 2019 Annual Report?",
       "ground_truth": "5.0",
       "answer": "6",
       "correct": false,
-      "latency_ms": 8554.3
+      "latency_ms": 8675.6
     },
     {
       "question": "What is the average annual Total services revenue for BCE Inc. in the years 2018 and 2019?",
       "ground_truth": "20589.0",
       "answer": "20,934",
       "correct": false,
-      "latency_ms": 8687.54
+      "latency_ms": 8491.6
     },
     {
       "question": "What was the total value of long-lived assets for Extreme Networks Inc. as of June 30, 2019?",
       "ground_truth": "176308.0",
       "answer": "176308",
       "correct": true,
-      "latency_ms": 11185.66
+      "latency_ms": 10694.86
     },
     {
       "question": "In what year did the long-lived assets in the Americas region exceed $150,000 thousand, according to the geographic distribution of long-lived assets for Extreme Networks Inc. in its 2019 report?",
       "ground_truth": "1.0",
       "answer": "2018",
       "correct": false,
-      "latency_ms": 11384.38
+      "latency_ms": 11325.25
     }
   ],
   "qwen3:8b_tatqa": [
@@ -1141,140 +1141,140 @@
       "ground_truth": "216.0",
       "answer": "216.0",
       "correct": true,
-      "latency_ms": 6833.22
+      "latency_ms": 10963.05
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
-      "answer": "",
-      "correct": false,
-      "latency_ms": 11456.82
+      "answer": "140.3",
+      "correct": true,
+      "latency_ms": 7058.62
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
-      "answer": "",
-      "correct": false,
-      "latency_ms": 9273.22
+      "answer": "2018",
+      "correct": true,
+      "latency_ms": 13466.36
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
       "answer": "",
       "correct": false,
-      "latency_ms": 13895.34
+      "latency_ms": 13439.03
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
       "answer": "",
       "correct": false,
-      "latency_ms": 13658.22
+      "latency_ms": 12720.11
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
       "answer": "April 2018",
       "correct": false,
-      "latency_ms": 10589.67
+      "latency_ms": 10475.97
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
       "answer": "4.350",
       "correct": false,
-      "latency_ms": 11267.75
+      "latency_ms": 9231.06
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
       "answer": "0.65",
       "correct": false,
-      "latency_ms": 9138.69
+      "latency_ms": 9282.09
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "370",
       "correct": true,
-      "latency_ms": 9901.29
+      "latency_ms": 9494.29
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
       "answer": "1125",
       "correct": true,
-      "latency_ms": 10076.11
+      "latency_ms": 9721.81
     },
     {
       "question": "What was the total revenue for VMware in the year ended January 31, 2020?",
       "ground_truth": "777.0",
       "answer": "777",
       "correct": true,
-      "latency_ms": 9017.54
+      "latency_ms": 9224.85
     },
     {
       "question": "What was VMware's net income for the year ended February 2, 2018?",
       "ground_truth": "234.0",
-      "answer": "-234",
+      "answer": "",
       "correct": false,
-      "latency_ms": 9782.16
+      "latency_ms": 11397.87
     },
     {
       "question": "What was the change in total revenue between 2018 and 2019 for VMware-inc?",
       "ground_truth": "165.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 11723.05
+      "latency_ms": 11285.13
     },
     {
       "question": "In the consolidated statements of income for vmware-inc, for how many years did the total revenue exceed $500 million between February 2, 2018, and January 31, 2020?",
       "ground_truth": "2.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 12119.35
+      "latency_ms": 11653.31
     },
     {
       "question": "What was the percentage change in VMware's net income from $(832) million in 2019 to $(204) million in 2020?",
       "ground_truth": "-75.48",
       "answer": "",
       "correct": false,
-      "latency_ms": 12047.84
+      "latency_ms": 11437.83
     },
     {
       "question": "What were the total operating revenues for the year 2019 as reported in BCE Inc.'s 2019 Annual Report",
       "ground_truth": "23964.0",
       "answer": "23964",
       "correct": true,
-      "latency_ms": 8649.29
+      "latency_ms": 8543.55
     },
     {
       "question": "How many types of services does BCE Inc. offer according to its 2019 Annual Report?",
       "ground_truth": "5.0",
       "answer": "5",
       "correct": true,
-      "latency_ms": 8532.83
+      "latency_ms": 8581.71
     },
     {
       "question": "What is the average annual Total services revenue for BCE Inc. in the years 2018 and 2019?",
       "ground_truth": "20589.0",
       "answer": "20589",
       "correct": true,
-      "latency_ms": 11020.8
+      "latency_ms": 10804.0
     },
     {
       "question": "What was the total value of long-lived assets for Extreme Networks Inc. as of June 30, 2019?",
       "ground_truth": "176308.0",
-      "answer": "17",
+      "answer": "",
       "correct": false,
-      "latency_ms": 11617.85
+      "latency_ms": 11259.31
     },
     {
       "question": "In what year did the long-lived assets in the Americas region exceed $150,000 thousand, according to the geographic distribution of long-lived assets for Extreme Networks Inc. in its 2019 report?",
       "ground_truth": "1.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 11423.03
+      "latency_ms": 11518.35
     }
   ]
 }
