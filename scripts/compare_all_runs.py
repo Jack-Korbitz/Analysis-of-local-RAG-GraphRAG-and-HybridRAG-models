@@ -274,18 +274,6 @@ KEY FINDINGS:
    - {len(models)} models: {', '.join(models)}
    - Parameter sizes: {min(model_sizes)}-{max(model_sizes)}B
    - Average latency: {sum(lat for _, _, lat in all_latencies) / len(all_latencies):.0f}ms
-
-4. CURRENT STATUS:
-   - Financial QA is challenging: Best accuracy is {best_accuracy[2]:.1f}%
-   - {"GraphRAG underperforming - extraction patterns need work" if avg_graphrag < avg_baseline else "GraphRAG competitive with baseline"}
-   - Speed/accuracy tradeoff: {"Baseline fastest" if avg_baseline > avg_rag else "RAG provides best accuracy"}
-
-5. NEXT STEPS TO IMPROVE:
-   - Implement Chain-of-Thought prompting (+15-20% expected)
-   - Add error recovery/self-critique (+10-15% expected)
-   - Improve GraphRAG extraction patterns (markdown tables)
-   - Consider table-aware chunking for RAG
-   - Target: {best_accuracy[2]:.1f}% → 40-50%+ accuracy
     """)
 
 

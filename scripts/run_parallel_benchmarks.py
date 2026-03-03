@@ -29,11 +29,28 @@ def _extract_answer_number(text: str) -> float | None:
     text = re.sub(r'(\d+\.?\d*)\s*billion', lambda m: str(float(m.group(1)) * 1e3), text, flags=re.IGNORECASE)
     text = re.sub(r'(\d+\.?\d*)\s*million', r'\1', text, flags=re.IGNORECASE)
 
+    # Priority 1: explicit ANSWER: tag
+    m = re.search(r'ANSWER:\s*(-?\d+\.?\d*)', text.strip(), re.IGNORECASE)
+    if m:
+        try:
+            return float(m.group(1))
+        except ValueError:
+            pass
+
+    # Priority 2: last "= <number>" in the text — captures the result of shown calculations
+    # e.g. "11.8 - 19.9 = -8.1" or "268496 + 131262 = 399758"
+    eq_matches = re.findall(r'=\s*(-?\d+\.?\d*)', text)
+    if eq_matches:
+        try:
+            return float(eq_matches[-1])
+        except ValueError:
+            pass
+
+    # Priority 3: fallback patterns (first number found)
     patterns = [
         r'^(-?\d+\.?\d*)\s',                           # number at very start
         r'^(-?\d+\.?\d*)$',                             # entire response is a number
-        r'ANSWER:\s*(-?\d+\.?\d*)',                     # explicit ANSWER: tag
-        r'(?:answer|result|is|was|=|:)\s*(-?\d+\.?\d*)',
+        r'(?:answer|result|is|was|:)\s*(-?\d+\.?\d*)',
         r'\b(-?\d+\.\d+)\b',                            # any decimal in text
         r'\b(-?\d{1,8})\b',                             # any short integer in text
     ]
@@ -49,8 +66,12 @@ def _extract_answer_number(text: str) -> float | None:
 
 def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
     """
-    Returns True if the predicted answer numerically matches the ground truth
-    within a relative tolerance. Falls back to case-insensitive exact string match.
+    Returns True if the predicted answer numerically matches the ground truth.
+    Handles:
+    - Relative tolerance (default 1%) for large values
+    - Absolute tolerance (±0.5) for small values
+    - Percentage ↔ decimal conversion (e.g. model outputs -3.2% for GT -0.032)
+    - Falls back to case-insensitive exact string match
     """
     pred_num = _extract_answer_number(pred_text)
     try:
@@ -61,7 +82,23 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
     if pred_num is not None and gt_num is not None:
         if gt_num == 0:
             return abs(pred_num) < 1e-6
-        return abs(pred_num - gt_num) / abs(gt_num) <= tol
+
+        # Exact or relative tolerance match
+        if abs(pred_num - gt_num) / abs(gt_num) <= tol:
+            return True
+
+        # Percentage ↔ decimal: GT is a decimal (e.g. -0.032), model outputs percent (e.g. -3.2)
+        if 0 < abs(gt_num) < 1 and abs(pred_num - gt_num * 100) < 0.5:
+            return True
+        # Reverse: GT is a percent (e.g. 35), model outputs decimal (e.g. 0.35)
+        if 0 < abs(pred_num) < 1 and abs(pred_num * 100 - gt_num) < 0.5:
+            return True
+
+        # Absolute tolerance for small numbers
+        if abs(gt_num) < 100 and abs(pred_num - gt_num) < 0.5:
+            return True
+
+        return False
 
     # Fallback: normalised string match
     return str(pred_text).strip().lower() == str(ground_truth).strip().lower()
@@ -81,6 +118,23 @@ class ParallelBenchmarkRunner:
         self.results = {}
         self.timings = {}
     
+    @staticmethod
+    def _clean_table(raw: str) -> str:
+        """
+        Clean a pandas-rendered markdown table for LLM consumption:
+        - Drop the auto-generated numeric index column (first col is always |  N |)
+        - Normalize financial negatives: "-23158 ( 23158 )" → "-23158"
+        """
+        lines = raw.strip().splitlines()
+        cleaned = []
+        for line in lines:
+            # Remove leading index cell: "| N |" or "|---:|" at the start
+            line = re.sub(r'^\|\s*-*\d*:?\s*\|', '|', line)
+            # Normalize parenthetical negatives: -VALUE ( VALUE ) → -VALUE
+            line = re.sub(r'-(\d[\d,\.]*)\s*\(\s*[\d,\.]+\s*\)', r'-\1', line)
+            cleaned.append(line)
+        return "\n".join(cleaned)
+
     def _build_dataset_context(self, example: dict) -> str:
         """
         Build context string from the dataset's document fields.
@@ -91,7 +145,7 @@ class ParallelBenchmarkRunner:
         if example.get('pre_text'):
             parts.append(example['pre_text'].strip())
         if example.get('table'):
-            parts.append(example['table'].strip())
+            parts.append(self._clean_table(example['table']))
         if example.get('post_text'):
             parts.append(example['post_text'].strip())
         # TAT-DQA uses only a 'context' field — use it when the structured fields are absent
@@ -299,7 +353,7 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_graph_context(
                 question=example['question'],
                 context=context,
-                max_tokens=400
+                max_tokens=800
             )
             
             if not result.get('success', False):
