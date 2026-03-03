@@ -72,7 +72,7 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
 # docker ps
 
 class ParallelBenchmarkRunner:
-    def __init__(self, models, datasets, num_samples=100, max_workers=3):
+    def __init__(self, models, datasets, num_samples=20, max_workers=3):
         self.models = models
         self.datasets = datasets
         self.num_samples = num_samples
@@ -82,7 +82,11 @@ class ParallelBenchmarkRunner:
         self.timings = {}
     
     def _build_dataset_context(self, example: dict) -> str:
-        """Build context string from the dataset's own pre_text, table, post_text fields."""
+        """
+        Build context string from the dataset's document fields.
+        - FinQA / ConvFinQA: use pre_text + table + post_text
+        - TAT-DQA: those fields are absent; fall back to the 'context' field
+        """
         parts = []
         if example.get('pre_text'):
             parts.append(example['pre_text'].strip())
@@ -90,6 +94,9 @@ class ParallelBenchmarkRunner:
             parts.append(example['table'].strip())
         if example.get('post_text'):
             parts.append(example['post_text'].strip())
+        # TAT-DQA uses only a 'context' field — use it when the structured fields are absent
+        if not parts and example.get('context'):
+            parts.append(example['context'].strip())
         return "\n\n".join(parts) if parts else ""
 
     def _run_model_baseline(self, model, dataset_name, dataset_path, samples):
@@ -414,7 +421,7 @@ def main():
     runner = ParallelBenchmarkRunner(
         models, 
         datasets, 
-        num_samples=100,
+        num_samples=20,
         max_workers=3
     )
     

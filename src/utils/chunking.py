@@ -82,43 +82,93 @@ class DocumentChunker:
         sentences = re.split(r'(?<=[.!?])\s+', text)
         return [s.strip() for s in sentences if s.strip()]
     
+    def _extract_full_context(self, example: Dict) -> str:
+        """
+        Extract full document context from an example, handling all three dataset formats:
+        - FinQA / ConvFinQA: pre_text + table + post_text
+        - TAT-DQA: context field only
+        """
+        parts = []
+        if example.get('pre_text'):
+            parts.append(str(example['pre_text']).strip())
+        if example.get('table'):
+            parts.append(str(example['table']).strip())
+        if example.get('post_text'):
+            parts.append(str(example['post_text']).strip())
+        if not parts and example.get('context'):
+            parts.append(str(example['context']).strip())
+        return "\n\n".join(parts)
+
+    def chunk_table_aware(self, text: str, metadata: Dict = None) -> List[Dict]:
+        """
+        Chunk text while keeping markdown table blocks intact.
+        Table blocks (lines starting with |) are never split mid-row —
+        the entire table is kept as one chunk regardless of chunk_size.
+        """
+        if not text or len(text.strip()) == 0:
+            return []
+
+        chunks = []
+        lines = text.split('\n')
+        table_block: List[str] = []
+        prose_block: List[str] = []
+
+        def flush_prose():
+            if prose_block:
+                prose_text = '\n'.join(prose_block).strip()
+                if len(prose_text) > 50:
+                    chunks.extend(self.chunk_text(prose_text, metadata))
+                prose_block.clear()
+
+        def flush_table():
+            if table_block:
+                table_text = '\n'.join(table_block).strip()
+                if len(table_text) > 20:
+                    chunks.append({'text': table_text, 'metadata': metadata or {}})
+                table_block.clear()
+
+        for line in lines:
+            if line.strip().startswith('|'):
+                flush_prose()
+                table_block.append(line)
+            else:
+                flush_table()
+                prose_block.append(line)
+
+        flush_prose()
+        flush_table()
+        return chunks
+
     def chunk_dataset_contexts(
         self,
         dataset_examples: List[Dict],
         context_field: str = 'context'
     ) -> List[Dict]:
         """
-        Chunk contexts from a dataset
-        
-        Args:
-            dataset_examples: List of dataset examples
-            context_field: Field name containing context text
-            
-        Returns:
-            List of chunked documents with metadata
+        Chunk contexts from a dataset.
+        Uses table-aware chunking so markdown table rows are never split mid-row.
+        Handles FinQA/ConvFinQA (pre_text+table+post_text) and TAT-DQA (context).
         """
         all_chunks = []
-        
+
         for i, example in enumerate(dataset_examples):
-            context = example.get(context_field, '')
-            
+            context = self._extract_full_context(example)
+
             if not context or len(context) < 50:
                 continue
-            
-            # Build metadata
+
             metadata = {
                 'example_id': example.get('id', f'ex_{i}'),
                 'context_id': example.get('context_id', f'ctx_{i}'),
                 'company': example.get('company_name', 'Unknown'),
                 'year': str(example.get('report_year', 'Unknown')),
                 'source': 'dataset',
-                'question': example.get('question', '')[:100]  # Store related question
+                'question': example.get('question', '')[:100]
             }
-            
-            # Chunk the context
-            chunks = self.chunk_text(context, metadata)
+
+            chunks = self.chunk_table_aware(context, metadata)
             all_chunks.extend(chunks)
-        
+
         return all_chunks
 
 
@@ -148,8 +198,8 @@ def main():
         metadata={'company': 'Analog Devices', 'year': 2009}
     )
     
-    print(f"\n📄 Original text length: {len(text)} characters")
-    print(f"📦 Number of chunks: {len(chunks)}")
+    print(f"\n  Original text length: {len(text)} characters")
+    print(f"    Number of chunks: {len(chunks)}")
     
     for i, chunk in enumerate(chunks):
         print(f"\n{'='*60}")
