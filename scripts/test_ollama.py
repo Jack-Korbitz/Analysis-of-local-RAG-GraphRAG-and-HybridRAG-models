@@ -52,7 +52,7 @@ if __name__ == "__main__":
     # Test connection
     if test_ollama_connection():
         # Test your three models
-        models_to_test = ["gemma3:27b", "gpt-oss:20b", "qwen3:30b"]
+        models_to_test = ["gemma3:12b", "gpt-oss:8b", "qwen3:8b"]
         
         print("\n" + "=" * 60)
         print("TESTING YOUR MODELS")
