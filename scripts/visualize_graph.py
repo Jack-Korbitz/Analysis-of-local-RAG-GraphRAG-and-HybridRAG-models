@@ -1,13 +1,3 @@
-"""
-Export a slide-ready knowledge graph visualization from Neo4j.
-Queries a small subgraph (3 companies, their metrics and years) and
-renders it as a PNG using networkx + matplotlib.
-
-Run:
-    python scripts/visualize_graph.py
-Output:
-    results/visualizations/knowledge_graph.png
-"""
 import sys
 sys.path.append('.')
 
@@ -19,6 +9,15 @@ from src.graphrag.neo4j_client import Neo4jClient
 
 OUTPUT_PATH = Path("results/visualizations/knowledge_graph.png")
 
+# ─────────────────────────────────────────────
+#  ADJUST THESE VALUES BEFORE RUNNING
+# ─────────────────────────────────────────────
+NUM_COMPANIES  = 306       # 1 – 306 total companies in graph
+YEAR_TO_SHOW   = 2018     # 1998 – 2022
+NODE_SPACING   = 2.0      # higher = more spread out (try 3.0 – 8.0)
+FIGURE_SIZE    = (32, 22) # width x height in inches
+# ─────────────────────────────────────────────
+
 NODE_COLORS = {
     "Company":  "#2196F3",
     "Metric":   "#4CAF50",
@@ -26,10 +25,10 @@ NODE_COLORS = {
     "Document": "#9E9E9E",
 }
 NODE_SIZES = {
-    "Company":  2800,
-    "Metric":   1400,
-    "Year":     1800,
-    "Document": 800,
+    "Company":  1000,
+    "Metric":   300,
+    "Year":     800,
+    "Document": 200,
 }
 
 METRIC_LABELS = {
@@ -44,43 +43,42 @@ METRIC_LABELS = {
 }
 
 
-def fetch_subgraph(neo4j: Neo4jClient, companies: list, max_metrics_per_company: int = 4):
-    """Pull a small, readable subgraph from Neo4j."""
-    nodes = {}   # id -> {label, type, display}
-    edges = []   # (src_id, dst_id, rel_type)
+def fetch_subgraph(neo4j: Neo4jClient, companies: list, year: int):
+    """One metric-type node per company for the selected year, one shared Year node."""
+    nodes = {}
+    edges = []
 
-    for company in companies:
+    y_id = f"year_{year}"
+    nodes[y_id] = {"type": "Year", "display": str(year)}
+
+    rows = neo4j.query_graph("""
+        MATCH (c:Company)-[:HAS_METRIC]->(m:Metric)-[:FOR_YEAR]->(y:Year {value: $year})
+        WHERE c.name IN $companies
+        RETURN c.name AS company, m.name AS metric
+        ORDER BY c.name, m.name
+    """, {"companies": companies, "year": year})
+
+    seen = set()
+    for row in rows:
+        company = row["company"]
+        mname   = row["metric"]
+
+        key = (company, mname)
+        if key in seen:
+            continue
+        seen.add(key)
+
         c_id = f"company_{company}"
-        nodes[c_id] = {"type": "Company", "display": company}
+        m_id = f"metric_{company}_{mname}"
 
-        rows = neo4j.query_graph("""
-            MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)-[:FOR_YEAR]->(y:Year)
-            RETURN m.name AS metric, m.value AS value, y.value AS year
-            ORDER BY y.value DESC, m.name
-            LIMIT $limit
-        """, {"company": company, "limit": max_metrics_per_company * 3})
+        if c_id not in nodes:
+            nodes[c_id] = {"type": "Company", "display": company}
 
-        seen_metrics = {}
-        for row in rows:
-            mname = row["metric"]
-            year  = int(row["year"])
-            value = row["value"]
+        label = METRIC_LABELS.get(mname, mname.replace("_", " ").title())
+        nodes[m_id] = {"type": "Metric", "display": label}
 
-            if mname not in seen_metrics:
-                if len(seen_metrics) >= max_metrics_per_company:
-                    continue
-                seen_metrics[mname] = True
-
-            m_id = f"metric_{company}_{mname}_{year}"
-            y_id = f"year_{year}"
-            label = METRIC_LABELS.get(mname, mname.replace("_", " ").title())
-            display = f"{label}\n${value:,.0f}M"
-
-            nodes[m_id] = {"type": "Metric", "display": display}
-            nodes[y_id] = {"type": "Year",   "display": str(year)}
-
-            edges.append((c_id, m_id, "HAS_METRIC"))
-            edges.append((m_id, y_id, "FOR_YEAR"))
+        edges.append((c_id, m_id, "HAS_METRIC"))
+        edges.append((m_id, y_id, "FOR_YEAR"))
 
     return nodes, edges
 
@@ -95,45 +93,24 @@ def build_nx_graph(nodes, edges):
 
 
 def draw(G: nx.DiGraph, output_path: Path):
-    fig, ax = plt.subplots(figsize=(18, 11))
+    fig, ax = plt.subplots(figsize=FIGURE_SIZE)
     fig.patch.set_facecolor("#1a1a2e")
     ax.set_facecolor("#1a1a2e")
 
-    # Separate nodes by type for layout
     company_nodes = [n for n, d in G.nodes(data=True) if d["type"] == "Company"]
     metric_nodes  = [n for n, d in G.nodes(data=True) if d["type"] == "Metric"]
     year_nodes    = [n for n, d in G.nodes(data=True) if d["type"] == "Year"]
 
-    # Manual layered layout: companies left, metrics center, years right
-    pos = {}
-    n_companies = len(company_nodes)
-    for i, n in enumerate(company_nodes):
-        pos[n] = (-2.5, (i - (n_companies - 1) / 2) * 2.5)
+    pos = nx.spring_layout(G, k=NODE_SPACING, iterations=120, seed=42)
 
-    n_metrics = len(metric_nodes)
-    for i, n in enumerate(metric_nodes):
-        pos[n] = (0, (i - (n_metrics - 1) / 2) * 0.95)
-
-    unique_years = sorted({G.nodes[n]["display"] for n in year_nodes})
-    year_y = {y: (i - (len(unique_years) - 1) / 2) * 2.2 for i, y in enumerate(unique_years)}
-    for n in year_nodes:
-        yr = G.nodes[n]["display"]
-        pos[n] = (2.8, year_y[yr])
-
-    # Draw edges
     has_metric_edges = [(u, v) for u, v, d in G.edges(data=True) if d["rel"] == "HAS_METRIC"]
     for_year_edges   = [(u, v) for u, v, d in G.edges(data=True) if d["rel"] == "FOR_YEAR"]
 
     nx.draw_networkx_edges(G, pos, edgelist=has_metric_edges, ax=ax,
-                           edge_color="#2196F3", alpha=0.5, arrows=True,
-                           arrowsize=15, width=1.2,
-                           connectionstyle="arc3,rad=0.05")
+                           edge_color="#2196F3", alpha=0.3, arrows=False, width=0.6)
     nx.draw_networkx_edges(G, pos, edgelist=for_year_edges, ax=ax,
-                           edge_color="#FF9800", alpha=0.5, arrows=True,
-                           arrowsize=15, width=1.2,
-                           connectionstyle="arc3,rad=0.05")
+                           edge_color="#FF9800", alpha=0.3, arrows=False, width=0.6)
 
-    # Draw nodes by type
     for node_type, color in NODE_COLORS.items():
         if node_type == "Document":
             continue
@@ -143,33 +120,30 @@ def draw(G: nx.DiGraph, output_path: Path):
         nx.draw_networkx_nodes(G, pos, nodelist=subset, ax=ax,
                                node_color=color,
                                node_size=NODE_SIZES[node_type],
-                               alpha=0.95)
+                               alpha=0.9)
 
-    # Labels
-    labels = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] != "Document"}
-    nx.draw_networkx_labels(G, pos, labels=labels, ax=ax,
-                            font_size=7.5, font_color="white", font_weight="bold")
+    # Company and Year nodes get labels; metric nodes are too numerous for full labels
+    company_labels = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Company"}
+    year_labels    = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Year"}
+    metric_labels  = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Metric"}
 
-    # Edge labels
-    edge_label_pos = {
-        **{e: "HAS_METRIC" for e in has_metric_edges},
-        **{e: "FOR_YEAR"   for e in for_year_edges},
-    }
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_label_pos, ax=ax,
-                                 font_size=6, font_color="#cccccc",
-                                 bbox=dict(alpha=0))
+    nx.draw_networkx_labels(G, pos, labels=company_labels, ax=ax,
+                            font_size=5.5, font_color="white", font_weight="bold")
+    nx.draw_networkx_labels(G, pos, labels=year_labels, ax=ax,
+                            font_size=6, font_color="white", font_weight="bold")
+    nx.draw_networkx_labels(G, pos, labels=metric_labels, ax=ax,
+                            font_size=3.5, font_color="white")
 
-    # Legend
     legend_handles = [
-        mpatches.Patch(color=NODE_COLORS["Company"],  label="Company"),
-        mpatches.Patch(color=NODE_COLORS["Metric"],   label="Financial Metric"),
-        mpatches.Patch(color=NODE_COLORS["Year"],     label="Year"),
+        mpatches.Patch(color=NODE_COLORS["Company"],  label=f"Company ({len(company_nodes)})"),
+        mpatches.Patch(color=NODE_COLORS["Metric"],   label=f"Financial Metric ({len(metric_nodes)})"),
+        mpatches.Patch(color=NODE_COLORS["Year"],     label=f"Year ({len(year_nodes)})"),
     ]
-    ax.legend(handles=legend_handles, loc="lower left", fontsize=10,
+    ax.legend(handles=legend_handles, loc="lower right", fontsize=11,
               facecolor="#2a2a4a", edgecolor="white", labelcolor="white")
 
     ax.set_title("GraphRAG Knowledge Graph — Financial Entity Structure",
-                 fontsize=15, fontweight="bold", color="white", pad=16)
+                 fontsize=18, fontweight="bold", color="white", pad=20)
     ax.axis("off")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -183,16 +157,15 @@ def draw(G: nx.DiGraph, output_path: Path):
 def main():
     neo4j = Neo4jClient()
 
-    # Pick 3 companies that have the most metrics for a rich visualization
     top = neo4j.query_graph("""
         MATCH (c:Company)-[:HAS_METRIC]->(m:Metric)
         RETURN c.name AS company, count(m) AS cnt
-        ORDER BY cnt DESC LIMIT 3
-    """)
+        ORDER BY cnt DESC LIMIT $n
+    """, {"n": NUM_COMPANIES})
     companies = [r["company"] for r in top]
-    print(f"Visualizing companies: {companies}")
+    print(f"Visualizing {len(companies)} companies | year={YEAR_TO_SHOW} | spacing={NODE_SPACING}")
 
-    nodes, edges = fetch_subgraph(neo4j, companies, max_metrics_per_company=4)
+    nodes, edges = fetch_subgraph(neo4j, companies, year=YEAR_TO_SHOW)
     print(f"  Nodes: {len(nodes)}  Edges: {len(edges)}")
 
     G = build_nx_graph(nodes, edges)
