@@ -122,7 +122,6 @@ def plot_accuracy_by_approach(data, ax):
     ax.set_xticks(x)
     ax.set_xticklabels([m.replace(':', '\n') for m in all_models], fontsize=9)
     ax.set_ylim(0, max(55, ax.get_ylim()[1] * 1.15))
-    ax.legend(loc='upper right', fontsize=9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_axisbelow(True)
 
@@ -160,7 +159,6 @@ def plot_accuracy_by_dataset(data, ax):
     ax.set_xticks(x)
     ax.set_xticklabels([d.upper() for d in datasets], fontsize=9)
     ax.set_ylim(0, max(55, ax.get_ylim()[1] * 1.15))
-    ax.legend(loc='upper right', fontsize=9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_axisbelow(True)
 
@@ -189,7 +187,6 @@ def plot_latency(data, ax):
     ax.set_ylabel('Latency (seconds)')
     ax.set_xticks(x)
     ax.set_xticklabels([m.replace(':', '\n') for m in all_models], fontsize=9)
-    ax.legend(loc='upper right', fontsize=9)
     ax.grid(axis='y', alpha=0.3)
     ax.set_axisbelow(True)
 
@@ -239,7 +236,14 @@ def main():
     plot_accuracy_by_dataset(data, axes[1, 0])
     plot_latency(data, axes[1, 1])
 
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    legend_handles = [
+        mpatches.Patch(color=COLORS[a], label=a) for a in ["Baseline", "RAG", "GraphRAG"]
+    ]
+    fig.legend(handles=legend_handles, loc='lower center', ncol=3,
+               fontsize=11, frameon=True, framealpha=0.9,
+               bbox_to_anchor=(0.5, 0.01))
+
+    plt.tight_layout(rect=[0, 0.07, 1, 0.96])
 
     out_path = OUTPUT_DIR / "benchmark_results.png"
     plt.savefig(out_path, dpi=150, bbox_inches='tight', facecolor=fig.get_facecolor())
