@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(du -sh *)",
-      "Bash(python -c \":*)",
-      "Bash(python scripts/visualize_results.py)"
-    ]
-  }
-}
