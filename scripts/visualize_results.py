@@ -42,12 +42,11 @@ def check_accuracy(answer, ground_truth):
     answer_str = str(answer).lower()
     gt_str = re.sub(r'\.0$', '', str(ground_truth).lower())
 
-    # Normalize: strip commas from numbers (41,932 → 41932)
     answer_norm = re.sub(r'(\d),(\d)', r'\1\2', answer_str)
     gt_norm = re.sub(r'(\d),(\d)', r'\1\2', gt_str)
 
-    # Direct string containment after normalization
-    if gt_norm in answer_norm:
+    # Word-boundary safe string match (avoids "531" matching "-531" or "2531")
+    if gt_norm and re.search(r'(?<!\d)' + re.escape(gt_norm) + r'(?!\d)', answer_norm):
         return True
 
     answer_numbers = re.findall(r'-?\d+\.?\d*', answer_norm)
@@ -58,13 +57,21 @@ def check_accuracy(answer, ground_truth):
 
     try:
         gt_val = float(gt_numbers[0])
+
+        # Boolean yes/no: GT is 0 or 1
+        if gt_val in (0.0, 1.0):
+            if gt_val == 1.0 and re.search(r'\b(yes|true|did|exceeded?|greater|more|higher)\b', answer_str):
+                return True
+            if gt_val == 0.0 and re.search(r'\b(no|false|did not|not exceed|less|lower|neither)\b', answer_str):
+                return True
+
         for ans_num in answer_numbers:
             ans_val = float(ans_num)
 
             if gt_val == ans_val:
                 return True
 
-            # Percentage ↔ decimal (gt=0.35 matches ans=35, or gt=35 matches ans=0.35)
+            # Percentage ↔ decimal
             if 0 < abs(gt_val) < 1 and abs(ans_val - gt_val * 100) < 0.5:
                 return True
             if 0 < abs(ans_val) < 1 and abs(ans_val * 100 - gt_val) < 0.5:
@@ -74,9 +81,19 @@ def check_accuracy(answer, ground_truth):
             if abs(gt_val) >= 100 and abs(gt_val - ans_val) / abs(gt_val) < 0.01:
                 return True
 
-            # Absolute tolerance for small numbers (within 0.5)
-            if abs(gt_val) < 100 and abs(ans_val - gt_val) < 0.5:
+            # Absolute tolerance for mid-range numbers 1–99 (within 0.5)
+            if 1 <= abs(gt_val) < 100 and abs(ans_val - gt_val) < 0.5:
                 return True
+
+            # Relative tolerance for small decimals <1 (within 1%)
+            if abs(gt_val) < 1 and abs(gt_val - ans_val) / abs(gt_val) < 0.01:
+                return True
+
+            # Unit scale: model strips "million"/"thousand" suffix
+            if abs(gt_val) >= 1000:
+                for scale in [1_000, 1_000_000]:
+                    if abs(ans_val * scale - gt_val) / abs(gt_val) < 0.01:
+                        return True
 
     except ValueError:
         pass

@@ -431,7 +431,7 @@ class ParallelBenchmarkRunner:
                 # Graph records first (structured facts) then source document (raw tables).
                 # Cap graph_context at 1500 chars to avoid context overflow — the
                 # dataset source document is the authoritative source anyway.
-                context = f"[Knowledge graph]\n{graph_context[:1500]}\n\n[Source document]\n{dataset_ctx}"
+                context = f"[Knowledge graph]\n{graph_context[:3000]}\n\n[Source document]\n{dataset_ctx}"
             else:
                 context = graph_context
             result = client.generate_with_graph_context(

@@ -5,214 +5,214 @@
       "ground_truth": "3.8",
       "answer": "",
       "correct": false,
-      "latency_ms": 10357.14
+      "latency_ms": 10103.41
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
-      "answer": "The stock-based compensation expense for 2012 was $3.3 million. The total fair value of vested restricted stock and units in 2012 was $1.5 million. Comparing these values: $3.3 million > $1.5 million.  \n\nANSWER: 1",
+      "answer": "The stock-based compensation expense for equity awards in 2012 was $3.3 million. The total fair value of vested restricted stock and units in 2012 was $1.5 million. Comparing these values: $3.3 million > $1.5 million.  \n\nANSWER: 1",
       "correct": true,
-      "latency_ms": 23726.99
+      "latency_ms": 22782.95
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
-      "answer": "To find the total operating expenses for 2018, we use the aircraft fuel expense ($9,896 million) and the percentage of total operating expenses (23.6%).  \nTotal Operating Expenses = Aircraft Fuel Expense / (Percentage as a decimal)  \nTotal Operating Expenses = 9896 / 0.236 \u2248 41932.  \n\nANSWER: 41932",
+      "answer": "To find the total operating expenses for 2018, use the formula:  \n**Total Operating Expenses = Aircraft Fuel Expense / (Percentage of Total Operating Expenses)**  \n\nGiven:  \n- Aircraft Fuel Expense = $9,896 million  \n- Percentage = 23.6% = 0.236  \n\nCalculation:  \nTotal Operating Expenses = 9896 / 0.236 \u2248 41932.2  \n\nANSWER: 41932.2",
       "correct": true,
-      "latency_ms": 20592.69
+      "latency_ms": 21699.21
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
       "answer": "",
       "correct": false,
-      "latency_ms": 20980.28
+      "latency_ms": 23770.38
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
       "answer": "",
       "correct": false,
-      "latency_ms": 19787.4
+      "latency_ms": 21851.12
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
-      "answer": "To calculate the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010:  \n\n1. **Fair value in 2010**: $2.5 billion  \n2. **Fair value in 2009**: $1.6 billion  \n3. **Difference**: $2.5 - $1.6 = $0.9 billion  \n4. **Percentage growth**: ($0.9 / $1.6) \u00d7 100 = 56.25%  \n\nANSWER: 56.25",
+      "answer": "To calculate the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010:  \n1. **Fair value in 2009**: $1.6 billion  \n2. **Fair value in 2010**: $2.5 billion  \n3. **Difference**: $2.5 - $1.6 = $0.9 billion  \n4. **Percentage growth**: ($0.9 / $1.6) \u00d7 100 = 56.25%  \n\nANSWER: 56.25",
       "correct": false,
-      "latency_ms": 18444.16
+      "latency_ms": 20365.91
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
       "answer": "",
       "correct": false,
-      "latency_ms": 20549.91
+      "latency_ms": 22761.22
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
-      "answer": "To determine the percentage of net earnings equivalent to net cash provided by operating activities, divide the net cash provided by operating activities by net earnings and multiply by 100.  \nNet cash provided by operating activities = $2807.0 million  \nNet earnings = $1786.2 million  \nCalculation: (2807.0 / 1786.2) * 100 = 157.1%  \nANSWER: 157.1",
+      "answer": "To determine the percentage of net earnings equivalent to net cash provided by operating activities, divide the net cash provided by operating activities by net earnings and multiply by 100:  \n$ \\frac{2807.0}{1786.2} \\times 100 = 157\\% $.  \n\nANSWER: 157",
       "correct": false,
-      "latency_ms": 17697.77
+      "latency_ms": 21018.3
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
-      "answer": "",
-      "correct": false,
-      "latency_ms": 20590.29
+      "answer": "The deferred acquisition payments in 2011 were $34.8, and in 2012 they were $1.2.  \nPercentage decrease = ((34.8 - 1.2) / 34.8) * 100 = (33.6 / 34.8) * 100 \u2248 96.55%.  \nANSWER: 96.6",
+      "correct": true,
+      "latency_ms": 20184.27
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
       "answer": "",
       "correct": false,
-      "latency_ms": 23014.0
+      "latency_ms": 28783.35
     }
   ],
   "llama3.1:8b_finqa": [
     {
       "question": "What was Analog Devices reported interest expense for fiscal year 2009, as listed in its annual report?",
       "ground_truth": "3.8",
-      "answer": "To find the reported interest expense for fiscal year 2009, we need to look at the information provided in the text. The relevant sentence is:\n\n\"If LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\"\n\nThis sentence implies that the change in interest expense is directly related to the change in LIBOR. However, it does not provide the actual interest expense for fiscal year 2009.\n\nTo find the actual interest expense, we need to look at the table that lists the fair value of forward exchange contracts. The table does not directly provide the interest expense, but it does provide information on the fair value of the forward exchange contracts.\n\nHowever, the text does not provide a direct link between the fair value of the forward exchange contracts and the interest expense. Therefore, we need to look for another sentence that provides more information.\n\nThe relevant sentence is:\n\n\"Our sensitivity analysis of the effects of changes in foreign currency exchange rates does not factor in a potential change in sales levels or local currency selling prices.\"\n\nThis sentence does not provide any information on the interest expense. However, it implies that the interest expense is not directly related to the foreign currency exchange rates.\n\nSince the text does not provide a direct link between the interest expense and the LIBOR, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever, we can look at the information provided in the table that lists the fair value of forward exchange contracts. The table provides the fair value of the forward exchange contracts as of October 31, 2009, which is $6427.\n\nSince the table does not provide any information on the interest expense, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever, we can look at the sentence that provides the information on the change in interest expense:\n\n\"If LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\"\n\nThis sentence implies that the change in interest expense is directly related to the change in LIBOR. However, it does not provide the actual interest expense for fiscal year 2009.\n\nSince the text does not provide a direct link between the interest expense and the LIBOR, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever, we can look at the information provided in the text that states:\n\n\"The terms of these contracts are for periods matching the duration of the underlying exposure and generally range from one month to twelve months.\"\n\nThis sentence implies that the interest expense is related to the duration of the underlying exposure. However, it does not provide any information on the actual interest expense for fiscal year 2009.\n\nSince the text does not provide a direct link between the interest expense and the LIBOR, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever, we can look at the information provided in the text that states:\n\n\"Our largest foreign currency exposure is the euro, primarily because our European operations have the highest proportion of our local currency denominated expenses.\"\n\nThis sentence implies that the interest expense is related to the foreign currency exposure. However, it does not provide any information on the actual interest expense for fiscal year 2009.\n\nSince the text does not provide a direct link between the interest expense and the LIBOR, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever, we can look at the information provided in the text that states:\n\n\"The market risk associated with our derivative instruments results from currency exchange rate or interest rate movements that are expected to offset the market risk of the underlying transactions, assets and liabilities being hedged.\"\n\nThis sentence implies that the interest expense is related to the market risk associated with the derivative instruments. However, it does not provide any information on the actual interest expense for fiscal year 2009.\n\nSince the text does not provide a direct link between the interest expense and the LIBOR, we cannot calculate the actual interest expense for fiscal year 2009.\n\nHowever",
-      "correct": false,
-      "latency_ms": 21891.18
+      "answer": "To find the reported interest expense for fiscal year 2009, we need to look at the information provided in the annual report. The relevant sentence is:\n\n\"If LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\"\n\nThis sentence implies that the change in interest expense is directly related to the change in LIBOR. However, it does not provide the actual interest expense for fiscal year 2009. \n\nTo find the actual interest expense, we need to look at the table or the text that provides the interest expense for fiscal year 2009. Unfortunately, the provided text does not contain this information.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text. But we can use the information about the change in interest expense due to a change in LIBOR to infer that the interest expense for fiscal year 2009 is not explicitly stated.\n\nHowever, we can use the information about the change in interest expense due to a change in LIBOR to infer that the interest expense for fiscal year 2009 is not explicitly stated.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR changes by 100 basis points, our annual interest expense would change by $3.8 million.\n\nHowever, we can infer that the interest expense for fiscal year 2009 is not directly provided in the text.\n\nSince the text does not provide the actual interest expense for fiscal year 2009, we can look at the information provided about the change in interest expense due to a change in LIBOR.\n\nThe text states that if LIBOR",
+      "correct": true,
+      "latency_ms": 21462.27
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
-      "answer": "To answer this question, we need to compare the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable with the total fair value of restricted stock and restricted stock units vested during the fiscal year ended March 31, 2012.\n\nStep 1: Identify the total fair value of restricted stock and restricted stock units vested during the fiscal year ended March 31, 2012.\nAccording to the text, the total fair value of restricted stock and restricted stock units vested in fiscal year 2012 was $1.5 million.\n\nStep 2: Compare the stock-based compensation expense with the total fair value of restricted stock and restricted stock units vested.\n$3.3 million (stock-based compensation expense) > $1.5 million (total fair value of restricted stock and restricted stock units vested)\n\nSince $3.3 million is greater than $1.5 million, the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceeded the total fair value of restricted stock and restricted stock units vested during that year.\n\nANSWER: 1",
+      "answer": "To answer this question, we need to compare the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable with the total fair value of restricted stock and restricted stock units vested during the fiscal year ended March 31, 2012.\n\nAccording to the text, the total fair value of restricted stock and restricted stock units vested in fiscal year 2012 was $1.5 million.\n\nNow, let's compare the two amounts:\n\n$3.3 million (stock-based compensation expense) > $1.5 million (total fair value of restricted stock and restricted stock units vested)\n\nSince $3.3 million is greater than $1.5 million, the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable did exceed the total fair value of restricted stock and restricted stock units vested during that year.\n\nANSWER: 1",
       "correct": true,
-      "latency_ms": 17133.55
+      "latency_ms": 16991.54
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
-      "answer": "To find the total operating expenses for American Airlines Group in 2018, we need to look at the table and find the row for 2018.\n\nThe table shows that the aircraft fuel expense for 2018 was $9,896 million. However, this is not the total operating expenses. To find the total operating expenses, we need to look at the percent of total operating expenses column, which is 23.6% for 2018.\n\nLet's assume that the total operating expenses for 2018 is x. Then, 23.6% of x is equal to $9,896 million.\n\nTo find x, we can set up the following equation:\n\n0.236x = 9,896\n\nTo solve for x, we can divide both sides of the equation by 0.236:\n\nx = 9,896 / 0.236\nx = 41,944\n\nTherefore, the total operating expenses for American Airlines Group in 2018 were $41,944 million.\n\nANSWER: 41944",
+      "answer": "To find the total operating expenses for American Airlines Group in 2018, we need to look at the \"percent of total operating expenses\" column for 2018, which is 23.6%. However, this is a percentage, not the actual total operating expenses.\n\nWe can assume that the \"percent of total operating expenses\" is a percentage of the total operating expenses for the year. To find the actual total operating expenses, we need to know the total operating expenses for 2018. Unfortunately, the table does not provide this information directly.\n\nHowever, we can use the \"aircraft fuel expense\" for 2018, which is $9,896 million, and the \"percent of total operating expenses\" for 2018, which is 23.6%. We can set up a proportion to find the total operating expenses:\n\nLet x be the total operating expenses for 2018.\n\nWe know that 23.6% of x is equal to $9,896 million.\n\nWe can set up the equation:\n\n0.236x = 9,896\n\nTo solve for x, we can divide both sides by 0.236:\n\nx = 9,896 / 0.236\nx = 41,943\n\nSo, the total operating expenses for American Airlines Group in 2018 were approximately $41,943 million.\n\nANSWER: 41943",
       "correct": true,
-      "latency_ms": 20377.66
+      "latency_ms": 22748.35
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
-      "answer": "To find the proportion of Intel's total cash and investments as of December 29, 2012, that was made up of available-for-sale investments, we need to follow these steps:\n\n1. Identify the total cash and investments as of December 29, 2012: $26302 million (from the table)\n2. Identify the available-for-sale investments as of December 29, 2012: $14001 million (from the table)\n3. Divide the available-for-sale investments by the total cash and investments to find the proportion:\n$14001 \u00f7 $26302 = 0.531\n\nSo, the proportion of Intel's total cash and investments as of December 29, 2012, that was made up of available-for-sale investments is 0.531.\n\nANSWER: 0.531",
+      "answer": "To find the proportion of Intel's total cash and investments as of December 29, 2012, that was made up of available-for-sale investments, we need to follow these steps:\n\n1. Identify the total cash and investments as of December 29, 2012: $26302 million (from the table)\n2. Identify the available-for-sale investments as of December 29, 2012: $14001 million (from the table)\n3. Divide the available-for-sale investments by the total cash and investments: $14001 \u00f7 $26302\n4. Calculate the proportion: 0.531\n\nANSWER: 0.531",
       "correct": true,
-      "latency_ms": 20569.54
+      "latency_ms": 22424.57
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
-      "answer": "To find the percentage change in net revenue, we need to calculate the difference in net revenue between 2008 and 2007, and then divide that by the 2007 net revenue.\n\nStep 1: Calculate the difference in net revenue between 2008 and 2007.\n2008 net revenue = $959.2 million\n2007 net revenue = $991.1 million\nDifference = 2008 net revenue - 2007 net revenue\n= $959.2 million - $991.1 million\n= -$31.9 million\n\nStep 2: Divide the difference by the 2007 net revenue to find the percentage change.\nPercentage change = (Difference / 2007 net revenue) x 100\n= (-$31.9 million / $991.1 million) x 100\n= -3.21%\n\nANSWER: -3.21",
+      "answer": "To find the percentage change in net revenue, we need to calculate the difference in net revenue between 2008 and 2007, and then divide that by the 2007 net revenue.\n\nStep 1: Find the difference in net revenue between 2008 and 2007.\n2008 net revenue = $959.2 million\n2007 net revenue = $991.1 million\nDifference = 2008 net revenue - 2007 net revenue\n= $959.2 million - $991.1 million\n= -$31.9 million\n\nStep 2: Divide the difference by the 2007 net revenue to find the percentage change.\nPercentage change = (Difference / 2007 net revenue) x 100\n= (-$31.9 million / $991.1 million) x 100\n= -3.21%\n\nANSWER: -3.21",
       "correct": true,
-      "latency_ms": 19893.32
+      "latency_ms": 22277.07
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
-      "answer": "To find the percentage growth in the fair value of loans held-for-sale carried at LOCOM, we need to calculate the difference in fair value between December 31, 2009, and December 31, 2010, and then divide by the fair value at December 31, 2009, and multiply by 100.\n\nStep 1: Find the difference in fair value between December 31, 2009, and December 31, 2010.\nFair value at December 31, 2009 = $1.6 billion\nFair value at December 31, 2010 = $2.5 billion\nDifference in fair value = $2.5 billion - $1.6 billion = $0.9 billion\n\nStep 2: Divide the difference in fair value by the fair value at December 31, 2009, and multiply by 100.\nPercentage growth = ($0.9 billion / $1.6 billion) x 100\n= 56.25%\n\nANSWER: 56.25",
+      "answer": "To find the percentage growth in the fair value of loans held-for-sale carried at LOCOM, we need to calculate the difference in fair value between December 31, 2009, and December 31, 2010, and then divide by the fair value at December 31, 2009, and multiply by 100.\n\nStep 1: Calculate the difference in fair value between December 31, 2009, and December 31, 2010.\nFair value at December 31, 2009: $1.6 billion\nFair value at December 31, 2010: $2.5 billion\nDifference: $2.5 billion - $1.6 billion = $0.9 billion\n\nStep 2: Divide the difference by the fair value at December 31, 2009, and multiply by 100.\nPercentage growth: ($0.9 billion / $1.6 billion) x 100 = 56.25%\n\nANSWER: 56.25",
       "correct": false,
-      "latency_ms": 18795.73
+      "latency_ms": 20626.58
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
-      "answer": "To calculate the expected annual amortization expense, we need to first determine the total amount of intangibles acquired.\n\nFrom the table, we see that the intangible assets (1) consist of customer-related intangibles of approximately $10.7 million and network location intangibles of approximately $10.4 million.\n\nTotal intangible assets = $10.7 million + $10.4 million = $21.1 million\n\nSince the intangibles are being amortized on a straight-line basis over periods of up to 20 years, we can calculate the annual amortization expense as follows:\n\nAnnual amortization expense = Total intangible assets / Number of years\n= $21.1 million / 20\n= $1.055 million\n\nTherefore, the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation is $1.055 million.\n\nANSWER: 1.055",
+      "answer": "To calculate the expected annual amortization expense, we need to first calculate the total amount of intangibles acquired.\n\nFrom the table, we see that the intangible assets (1) consist of customer-related intangibles of approximately $10.7 million and network location intangibles of approximately $10.4 million. Therefore, the total amount of intangibles acquired is:\n\n$10.7 million + $10.4 million = $21.1 million\n\nSince the intangibles are being amortized on a straight-line basis over periods of up to 20 years, we can calculate the annual amortization expense as follows:\n\nAnnual amortization expense = Total amount of intangibles / Number of years\n= $21.1 million / 20 years\n= $1.055 million per year\n\nTherefore, the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation is $1.055 million.\n\nANSWER: 1.055",
       "correct": false,
-      "latency_ms": 20009.64
+      "latency_ms": 22408.04
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
-      "answer": "To find the percentage of net earnings equivalent to the net cash provided by operating activities, we need to divide the net cash provided by operating activities by the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, and then multiply by 100.\n\nStep 1: Identify the figures needed from the text.\n- Net earnings including earnings attributable to redeemable and noncontrolling interests as reported: $1786.2\n- Net cash provided by operating activities: $2807.0\n\nStep 2: Perform the calculation.\n(Net cash provided by operating activities) / (Net earnings including earnings attributable to redeemable and noncontrolling interests as reported) = $2807.0 / $1786.2\n= 1.573\n\nStep 3: Convert the result to a percentage by multiplying by 100.\n1.573 \u00d7 100 = 157.3%\n\nANSWER: 157.3",
+      "answer": "To find the percentage of net earnings equivalent to the net cash provided by operating activities, we need to divide the net cash provided by operating activities by the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, and then multiply by 100.\n\nStep 1: Identify the figures needed from the text.\n- Net earnings including earnings attributable to redeemable and noncontrolling interests as reported: $1786.2\n- Net cash provided by operating activities: $2807.0\n\nStep 2: Perform the calculation.\n(Net cash provided by operating activities) / (Net earnings including earnings attributable to redeemable and noncontrolling interests as reported) \u00d7 100\n= ($2807.0) / ($1786.2) \u00d7 100\n= 1.573 \u00d7 100\n= 157.3%\n\nANSWER: 157.3",
       "correct": false,
-      "latency_ms": 18246.92
+      "latency_ms": 21095.39
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
-      "answer": "To find the percentage decrease in deferred acquisition payments from 2011 to 2012, we need to follow these steps:\n\n1. Identify the deferred acquisition payments for 2011 and 2012:\n\t* 2011: $34.8\n\t* 2012: $1.2\n2. Calculate the decrease in deferred acquisition payments:\n\t* Decrease = 2011 - 2012 = $34.8 - $1.2 = $33.6\n3. Calculate the percentage decrease:\n\t* Percentage decrease = (Decrease / 2011) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nANSWER: 96.55",
-      "correct": true,
-      "latency_ms": 21663.47
+      "answer": "To find the percentage decrease in deferred acquisition payments from 2011 to 2012, we need to follow these steps:\n\n1. Identify the figures for 2011 and 2012:\n\t* 2011: $34.8\n\t* 2012: $1.2\n2. Calculate the decrease:\n\t* Decrease = 2011 - 2012 = $34.8 - $1.2 = $33.6\n3. Calculate the percentage decrease:\n\t* Percentage decrease = (Decrease / 2011) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nHowever, since the decrease is from a larger amount to a smaller amount, we should express this as a percentage decrease, which is the same as the percentage of the original amount that was lost.\n\n4. Calculate the percentage decrease as a percentage of the original amount:\n\t* Percentage decrease = (Original amount - New amount) / Original amount\n\t* Percentage decrease = ($34.8 - $1.2) / $34.8\n\t* Percentage decrease = $33.6 / $34.8\n\t* Percentage decrease \u2248 0.9655 or 96.55%\n\nSince the question asks for the percentage decrease, we should express this as a negative percentage.\n\n5. Convert the percentage to a negative percentage:\n\t* Percentage decrease \u2248 -96.55%\n\nHowever, the correct way to express this as a percentage decrease is to subtract the new amount from the original amount and divide by the original amount, then multiply by 100.\n\n6. Correct the calculation:\n\t* Percentage decrease = (($34.8 - $1.2) / $34.8) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nSince the new amount is smaller than the original amount, we should express this as a percentage decrease, which is the same as the percentage of the original amount that was lost.\n\n7. Express the percentage decrease as a negative percentage:\n\t* Percentage decrease \u2248 -96.55%\n\nHowever, the correct way to express this as a percentage decrease is to subtract the new amount from the original amount and divide by the original amount, then multiply by 100.\n\n8. Correct the calculation:\n\t* Percentage decrease = (($34.8 - $1.2) / $34.8) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nTo express this as a percentage decrease, we should subtract the new amount from the original amount and divide by the original amount, then multiply by 100.\n\n9. Correct the calculation:\n\t* Percentage decrease = (($34.8 - $1.2) / $34.8) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nHowever, the correct way to express this as a percentage decrease is to subtract the new amount from the original amount and divide by the original amount, then multiply by 100.\n\n10. Correct the calculation:\n\t* Percentage decrease = (($34.8 - $1.2) / $34.8) x 100\n\t* Percentage decrease = ($33.6 / $34.8) x 100\n\t* Percentage decrease \u2248 96.55%\n\nTo express this as a percentage decrease, we should subtract the new amount from the original amount and divide by the original amount, then multiply by 100.\n\n11. Correct the calculation:\n\t* Percentage decrease = (($34.8 - $1.2) / $34.8) x 100",
+      "correct": false,
+      "latency_ms": 26256.32
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
-      "answer": "To calculate the total amount spent on share repurchase in the quarter ending December 29, 2018, we need to multiply the total number of shares purchased by the average price paid per share.\n\nFrom the table, we can see that the total number of shares purchased in the quarter ending December 29, 2018, is 1327657, and the average price paid per share is $42.61.\n\nStep 1: Multiply the total number of shares purchased by the average price paid per share:\n1327657 * $42.61 = $5,670,111.57\n\nSince we are asked for the total amount spent on this repurchase in millions, we need to divide the result by 1,000,000.\n\nStep 2: Divide the result by 1,000,000:\n$5,670,111.57 / 1,000,000 = 5.67\n\nHowever, we are also asked to consider the effect on the net change in cash from financing activity. Since the company is repurchasing its own shares, it is using cash to do so, which will decrease the net change in cash from financing activity.\n\nTherefore, the correct answer is the total amount spent on share repurchase in the quarter ending December 29, 2018.\n\nANSWER: 5.67",
+      "answer": "To calculate the total amount spent on the share repurchase in the quarter ending December 29, 2018, we need to multiply the total number of shares purchased (1327657) by the average price paid per share ($42.61).\n\nStep 1: Multiply the total number of shares purchased by the average price paid per share\n1327657 * $42.61 = $5,672,111,097\n\nSince this is a share repurchase, it is a cash outflow from financing activity. Therefore, the net change in cash from financing activity will be negative.\n\nANSWER: 5672111097",
       "correct": false,
-      "latency_ms": 22164.96
+      "latency_ms": 22238.95
     }
   ],
   "gemma3:12b_finqa": [
     {
       "question": "What was Analog Devices reported interest expense for fiscal year 2009, as listed in its annual report?",
       "ground_truth": "3.8",
-      "answer": "The text states: \"if libor changes by 100 basis points , our annual interest expense would change by $ 3.8 million .\"\nThis statement describes the *change* in interest expense, not the total reported interest expense. There is no other information provided about the actual reported interest expense for fiscal year 2009.\n\nANSWER: 3.8",
+      "answer": "The text states: \"if libor changes by 100 basis points , our annual interest expense would change by $ 3.8 million .\"\nThis statement describes the *change* in interest expense, not the total reported interest expense. There is no mention of the actual reported interest expense for fiscal year 2009.\n\nANSWER: 3.8",
       "correct": true,
-      "latency_ms": 27613.91
+      "latency_ms": 27271.38
     },
     {
       "question": "During the fiscal year ended March 31, 2012, for Abiomed, Inc., did the stock-based compensation expense of $3.3 million for equity awards where prescribed performance milestones were achieved or deemed probable exceed the total fair value of restricted stock and restricted stock units vested during that year?",
       "ground_truth": "1",
-      "answer": "1. Identify the stock-based compensation expense for equity awards where milestones were achieved or deemed probable: $3.3 million.\n2. Identify the total fair value of restricted stock and restricted stock units vested in fiscal year 2012: $1.5 million.\n3. Compare the two values: $3.3 million > $1.5 million.\n4. Since $3.3 million is greater than $1.5 million, the stock-based compensation expense did exceed the total fair value of vested units.\n\nANSWER: 1",
+      "answer": "1. Identify the stock-based compensation expense for equity awards where milestones were achieved or deemed probable: $3.3 million.\n2. Identify the total fair value of restricted stock and restricted stock units vested in fiscal year 2012: $1.5 million.\n3. Compare the two values: $3.3 million > $1.5 million.\n4. Determine if the expense exceeded the fair value: Yes.\n\nANSWER: 1",
       "correct": true,
-      "latency_ms": 17330.32
+      "latency_ms": 17041.04
     },
     {
       "question": "What were the total operating expenses for American Airlines Group in 2018, as reflected in the table detailing annual aircraft fuel consumption and costs?",
       "ground_truth": "41932.20338983051",
-      "answer": "1. Identify the relevant information: In 2018, the aircraft fuel expense was $9896 million, and this represented 23.6% of total operating expenses.\n2. Set up the equation: Let 'x' be the total operating expenses. Then, 0.236 * x = 9896\n3. Solve for x: x = 9896 / 0.236\n4. Calculate: x = 41915.254237\n\nANSWER: 41915.25",
+      "answer": "1. Identify the relevant information: In 2018, the aircraft fuel expense was $9896 million, and this represented 23.6% of total operating expenses.\n2. Set up the equation: Let 'x' be the total operating expenses. Then, 0.236 * x = 9896\n3. Solve for x: x = 9896 / 0.236\n4. Calculate: x = 41915.254237288135\n\nANSWER: 41915.25",
       "correct": true,
-      "latency_ms": 20230.36
+      "latency_ms": 23225.51
     },
     {
       "question": "What proportion of Intel's total cash and investments as of December 29, 2012, was made up of available-for-sale investments?",
       "ground_truth": "0.5323169340734545",
       "answer": "1. Identify the amount of available-for-sale investments as of December 29, 2012: $14,001 million.\n2. Identify the total cash and investments as of December 29, 2012: $26,302 million.\n3. Calculate the proportion: ($14,001 / $26,302) = 0.5334\n\nANSWER: 0.5334",
       "correct": true,
-      "latency_ms": 20152.87
+      "latency_ms": 21962.34
     },
     {
       "question": "What was the percentage change in Entergy Louisiana, LLC's net revenue from 2007 to 2008, considering the operating revenues net of fuel, fuel-related expenses, and gas purchased for resale?",
       "ground_truth": "-0.032186459489456136",
       "answer": "1. Identify the 2007 net revenue: $991.1 million\n2. Identify the 2008 net revenue: $959.2 million\n3. Calculate the change in net revenue: 2008 net revenue - 2007 net revenue = $959.2 - $991.1 = -$31.9 million\n4. Calculate the percentage change: (Change in net revenue / 2007 net revenue) * 100 = (-$31.9 / $991.1) * 100\n5. Calculate the result: (-$31.9 / $991.1) * 100 = -0.03214 * 100 = -3.214\n\nANSWER: -3.214",
       "correct": true,
-      "latency_ms": 21069.02
+      "latency_ms": 23746.91
     },
     {
       "question": "What was the percentage growth in the fair value of loans held-for-sale carried at LOCOM from December 31, 2009, to December 31, 2010, for Citigroup?",
       "ground_truth": "0.9765625",
       "answer": "1. Identify the fair value at December 31, 2009: $1.6 billion\n2. Identify the fair value at December 31, 2010: $2.5 billion\n3. Calculate the change in fair value: $2.5 - $1.6 = $0.9 billion\n4. Calculate the percentage growth: ($0.9 / $1.6) * 100 = 56.25%\n\nANSWER: 56.25",
       "correct": false,
-      "latency_ms": 17833.48
+      "latency_ms": 19343.96
     },
     {
       "question": "What is the expected annual amortization expense for the acquired customer-related and network location intangibles of American Tower Corporation, in millions, considering the intangibles are being amortized on a straight-line basis over periods of up to 20 years?",
       "ground_truth": "7.385",
       "answer": "1. Identify the total value of customer-related intangibles: $10.7 million.\n2. Identify the total value of network location intangibles: $10.4 million.\n3. Calculate the total value of intangibles: $10.7 million + $10.4 million = $21.1 million.\n4. Determine the amortization period: up to 20 years.\n5. Calculate the annual amortization expense: $21.1 million / 20 years = $1.055 million.\n\nANSWER: 1.055",
       "correct": false,
-      "latency_ms": 20038.51
+      "latency_ms": 22732.85
     },
     {
       "question": "In General Mills' 2019 financial report, what percentage of the net earnings, including earnings attributable to redeemable and noncontrolling interests as reported, was equivalent to the net cash provided by operating activities?",
       "ground_truth": "0.6363377271107945",
       "answer": "1. Identify the net earnings as reported: $1786.2 million\n2. Identify the net cash provided by operating activities: $2807.0 million\n3. Calculate the ratio: (Net cash provided by operating activities / Net earnings as reported) * 100\n4. Calculation: ($2807.0 / $1786.2) * 100 = 157.05%\n\nANSWER: 157.05",
       "correct": false,
-      "latency_ms": 17744.08
+      "latency_ms": 20889.64
     },
     {
       "question": "What percentage decrease occurred in the deferred acquisition payments from 2011 to 2012, as outlined in the contingent acquisition obligations table within the Notes to Consolidated Financial Statements for 2009?",
       "ground_truth": "96.55172413793103",
       "answer": "1. Identify the deferred acquisition payments for 2011: $34.8 million\n2. Identify the deferred acquisition payments for 2012: $1.2 million\n3. Calculate the decrease: $34.8 - $1.2 = $33.6 million\n4. Calculate the percentage decrease: ($33.6 / $34.8) * 100 = 96.54%\n\nANSWER: 96.54",
       "correct": true,
-      "latency_ms": 22844.79
+      "latency_ms": 26173.31
     },
     {
       "question": "How does the share repurchase in the quarter ending December 29, 2018, affect the net change in cash from financing activity for Cadence Design Systems, and what is the total amount spent on this repurchase in millions?",
       "ground_truth": "56.57146477",
-      "answer": "The question asks for the total amount spent on the share repurchase in the quarter ending December 29, 2018.\n\nFrom the table, the total number of shares purchased as part of the publicly announced plan or program for the period ending December 29, 2018, is 1,203,690. The average price paid per share is $42.61.\n\nTotal amount spent = Total number of shares purchased * Average price per share\nTotal amount spent = 1,203,690 * $42.61 = $51,382,999.90\n\nSince the question asks for the amount in millions, we divide by 1,000,000.\n$51,382,999.90 / 1,000,000 = 51.3829999\n\nRounding to two decimal places, the total amount spent is $51.38 million.\n\nANSWER: 51.38",
+      "answer": "The question asks for the total amount spent on the share repurchase in the quarter ending December 29, 2018.\n\nFrom the table, the total number of shares purchased as part of the publicly announced plan or program for the period ending December 29, 2018 is 1,203,690.\nThe average price paid per share for this repurchase is $42.61.\n\nTotal amount spent = Total number of shares purchased * Average price per share\nTotal amount spent = 1,203,690 * 42.61 = $51,382,999.90\n\nSince the question asks for the amount in millions, we divide by 1,000,000.\nTotal amount spent in millions = $51,382,999.90 / 1,000,000 = 51.3829999\n\nRounding to two decimal places, the total amount spent is $51.38 million.\n\nANSWER: 51.38",
       "correct": false,
-      "latency_ms": 23532.04
+      "latency_ms": 24291.04
     }
   ],
   "llama3.1:8b_convfinqa": [
@@ -221,70 +221,70 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 15564.87
+      "latency_ms": 16031.46
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 279.28
+      "latency_ms": 289.11
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 312.47
+      "latency_ms": 321.77
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
       "answer": "-4.51%",
       "correct": false,
-      "latency_ms": 242.73
+      "latency_ms": 13435.73
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
-      "answer": "9.1%",
+      "answer": "8.06",
       "correct": false,
-      "latency_ms": 11574.45
+      "latency_ms": 176.33
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
       "answer": "2530454",
       "correct": true,
-      "latency_ms": 355.33
+      "latency_ms": 371.86
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "-1.5B",
       "correct": false,
-      "latency_ms": 418.47
+      "latency_ms": 380.25
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "18",
       "correct": false,
-      "latency_ms": 11179.87
+      "latency_ms": 13482.13
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
       "answer": "27729",
       "correct": true,
-      "latency_ms": 383.66
+      "latency_ms": 365.21
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 389.54
+      "latency_ms": 395.84
     }
   ],
   "gemma3:12b_convfinqa": [
@@ -293,70 +293,70 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 14891.54
+      "latency_ms": 15178.59
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 12499.37
+      "latency_ms": 14993.67
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 14376.62
+      "latency_ms": 16522.65
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
       "answer": "75.95",
       "correct": false,
-      "latency_ms": 12691.19
+      "latency_ms": 16171.88
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
       "answer": "10.5",
       "correct": false,
-      "latency_ms": 13548.56
+      "latency_ms": 15820.98
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
       "answer": "2530454",
       "correct": true,
-      "latency_ms": 678.02
+      "latency_ms": 16512.11
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "1.0",
       "correct": false,
-      "latency_ms": 14327.51
+      "latency_ms": 16732.85
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "16",
       "correct": true,
-      "latency_ms": 14481.06
+      "latency_ms": 15959.74
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
       "answer": "27729",
       "correct": true,
-      "latency_ms": 14432.01
+      "latency_ms": 16355.45
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 17904.01
+      "latency_ms": 17374.91
     }
   ],
   "qwen3:8b_convfinqa": [
@@ -365,142 +365,142 @@
       "ground_truth": "206588.0",
       "answer": "206588",
       "correct": true,
-      "latency_ms": 12507.2
+      "latency_ms": 12889.89
     },
     {
       "question": "What were the revenues for Republic Services in 2008, as reflected in the unaudited pro forma financial information?",
       "ground_truth": "9362.2",
       "answer": "9362.2",
       "correct": true,
-      "latency_ms": 11953.38
+      "latency_ms": 14435.21
     },
     {
       "question": "What was the total of net sales for Apple Inc. in 2001, as reported in the 2002 financial year?",
       "ground_truth": "5363.0",
       "answer": "5363",
       "correct": true,
-      "latency_ms": 14259.96
+      "latency_ms": 17173.23
     },
     {
       "question": "What was the percentage change in the cumulative total return on investment for United Parcel Service Inc.'s Class B common stock from December 31, 2004 to December 31, 2009, assuming a $100 initial investment?",
       "ground_truth": "-24.05",
       "answer": "",
       "correct": false,
-      "latency_ms": 14266.08
+      "latency_ms": 16911.07
     },
     {
       "question": "What was the percentage change in the performance price of United Parcel Service's Class B common stock from December 31, 2004 to December 31, 2006, as reflected in the shareowner return performance graph?",
       "ground_truth": "-8.94",
       "answer": "",
       "correct": false,
-      "latency_ms": 13983.02
+      "latency_ms": 15830.48
     },
     {
       "question": "As of December 31, 2010, how many shares of series A common stock were subject to outstanding awards under the 2009 Global Incentive Plan at Celanese?",
       "ground_truth": "2530454.0",
-      "answer": "2530454",
-      "correct": true,
-      "latency_ms": 14309.93
+      "answer": "",
+      "correct": false,
+      "latency_ms": 16528.82
     },
     {
       "question": "What was the net change in the value of litigation reserves for JPMorgan Chase during 2012, considering the additional expenses for mortgage-related matters?",
       "ground_truth": "0.5",
       "answer": "0.5",
       "correct": true,
-      "latency_ms": 13585.19
+      "latency_ms": 15391.13
     },
     {
       "question": "What was the change in Masco's warranty liability from 2011 to 2012?",
       "ground_truth": "16.0",
       "answer": "16",
       "correct": true,
-      "latency_ms": 13259.85
+      "latency_ms": 16146.55
     },
     {
       "question": "What is the total value of Hartford's contractual obligations due within 1 year, as disclosed in the company's 2004 report?",
       "ground_truth": "27729.0",
       "answer": "",
       "correct": false,
-      "latency_ms": 20308.46
+      "latency_ms": 17625.32
     },
     {
       "question": "What was the total amount, in millions, capitalized to assets associated with compensation expense related to SL Green Realty Corp.'s long-term compensation plans, restricted stock, and stock options for the year ended December 31, 2013?",
       "ground_truth": "4.5",
       "answer": "4.5",
       "correct": true,
-      "latency_ms": 14573.65
+      "latency_ms": 16880.72
     }
   ],
   "llama3.1:8b_tatqa": [
     {
       "question": "What was the amount of Income before income taxes for carpenter-technology-corp in the year ended June 30, 2019?",
       "ground_truth": "216.0",
-      "answer": "To find the amount of Income before income taxes for Carpenter Technology Corp in the year ended June 30, 2019, we need to look at the table under \"Income before income taxes for the Company's domestic and foreign operations was as follows:\"\n\n| ($ in millions) | Years Ended June 30, |\n|-----------------|----------------------|\n|                 | 2019  | 2018  | 2017  |\n| Domestic        |       |       |       |\n| $204.2          | $140.3| $56.0 |\n| Foreign         | 11.8  | 19.9  | 14.2  |\n| Income before income taxes | $216.0   | $160.2| $70.2 |\n\nThe amount of Income before income taxes for the year ended June 30, 2019 is $216.0 million.\n\nANSWER: 216",
+      "answer": "To find the amount of Income before income taxes for Carpenter Technology Corp in the year ended June 30, 2019, we need to look at the table under \"Income before income taxes for the Company\u2019s domestic and foreign operations was as follows:\"\n\n| ($ in millions) | Years Ended June 30, |\n|-----------------|----------------------|\n|                 | 2019  | 2018  | 2017  |\n| Domestic        |       |       |       |\n| $204.2          | $140.3| $56.0 |\n| Foreign         | 11.8  | 19.9  | 14.2  |\n| Income before income taxes | $216.0   | $160.2| $70.2 |\n\nThe amount of Income before income taxes for the year ended June 30, 2019 is listed under the column for 2019, and it is $216.0 million.\n\nANSWER: 216",
       "correct": true,
-      "latency_ms": 1902.28
+      "latency_ms": 2050.79
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
       "answer": "To find the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018, I will look at the table under \"Income before income taxes for the Company\u2019s domestic and foreign operations was as follows:\"\n\n| ($ in millions) | Years Ended June 30, |\n|-----------------|----------------------|\n|                 | 2019  | 2018  | 2017  |\n| Domestic        |       |       |       |\n| $204.2          | $140.3| $56.0 |\n| Foreign         | 11.8  | 19.9  | 14.2  |\n| Income before income taxes | $216.0   | $160.2| $70.2 |\n\nThe Domestic Income before income taxes for 2018 is listed as $56.0 million.\n\nANSWER: 56",
       "correct": false,
-      "latency_ms": 13130.28
+      "latency_ms": 16253.08
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
-      "answer": "To determine the year when Foreign reached its highest value, we need to compare the Foreign values for each year.\n\n1. Identify the Foreign values for each year:\n\t* 2017: 14.2\n\t* 2018: 19.9\n\t* 2019: 11.8\n2. Compare the Foreign values:\n\t* 2017 is less than 2018\n\t* 2018 is greater than 2019\n3. Conclusion:\n\t* The highest Foreign value is 19.9, which occurred in 2018.\n\nANSWER: 2018",
+      "answer": "To determine the year when Foreign reached its highest value, we need to compare the Foreign values for each year.\n\n1. Identify the Foreign values for each year:\n\t* 2017: 14.2\n\t* 2018: 19.9\n\t* 2019: 11.8\n2. Compare the Foreign values:\n\t* 2017 is less than 2018\n\t* 2018 is greater than 2019\n3. Conclusion:\n\t* The highest Foreign value is in 2018.\n\nANSWER: 2018",
       "correct": true,
-      "latency_ms": 13815.01
+      "latency_ms": 16083.56
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
-      "answer": "To find the change in income before income taxes for Foreign operations from 2018 to 2019, we need to subtract the 2018 value from the 2019 value.\n\nStep 1: Identify the 2019 and 2018 values for Foreign operations from the table:\n\n| ($ in millions) | Years Ended June 30, |\n|-----------------|----------------------|\n|                 | 2019  | 2018  | 2017  |\n| Foreign         | 11.8  | 19.9  | 14.2  |\n\nStep 2: Subtract the 2018 value from the 2019 value:\n\nChange = 2019 value - 2018 value\n= 11.8 - 19.9\n\nStep 3: Perform the subtraction:\n\nChange = -8.1\n\nANSWER: -8.1",
+      "answer": "To find the change in income before income taxes for Foreign operations from 2018 to 2019, we need to subtract the 2018 value from the 2019 value.\n\nStep 1: Identify the 2019 and 2018 values for Foreign operations from the table:\n\n| ($ in millions) | Years Ended June 30, |\n|-----------------|----------------------|\n|                 | 2019  | 2018  | 2017  |\n| Foreign         | 11.8  | 19.9  | 14.2  |\n\nStep 2: Subtract the 2018 value from the 2019 value:\n\nChange = 2019 value - 2018 value\nChange = 11.8 - 19.9\n\nStep 3: Perform the subtraction:\n\nChange = -8.1\n\nANSWER: -8.1",
       "correct": true,
-      "latency_ms": 14741.13
+      "latency_ms": 16357.25
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
-      "answer": "To find the percentage change in Foreign income before income taxes from 2018 to 2019, we need to first find the difference in Foreign income before income taxes between 2019 and 2018, and then divide that by the Foreign income before income taxes in 2018.\n\nStep 1: Find the difference in Foreign income before income taxes between 2019 and 2018.\nForeign income before income taxes in 2019 = $11.8 million\nForeign income before income taxes in 2018 = $19.9 million\nDifference = $11.8 million - $19.9 million = -$8.1 million\n\nStep 2: Divide the difference by the Foreign income before income taxes in 2018.\nPercentage change = (Difference / Foreign income before income taxes in 2018) \u00d7 100\n= (-$8.1 million / $19.9 million) \u00d7 100\n= -40.6%\n\nANSWER: -40.6",
+      "answer": "To find the percentage change in Foreign income before income taxes for the years ended June 30, 2019 and 2018, we need to first find the difference in Foreign income before income taxes between the two years, and then divide that by the Foreign income before income taxes for 2018.\n\nStep 1: Find the difference in Foreign income before income taxes between 2019 and 2018.\nForeign income before income taxes for 2019 = 11.8\nForeign income before income taxes for 2018 = 19.9\nDifference = 11.8 - 19.9 = -8.1\n\nStep 2: Divide the difference by the Foreign income before income taxes for 2018.\nPercentage change = (Difference / Foreign income before income taxes for 2018) * 100\n= (-8.1 / 19.9) * 100\n= -40.6%\n\nANSWER: -40.6",
       "correct": true,
-      "latency_ms": 14487.32
+      "latency_ms": 16694.2
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
-      "answer": "To answer this question, we need to find the month and year when the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes were settled.\n\nAccording to the text, the settlement occurred in April 2018.\n\nANSWER: 4",
+      "answer": "To answer the question, we need to identify the month and year when the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes were settled.\n\nAccording to the text, the debt derivatives were settled in April 2018.\n\nANSWER: 4",
       "correct": false,
-      "latency_ms": 12528.12
+      "latency_ms": 14387.6
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
-      "answer": "To find the fixed hedged rate for the April 30, 2019 issuance of senior notes, we need to look at the table under \"Issuance of debt derivatives related to senior notes\".\n\n|                | Principal/Notional amount (US$) | Maturity Coupon rate (US$) | Fixed hedged (Cdn$) | Equivalent rate 1 (Cdn$) |\n|----------------|---------------------------------|---------------------------|---------------------|--------------------------|\n| **2019 issuances** |                                 |                           |                     |                          |\n| April 30, 2019  | 1,250                           | 2049                      | 4.350%              | 1,676                    |\n\nThe fixed hedged rate is given as 4.350%.\n\nANSWER: 4.35",
+      "answer": "To find the fixed hedged rate for the April 30, 2019 issuance of senior notes, we need to look at the table under \"Issuance of debt derivatives related to senior notes\".\n\n|                | Principal/Notional amount (US$) | Maturity Coupon rate (US$) | Fixed hedged (Cdn$) | Equivalent rate 1 (Cdn$) |\n|----------------|---------------------------------|---------------------------|---------------------|--------------------------|\n| **2019 issuances** |                                 |                           |                     |                          |\n| April 30, 2019  | 1,250                           | 2049                      | 4.350%              | 1,676                    |\n\nThe fixed hedged rate for the April 30, 2019 issuance of senior notes is given directly in the table as 4.350%.\n\nANSWER: 4.35",
       "correct": true,
-      "latency_ms": 1597.82
+      "latency_ms": 1755.39
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
-      "answer": "To find the decrease in the maturity coupon rate, we need to first find the difference in the coupon rates for the two issuances, and then divide by the notional amount of the second issuance.\n\nStep 1: Find the difference in the coupon rates\nCoupon rate for April 30, 2019: 2049\nCoupon rate for November 12, 2019: 2049\nDifference in coupon rates: 2049 - 2049 = 0\n\nSince the coupon rates are the same, we need to look at the notional amounts to find the decrease in the maturity coupon rate.\n\nStep 2: Find the decrease in the maturity coupon rate\nNotional amount for April 30, 2019: 1,250\nNotional amount for November 12, 2019: 1,000\nDecrease in notional amount: 1,250 - 1,000 = 250\n\nSince the coupon rates are the same, the decrease in the maturity coupon rate is directly proportional to the decrease in the notional amount.\n\nStep 3: Calculate the decrease in the maturity coupon rate\nDecrease in maturity coupon rate = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nHowever, this is not the correct answer. We need to find the decrease in the maturity coupon rate as a percentage of the notional amount.\n\nStep 4: Calculate the decrease in the maturity coupon rate\nDecrease in maturity coupon rate = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nSince the coupon rates are the same, we need to look at the percentage change in the notional amount.\n\nStep 5: Calculate the percentage change in the notional amount\nPercentage change in notional amount = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nHowever, this is not the correct answer. We need to find the percentage change in the notional amount.\n\nStep 6: Calculate the percentage change in the notional amount\nPercentage change in notional amount = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nSince the coupon rates are the same, we need to look at the percentage change in the notional amount.\n\nStep 7: Calculate the percentage change in the notional amount\nPercentage change in notional amount = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nHowever, this is not the correct answer. We need to find the percentage change in the notional amount.\n\nStep 8: Calculate the percentage change in the notional amount\nPercentage change in notional amount = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nSince the coupon rates are the same, we need to look at the percentage change in the notional amount.\n\nStep 9: Calculate the percentage change in the notional amount\nPercentage change in notional amount = (Decrease in notional amount / Notional amount for November 12, 2019) * 100\n= (250 / 1,000) * 100\n= 25\n\nHowever, this is not the correct answer. We",
+      "answer": "To find the decrease in the maturity coupon rate, we need to first find the difference in the coupon rates for the two issuances, and then divide it by the notional amount of the first issuance.\n\nStep 1: Find the difference in the coupon rates\nCoupon rate for April 30, 2019: 2049\nCoupon rate for November 12, 2019: 2049\nDifference in coupon rates: 2049 - 2049 = 0\n\nHowever, we are given the notional amounts, so we need to find the difference in the coupon rates as a percentage of the notional amount.\n\nStep 2: Find the difference in the coupon rates as a percentage of the notional amount\nNotional amount for April 30, 2019: 1,250\nNotional amount for November 12, 2019: 1,000\nDifference in notional amounts: 1,250 - 1,000 = 250\nPercentage decrease in notional amount: (250 / 1,250) * 100 = 20%\n\nHowever, we are asked to find the decrease in the maturity coupon rate, not the notional amount. Since the coupon rates are the same, the decrease in the maturity coupon rate is 0.\n\nANSWER: 0",
       "correct": false,
-      "latency_ms": 17801.15
+      "latency_ms": 16150.1
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "To find the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance, we need to subtract the Equivalent (Cdn$) of the 2018 issuance from the Equivalent (Cdn$) of the 2019 issuance.\n\nStep 1: Identify the Equivalent (Cdn$) for the 2018 issuance:\nEquivalent (Cdn$) for 2018 issuance = 938\n\nStep 2: Identify the Equivalent (Cdn$) for the 2019 issuance:\nEquivalent (Cdn$) for 2019 issuance = 1,308\n\nStep 3: Subtract the Equivalent (Cdn$) of the 2018 issuance from the Equivalent (Cdn$) of the 2019 issuance:\nIncrease = Equivalent (Cdn$) for 2019 issuance - Equivalent (Cdn$) for 2018 issuance\n= 1,308 - 938\n= 370\n\nANSWER: 370",
       "correct": true,
-      "latency_ms": 15461.9
+      "latency_ms": 17130.26
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
       "answer": "To find the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes, we need to add up the Principal/Notional amounts for the two 2019 issuances and divide by 2.\n\nStep 1: Add up the Principal/Notional amounts for the two 2019 issuances:\n1,250 + 1,000 = 2,250\n\nStep 2: Divide the sum by 2 to find the average:\n2,250 / 2 = 1,125\n\nANSWER: 1125",
       "correct": true,
-      "latency_ms": 13498.27
+      "latency_ms": 16113.17
     }
   ],
   "gemma3:12b_tatqa": [
@@ -509,142 +509,142 @@
       "ground_truth": "216.0",
       "answer": "The question asks for the Income before income taxes for the year ended June 30, 2019.\nAccording to the \"Income Taxes\" table, the Income before income taxes was $216.0 million.\n\nANSWER: 216.0",
       "correct": true,
-      "latency_ms": 15669.35
+      "latency_ms": 16527.65
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
-      "answer": "The question asks for the Domestic Income before income taxes for Carpenter Technology Corp in 2018.\n\nAccording to the \"Income Taxes\" table, Domestic Income before income taxes in 2018 was $140.3 million.\n\nANSWER: 140.3",
+      "answer": "The question asks for the Domestic Income before income taxes for Carpenter Technology Corp in 2018.\nAccording to the \"Income Taxes\" table, Domestic Income before income taxes in 2018 was $140.3 million.\n\nANSWER: 140.3",
       "correct": true,
-      "latency_ms": 13546.17
+      "latency_ms": 12176.89
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
-      "answer": "1. Identify the \"Income before income taxes\" table.\n2. Extract the \"Foreign\" values for each year: 2019: 11.8, 2018: 19.9, 2017: 14.2.\n3. Determine the highest value among these: 19.9.\n4. Identify the year corresponding to the highest value: 2018.\n\nANSWER: 2018",
+      "answer": "1. Identify the \"Income before income taxes\" table.\n2. Extract the \"Foreign\" values for each year: 2019: 11.8, 2018: 19.9, 2017: 14.2.\n3. Determine the highest value among these: 19.9 is the highest.\n4. Identify the year corresponding to the highest value: 2018.\n\nANSWER: 2018",
       "correct": true,
-      "latency_ms": 11367.44
+      "latency_ms": 10440.49
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
       "answer": "1. Identify the relevant data from the \"Income before income taxes\" table.\n2. Find the income before income taxes for Foreign operations in 2019: 11.8\n3. Find the income before income taxes for Foreign operations in 2018: 19.9\n4. Calculate the change: 11.8 - 19.9 = -8.1\n\nANSWER: -8.1",
       "correct": true,
-      "latency_ms": 10641.38
+      "latency_ms": 13596.54
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
       "answer": "1. Identify the Foreign income before income taxes for 2018: $19.9 million\n2. Identify the Foreign income before income taxes for 2019: $11.8 million\n3. Calculate the change in Foreign income before income taxes: $11.8 - $19.9 = -$8.1 million\n4. Calculate the percentage change: (-$8.1 / $19.9) * 100 = -40.7035\n\nANSWER: -40.7",
       "correct": true,
-      "latency_ms": 15169.16
+      "latency_ms": 13293.68
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
       "answer": "The text states: \"In April 2018, we settled the debt derivatives related to the repayment of the entire outstanding principal amount of our US$1.4 billion ($1.8 billion) 6.8% senior notes otherwise due in August 2018.\"\n\nTherefore, the month is April and the year is 2018.\n\nANSWER: 2018",
       "correct": false,
-      "latency_ms": 13424.06
+      "latency_ms": 14575.83
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
-      "answer": "The question asks for the fixed hedged rate for the April 30, 2019 issuance of senior notes.\n\nAccording to the table \"Issuance of debt derivatives related to senior notes\", the April 30, 2019 issuance had a \"Fixed hedged (Cdn$)\" rate of 4.350%.\n\nANSWER: 4.350",
+      "answer": "The question asks for the fixed hedged rate for the April 30, 2019 issuance of senior notes.\n\nAccording to the table \"Issuance of debt derivatives related to senior notes\", the April 30, 2019 issuance has a \"Fixed hedged (Cdn$)\" rate of 4.350%.\n\nANSWER: 4.350",
       "correct": true,
-      "latency_ms": 14963.76
+      "latency_ms": 14955.45
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
       "answer": "1. Identify the maturity coupon rates for the April 30, 2019 issuance and the November 12, 2019 issuance.\n   - April 30, 2019: 4.350%\n   - November 12, 2019: 3.700%\n\n2. Calculate the difference between the two coupon rates.\n   - 4.350% - 3.700% = 0.650%\n\nANSWER: 0.65",
       "correct": false,
-      "latency_ms": 16008.48
+      "latency_ms": 13288.38
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "1. Identify the Equivalent (Cdn$) for the February 8, 2018 issuance: 938\n2. Identify the Equivalent (Cdn$) for the November 12, 2019 issuance: 1308\n3. Calculate the increase: 1308 - 938 = 370\n\nANSWER: 370",
       "correct": true,
-      "latency_ms": 12295.73
+      "latency_ms": 11917.09
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
-      "answer": "1. Identify the Principal/Notional amounts for the 2019 issuances: 1,250 and 1,000.\n2. Sum the Principal/Notional amounts: 1,250 + 1,000 = 2,250\n3. Calculate the average: 2,250 / 2 = 1,125\n\nANSWER: 1125",
+      "answer": "1. Identify the Principal/Notional amounts for the 2019 issuances:\n   - April 30, 2019: 1,250\n   - November 12, 2019: 1,000\n\n2. Sum the Principal/Notional amounts: 1,250 + 1,000 = 2,250\n\n3. Count the number of issuances: 2\n\n4. Calculate the average: 2,250 / 2 = 1,125\n\nANSWER: 1125",
       "correct": true,
-      "latency_ms": 11125.35
+      "latency_ms": 12636.12
     }
   ],
   "qwen3:8b_tatqa": [
     {
       "question": "What was the amount of Income before income taxes for carpenter-technology-corp in the year ended June 30, 2019?",
       "ground_truth": "216.0",
-      "answer": "The Income before income taxes for the year ended June 30, 2019, is explicitly stated in the table under the \"Income before income taxes\" row for 2019. The value is $216.0 million.  \n\nANSWER: 216.0",
+      "answer": "The Income before income taxes for the year ended June 30, 2019, is explicitly stated in the table under the \"Income before income taxes\" row for 2019. \n\n**Calculation:**  \nDomestic income ($204.2) + Foreign income ($11.8) = $216.0  \n\nANSWER: 216.0",
       "correct": true,
-      "latency_ms": 14947.03
+      "latency_ms": 18294.46
     },
     {
       "question": "What was the amount of Domestic Income before income taxes for Carpenter Technology Corp in 2018?",
       "ground_truth": "140.3",
       "answer": "The Domestic Income before income taxes for 2018 is directly provided in the table under the \"Domestic\" row and \"2018\" column. \n\nANSWER: 140.3",
       "correct": true,
-      "latency_ms": 10471.29
+      "latency_ms": 9803.33
     },
     {
       "question": "In the income before income taxes table for Carpenter Technology Corp's 2019 report, during which year did Foreign reach its highest value?",
       "ground_truth": "2018.0",
-      "answer": "",
-      "correct": false,
-      "latency_ms": 15034.3
+      "answer": "The \"Foreign\" values in the income before income taxes table are:  \n- **2019**: $11.8  \n- **2018**: $19.9  \n- **2017**: $14.2  \n\nThe highest value is **$19.9** in **2018**.  \n\nANSWER: 2018",
+      "correct": true,
+      "latency_ms": 13512.05
     },
     {
       "question": "What was the change in income before income taxes for Foreign operations from 2018 to 2019 for Carpenter Technology Corp?",
       "ground_truth": "-8.1",
       "answer": "The income before income taxes for Foreign operations in 2019 was $11.8 million, and in 2018 it was $19.9 million.  \nChange = 2019 value - 2018 value = 11.8 - 19.9 = -8.1  \nANSWER: -8.1",
       "correct": true,
-      "latency_ms": 13637.41
+      "latency_ms": 12954.16
     },
     {
       "question": "What was the percentage change in Foreign income before income taxes for carpenter-technology-corp from 2018 to 2019?",
       "ground_truth": "-40.7",
-      "answer": "To calculate the percentage change in Foreign income before income taxes from 2018 to 2019:  \n1. **2018 Foreign Income**: $19.9 million  \n2. **2019 Foreign Income**: $11",
-      "correct": false,
-      "latency_ms": 14979.71
+      "answer": "To calculate the percentage change in Foreign income before income taxes from 2018 to 2019:  \n1. **2018 Foreign Income**: $19.9 million  \n2. **2019 Foreign Income**: $11.8 million  \n3. **Difference**: $11.8 - $19.9 = -$8.1 million  \n4. **Percentage Change**: (-$8.1 / $19.9) \u00d7 100 \u2248 -40.7%  \n\nANSWER: -40.7",
+      "correct": true,
+      "latency_ms": 15126.82
     },
     {
       "question": "In what month and year were the debt derivatives related to the repayment of the entire outstanding principal amount of Rogers Communications Inc.'s US$1.4 billion 6.8% senior notes settled, which were initially due?",
       "ground_truth": "2018-08-12",
       "answer": "",
       "correct": false,
-      "latency_ms": 15237.24
+      "latency_ms": 14684.02
     },
     {
       "question": "What was the fixed hedged rate for the April 30, 2019 issuance of senior notes?",
       "ground_truth": "4.173",
-      "answer": "The fixed hedged rate for the April 30, 2019 issuance is directly provided in the \"Fixed hedged (Cdn$)\" column of the table under \"2019 issuances.\" \n\n**Calculation:**  \nNo calculation is required; the value is explicitly stated as **4.350%**.\n\nANSWER: 4.350",
+      "answer": "The fixed hedged rate for the April 30, 2019 issuance is directly provided in the \"Fixed hedged (Cdn$)\" column of the table under \"2019 issuances.\" \n\n**Step-by-Step Calculation:**  \n1. Locate the row for \"April 30, 2019\" in the \"2019 issuances\" section.  \n2. Identify the value in the \"Fixed hedged (Cdn$)\" column for this row, which is **4.350%**.  \n\nANSWER: 4.350",
       "correct": true,
-      "latency_ms": 13100.99
+      "latency_ms": 12663.62
     },
     {
       "question": "What was the decrease in the maturity coupon rate for the 2019 issuances from April 30 to November 12, given the notional amounts of US$1,250 and US$1,000 respectively?",
       "ground_truth": "-0.18",
       "answer": "The coupon rates for the 2019 issuances are 4.350% (April 30) and 3.700% (November 12).  \nDecrease = 4.350% - 3.700% = 0.650%.  \n\nANSWER: 0.65",
       "correct": false,
-      "latency_ms": 11067.82
+      "latency_ms": 12533.83
     },
     {
       "question": "What was the increase in the Equivalent (Cdn$) between the February 8, 2018 issuance and the November 12, 2019 issuance of debt derivatives related to senior notes?",
       "ground_truth": "370.0",
       "answer": "The Equivalent (Cdn$) for the February 8, 2018 issuance was 938, and for the November 12, 2019 issuance, it was 1,308.  \nCalculation: 1,308 - 938 = 370  \nANSWER: 370",
       "correct": true,
-      "latency_ms": 12260.9
+      "latency_ms": 11871.63
     },
     {
       "question": "What was the average Principal/Notional amount for the 2019 issuances of debt derivatives related to senior notes?",
       "ground_truth": "1125.0",
-      "answer": "The Principal/Notional amounts for the 2019 issuances are $1,250 (April 30, 2019) and $1,000 (November 12, 2019).  \nStep 1: Add the amounts: 1,250 + 1,000 = 2,250  \nStep 2: Divide by the number of issuances (2): 2,250 / 2 = 1,125  \nANSWER: 1125",
+      "answer": "The 2019 issuances of debt derivatives related to senior notes have two entries:  \n- April 30, 2019: $1,250  \n- November 12, 2019: $1,000  \n\n**Calculation**:  \n(1,250 + 1,000) / 2 = 2,250 / 2 = 1,125  \n\nANSWER: 1125",
       "correct": true,
-      "latency_ms": 4653.6
+      "latency_ms": 12771.92
     }
   ]
 }

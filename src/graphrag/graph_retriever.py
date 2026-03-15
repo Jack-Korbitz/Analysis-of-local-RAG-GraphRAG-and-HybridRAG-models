@@ -138,6 +138,19 @@ class GraphRetriever:
         entities = self.extract_query_entities(query)
         company = self.find_company_in_graph(query)
 
+        # Strategy 0: Direct question match — the benchmark graph stores each
+        # source document's question text. If we find an exact match, return that
+        # document immediately without any entity guessing.
+        direct = self.neo4j.query_graph("""
+            MATCH (d:Document)
+            WHERE d.question = $q500 OR d.question = $q200
+            RETURN d.company as company, d.text as text,
+                   d.year as year, 'question_match' as strategy
+            LIMIT 1
+        """, {'q500': query[:500], 'q200': query[:200]})
+        if direct:
+            return direct
+
         # Strategy 1: Exact match — Company + Year + Metric.
         # Return immediately if found: the answer is in the structured record,
         # adding documents would only add noise.

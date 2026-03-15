@@ -65,6 +65,7 @@ def build_graphrag(datasets, max_examples=2000):
         print(f"\nIndexing {dataset_name}...")
         builder.build_from_dataset(
             dataset_path,
+            dataset_name=dataset_name,
             max_examples=max_examples,
             use_llm=False
         )

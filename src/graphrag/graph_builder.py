@@ -410,16 +410,49 @@ If no metrics found, return {{"metrics": []}}"""
 
         return results
 
+    @staticmethod
+    def _extract_full_context(example: dict) -> str:
+        """
+        Build full document context from an example, handling all three dataset formats:
+        - FinQA / ConvFinQA: pre_text + table + post_text
+        - TAT-DQA: context field only
+        """
+        parts = []
+        if example.get('pre_text'):
+            parts.append(str(example['pre_text']).strip())
+        if example.get('table'):
+            parts.append(str(example['table']).strip())
+        if example.get('post_text'):
+            parts.append(str(example['post_text']).strip())
+        if not parts and example.get('context'):
+            parts.append(str(example['context']).strip())
+        return "\n\n".join(parts)
+
+    @staticmethod
+    def _extract_year(example: dict) -> int:
+        """Extract year from report_year field or fall back to scanning the question."""
+        year_raw = example.get('report_year', 0)
+        try:
+            year = int(str(year_raw))
+            if year > 0:
+                return year
+        except (ValueError, TypeError):
+            pass
+        # Fall back: scan question for a 4-digit year
+        m = re.search(r'\b(19[9]\d|20[0-3]\d)\b', example.get('question', ''))
+        return int(m.group()) if m else 0
+
     def build_from_dataset(
         self,
         dataset_path: str,
+        dataset_name: str = 'dataset',
         max_examples: int = 50,
         use_llm: bool = False
     ):
         print(f"\n{'='*60}")
         print("Building Knowledge Graph")
         print(f"{'='*60}")
-        print(f"Dataset: {dataset_path}")
+        print(f"Dataset: {dataset_path} ({dataset_name})")
         print(f"Max examples: {max_examples}")
         print(f"Using LLM extraction: {use_llm}")
 
@@ -437,18 +470,19 @@ If no metrics found, return {{"metrics": []}}"""
 
         for i, example in enumerate(tqdm(examples, desc="Building graph")):
             try:
-                company = example.get('company_name', 'Unknown')
-                year_raw = example.get('report_year', 0)
-                context = example.get('context', '')
-                doc_id = example.get('id', f'doc_{i}')
+                # Works for FinQA/ConvFinQA (pre_text+table+post_text) and TAT-DQA (context)
+                context = self._extract_full_context(example)
 
                 if not context or len(context) < 50:
                     continue
 
-                try:
-                    year = int(str(year_raw))
-                except (ValueError, TypeError):
-                    year = 0
+                company = example.get('company_name', 'Unknown')
+                year = self._extract_year(example)
+                question = example.get('question', '')
+
+                # Prefix doc_id with dataset_name to avoid collisions across datasets
+                raw_id = example.get('id', f'doc_{i}')
+                doc_id = f"{dataset_name}_{raw_id}"
 
                 if company not in companies_created:
                     self.neo4j.create_company(company, {
@@ -461,11 +495,11 @@ If no metrics found, return {{"metrics": []}}"""
 
                 self.neo4j.create_document(
                     doc_id=doc_id,
-                    text=context[:2000],
+                    text=context[:4000],
                     properties={
                         'company': company,
                         'year': year,
-                        'question': example.get('question', '')[:200]
+                        'question': question[:500],
                     }
                 )
                 documents_created += 1
@@ -497,7 +531,6 @@ If no metrics found, return {{"metrics": []}}"""
                         continue
 
                 # Multi-year extraction: parse year columns from table field (or context)
-                # This creates metrics for 2016/2017/2018 etc. from a single document
                 table_text = example.get('table', '') or context
                 for (metric_year, metric_name, metric_value) in self.parse_table_year_columns(table_text):
                     try:
@@ -512,7 +545,7 @@ If no metrics found, return {{"metrics": []}}"""
                     except Exception:
                         continue
 
-            except Exception as e:
+            except Exception:
                 continue
 
         print(f"\nGraph building complete!")

@@ -79,6 +79,10 @@ class Neo4jClient:
                 "FOR (d:Document) ON (d.id)"
             )
             session.run(
+                "CREATE INDEX document_question IF NOT EXISTS "
+                "FOR (d:Document) ON (d.question)"
+            )
+            session.run(
                 "CREATE INDEX metric_name IF NOT EXISTS "
                 "FOR (m:Metric) ON (m.name)"
             )
@@ -104,10 +108,11 @@ class Neo4jClient:
             return result.single()["name"]
     
     def create_document(self, doc_id: str, text: str, properties: Dict = None) -> str:
-        """Create a Document node"""
+        """Create or update a Document node (MERGE prevents duplicates across datasets)."""
         with self.driver.session() as session:
             query = """
-            CREATE (d:Document {id: $doc_id, text: $text})
+            MERGE (d:Document {id: $doc_id})
+            SET d.text = $text
             SET d += $properties
             RETURN d.id as id
             """
