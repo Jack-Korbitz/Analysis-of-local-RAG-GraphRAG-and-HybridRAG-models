@@ -503,10 +503,10 @@ class ParallelBenchmarkRunner:
         output_dir = Path("results/metrics")
         output_dir.mkdir(parents=True, exist_ok=True)
         
-        with open(output_dir / f"{approach}_fast.json", 'w') as f:
+        with open(output_dir / f"{approach}.json", 'w') as f:
             json.dump(self.results[approach], f, indent=2)
-        
-        print(f"Saved: {approach}_fast.json")
+
+        print(f"Saved: {approach}.json")
     
     def print_summary(self):
         print("\n" + "="*60)
@@ -586,9 +586,9 @@ def main():
     print(f"  RAG: {timedelta(seconds=int(runner.timings.get('rag', 0)))}")
     print(f"  GraphRAG: {timedelta(seconds=int(runner.timings.get('graphrag', 0)))}")
     print(f"\nResults saved to results/metrics/")
-    print("  - baseline_fast.json")
-    print("  - rag_fast.json")
-    print("  - graphrag_fast.json")
+    print("  - baseline.json")
+    print("  - rag.json")
+    print("  - graphrag.json")
 
 
 if __name__ == "__main__":

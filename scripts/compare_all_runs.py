@@ -12,9 +12,9 @@ def load_all_results():
     
     result_files = {
         'Current Models': {
-            'baseline': output_dir / "baseline_fast.json",
-            'rag': output_dir / "rag_fast.json",
-            'graphrag': output_dir / "graphrag_fast.json"
+            'baseline': output_dir / "baseline.json",
+            'rag': output_dir / "rag.json",
+            'graphrag': output_dir / "graphrag.json"
         }
     }
     

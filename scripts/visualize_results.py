@@ -26,9 +26,9 @@ MODEL_COLORS = {
 
 def load_results():
     files = {
-        "Baseline": METRICS_DIR / "baseline_fast.json",
-        "RAG":      METRICS_DIR / "rag_fast.json",
-        "GraphRAG": METRICS_DIR / "graphrag_fast.json",
+        "Baseline": METRICS_DIR / "baseline.json",
+        "RAG":      METRICS_DIR / "rag.json",
+        "GraphRAG": METRICS_DIR / "graphrag.json",
     }
     data = {}
     for label, path in files.items():

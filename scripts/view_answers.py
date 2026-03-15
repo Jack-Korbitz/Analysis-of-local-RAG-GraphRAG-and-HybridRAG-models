@@ -14,9 +14,9 @@ METRICS_DIR = Path("results/metrics")
 OUTPUT_FILE = Path("results/answer_viewer.html")
 
 APPROACH_LABELS = {
-    "baseline_fast": "Baseline",
-    "rag_fast":      "RAG",
-    "graphrag_fast": "GraphRAG",
+    "baseline": "Baseline",
+    "rag":      "RAG",
+    "graphrag": "GraphRAG",
 }
 
 
