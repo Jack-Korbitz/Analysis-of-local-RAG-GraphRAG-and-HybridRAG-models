@@ -226,19 +226,11 @@ class ParallelBenchmarkRunner:
         cot = dataset_name in ('finqa', 'tatqa')
 
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
-            context = self._build_dataset_context(example)
             prompt_suffix = "Show your step-by-step calculation, then write ANSWER: <number>" if cot else "Answer (number only):"
-            if context:
-                prompt = (
-                    f"Context from annual report:\n{context}\n\n"
-                    f"Question: {example['question']}\n\n"
-                    f"{prompt_suffix}"
-                )
-            else:
-                prompt = (
-                    f"Financial question: {example['question']}\n\n"
-                    f"{prompt_suffix}"
-                )
+            prompt = (
+                f"Financial question: {example['question']}\n\n"
+                f"{prompt_suffix}"
+            )
             result = client.generate(
                 prompt=prompt,
                 system_prompt=system_prompt,

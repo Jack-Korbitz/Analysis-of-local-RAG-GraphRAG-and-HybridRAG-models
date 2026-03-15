@@ -4,15 +4,19 @@ A benchmark comparing three local LLMs across three retrieval architectures on f
 
 ---
 
-## Overview
+## What This Project Measures
 
-Each question is answered three ways, with accuracy compared across all combinations of model and approach:
+Each financial question is answered three ways:
 
-| Approach | Description |
-|---|---|
-| **Baseline** | LLM answers from training knowledge alone — no retrieval |
-| **Vector RAG** | Semantically similar document chunks are retrieved and passed as context |
-| **GraphRAG** | A Neo4j knowledge graph of extracted financial facts is traversed for structured context |
+| Approach | Context given to the model | Purpose |
+|---|---|---|
+| **Baseline** | None — question only | Control: what can the model answer from training knowledge alone? |
+| **Vector RAG** | Semantically retrieved document chunks | Does embedding-based retrieval help? |
+| **GraphRAG** | Structured facts traversed from a Neo4j knowledge graph | Does a structured knowledge graph help more? |
+
+The key research question is: **how much do RAG and GraphRAG benefit a local model compared to it working alone?**
+
+For detailed method descriptions see the [docs/](docs/) folder.
 
 ---
 
@@ -24,19 +28,23 @@ Each question is answered three ways, with accuracy compared across all combinat
 | `gemma3:12b` | 12B | Google |
 | `qwen3:8b` | 8B | Alibaba |
 
+All models run locally via [Ollama](https://ollama.ai).
+
+---
+
 ## Datasets
 
 All sourced from [G4KMU/t2-ragbench](https://huggingface.co/datasets/G4KMU/t2-ragbench) on HuggingFace:
 
-| Dataset | Description | Size |
-|---|---|---|
-| **FinQA** | Single-turn financial document QA with numeric answers | ~8,000 questions |
-| **ConvFinQA** | Multi-turn follow-up questions on financial documents | ~3,400 questions |
-| **TAT-DQA** | Table-and-text financial QA requiring table comprehension | ~11,000 questions |
+| Dataset | Description |
+|---|---|
+| **FinQA** | Single-turn financial document QA requiring arithmetic over tables |
+| **ConvFinQA** | Multi-turn follow-up questions on financial documents |
+| **TAT-DQA** | Table-and-text financial QA requiring table comprehension |
 
 ---
 
-## Setup
+## Quick Start
 
 ### Prerequisites
 
@@ -44,7 +52,7 @@ All sourced from [G4KMU/t2-ragbench](https://huggingface.co/datasets/G4KMU/t2-ra
 - [Ollama](https://ollama.ai/download)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-### Installation
+### Install
 
 ```bash
 git clone https://github.com/Jack-Korbitz/Analysis-of-local-GraphRAG-models.git
@@ -55,19 +63,7 @@ python -m venv venv
 # source venv/bin/activate       # Mac / Linux
 
 pip install -r requirements.txt
-```
-
-### Configuration
-
-```bash
 cp .env.example .env
-```
-
-```
-NEO4J_URI=bolt://localhost:7687
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=password123
-OLLAMA_BASE_URL=http://localhost:11434
 ```
 
 ### Pull Models
@@ -82,210 +78,58 @@ ollama pull qwen3:8b
 
 ```bash
 docker-compose up -d
+# Wait ~30 seconds. Verify at http://localhost:7474  (neo4j / password123)
 ```
 
-Wait ~30 seconds. Verify at http://localhost:7474 (neo4j / password123).
-
----
-
-## Running
-
-Run the following scripts in order:
+### Run
 
 ```bash
-python scripts/test_ollama.py              # 1. Verify models are available
-python scripts/download_datasets.py        # 2. Download benchmark datasets
-python scripts/build_improved_indexes.py   # 3. Build FAISS indexes + Neo4j graph
-python scripts/run_parallel_benchmarks.py  # 4. Run benchmarks
-python scripts/compare_all_runs.py         # 5. View results report
-python scripts/visualize_results.py        # 5. Generate results chart
+python scripts/download_datasets.py        # 1. Download benchmark datasets
+python scripts/build_improved_indexes.py   # 2. Build FAISS indexes + Neo4j graph
+python scripts/run_parallel_benchmarks.py  # 3. Run all benchmarks
+python scripts/compare_all_runs.py         # 4. Print results report
+python scripts/visualize_results.py        # 5. Generate charts (4 PNG files)
+python scripts/view_answers.py             # 6. Generate browsable HTML viewer
 ```
 
-Sample size is configured in `run_parallel_benchmarks.py`:
+Sample size is set in `run_parallel_benchmarks.py`:
 ```python
-runner = ParallelBenchmarkRunner(models, datasets, num_samples=100)
-# 3 models × 3 datasets × 100 = 900 total questions
+runner = ParallelBenchmarkRunner(models, datasets, num_samples=10)
+# 3 models × 3 datasets × 10 = 90 questions per approach
 ```
 
 ---
 
-## Architecture
+## Results
 
-### Baseline
-
-The question is sent directly to the LLM with no supporting context. This serves as the lower bound — any retrieval approach should improve on this.
-
+After running the benchmarks, compare results with:
+```bash
+python scripts/compare_all_runs.py
 ```
-Question → LLM → Answer
-```
+
+Charts are saved to `results/visualizations/`. Browse individual answers in `results/answer_viewer.html`.
 
 ---
 
-### Vector RAG
+## Architecture Overview
 
 ```
-Question → Embed → FAISS Search → Top-8 Chunks → LLM → Answer
+Baseline:  Question ─────────────────────────────────────────► LLM → Answer
+
+RAG:       Question → Embed → FAISS Search → Top chunks ──────► LLM → Answer
+                                                   + Source doc
+
+GraphRAG:  Question → Entity extraction → Neo4j traversal ────► LLM → Answer
+                                         + Graph records
+                                         + Source doc
 ```
 
-#### Embeddings — `src/rag/embeddings.py`
+See the docs folder for full details on each approach:
 
-Text is converted to dense vectors using **`all-MiniLM-L6-v2`** from the `sentence-transformers` library:
-
-| Property | Value |
-|---|---|
-| Model size | 22M parameters |
-| Output dimensions | 384 |
-| Similarity measure | Cosine (captures semantic meaning regardless of word choice) |
-
-Semantically related phrases — "net sales" and "revenue", or "interest cost" and "interest expense" — are embedded near each other in vector space, enabling retrieval by meaning rather than keyword.
-
-#### Chunking — `src/utils/chunking.py`
-
-Documents are split into overlapping segments before indexing:
-
-| Setting | Value |
-|---|---|
-| Chunk size | 300 characters |
-| Overlap | 75 characters |
-| Split boundary | Sentence endings |
-
-Chunking ensures each retrieval slot returns a focused passage. Overlap prevents answers from being split across a boundary. Duplicate chunks are removed before indexing.
-
-#### Vector Store — `src/rag/vector_store.py`
-
-Uses **FAISS `IndexFlatIP`** (inner product on L2-normalized vectors = cosine similarity). Vectors are normalized on insertion so similarity search is equivalent to measuring the angle between vectors. The index is saved to disk and reloaded at benchmark time — no re-embedding required between runs.
-
-#### Retriever — `src/rag/retriever.py`
-
-Embeds the question, retrieves the top 8 most similar chunks, and formats them as numbered context blocks for the LLM.
-
-**Prompt structure:**
-```
-Context:
-[Document 1]
-...chunk text...
-
-[Document 2]
-...chunk text...
-
-Question: {question}
-
-Let's approach this step-by-step:
-1. Identify the relevant information in the context
-2. Extract the specific data needed
-3. Provide a clear, concise answer
-
-Answer:
-```
-
----
-
-### GraphRAG
-
-```
-Question → Extract entities → Traverse Neo4j → Structured facts + Document text → LLM → Answer
-```
-
-#### Graph Builder — `src/graphrag/graph_builder.py`
-
-Processes each dataset example using **rule-based extraction** (no LLM required) to populate Neo4j:
-
-**Metric extraction uses two methods:**
-
-1. **Statement patterns** — regex matching on prose text:
-   ```
-   "revenue of $3.8 million"  →  (metric: revenue, value: 3.8)
-   ```
-
-2. **Table column parsing** (`parse_table_year_columns`) — finds markdown tables with year column headers and extracts a (year, metric, value) triple for every cell:
-   ```
-   | Metric        | 2016  | 2017  | 2018  |
-   | net income    | 450   | 510   | 620   |
-   | total revenue | 3200  | 3800  | 4100  |
-   ```
-   → 6 structured facts from a single table
-
-**23 canonical metric types** are recognized and mapped to standard names. Longest-keyword match wins when multiple terms apply to the same row.
-
-| Raw text examples | Canonical name |
-|---|---|
-| "net revenue", "net sales" | `net_revenue` |
-| "net income", "net earnings", "net profit" | `net_income` |
-| "interest expense", "interest cost" | `interest_expense` |
-| "total operating expenses", "operating costs" | `operating_expenses` |
-| "gross profit" | `gross_profit` |
-| "cost of goods sold", "cost of sales", "cost of revenue" | `cost_of_goods_sold` |
-| "capital expenditures", "capital expenditure" | `capital_expenditures` |
-| "cash and cash equivalents" | `cash_and_equivalents` |
-
-#### Graph Schema — `src/graphrag/neo4j_client.py`
-
-```
-(Company)-[:HAS_METRIC]->(Metric)-[:FOR_YEAR]->(Year)
-(Document)-[:ABOUT]---->(Company)
-(Document)-[:FROM_YEAR]->(Year)
-```
-
-Current graph contents:
-
-| Node | Count |
-|---|---|
-| Company | 306 |
-| Document | 18,772 |
-| Metric | 43,402 |
-| Year | 25 |
-| Relationships | 124,348 |
-
-Each Document node stores up to 2,000 characters of raw context including financial tables.
-
-#### Graph Retriever — `src/graphrag/graph_retriever.py`
-
-The question is parsed for three entity types:
-
-| Entity | Extraction method |
-|---|---|
-| Company | Matched against all Company nodes; longest-match-wins prevents partial name collisions |
-| Year | Regex `\b(19[9]\d|20[0-3]\d)\b` |
-| Metric type | Keyword lookup across recognized financial terms |
-
-Five retrieval strategies are attempted in priority order:
-
-| Priority | Strategy | Condition | Returns |
-|---|---|---|---|
-| 1 | Company + Year + Metric | All three extracted | Exact metric value |
-| 2 | Company + Year | Company and year found | All metrics for that company and year |
-| 3 | Company only | Company found, no year in question | Most recent metric values |
-| 4 | Metric only | Metric found, no year in question | That metric across all companies |
-| 5 | Document text | Company is known | Raw document text for that company and year |
-
-Strategy 5 runs alongside strategies 1–4 rather than as a last resort. Since structured metrics cover only 23 canonical types, most questions require the raw table text to find the specific line item asked about. The LLM receives both the structured metric records and the full document text.
-
-**Prompt structure:**
-```
-Knowledge graph records:
-[Record 1] Company: Analog Devices | Year: 2009 | Metric: interest_expense | Value: $3.80 million
-[Record 2] Company: Analog Devices | Year: 2009
-   Text: ...financial table text...
-
-Question: {question}
-
-Answer (be concise, lead with the number):
-```
-
----
-
-## Accuracy Scoring
-
-Financial answers have significant formatting variation. A tolerance-based match is applied across all scripts:
-
-| Check | Description |
-|---|---|
-| Comma normalization | `41,932` → `41932` |
-| String containment | Ground truth appears anywhere in the answer |
-| Exact numeric match | Numbers parsed and compared directly |
-| Percentage ↔ decimal | `0.35` matches `35%` and vice versa |
-| Large number tolerance | Within 1% for values ≥ 100 |
-| Small number tolerance | Within ± 0.5 for values < 100 |
+- [docs/baseline.md](docs/baseline.md) — Closed-book baseline method
+- [docs/rag.md](docs/rag.md) — Vector RAG build and retrieval pipeline
+- [docs/graphrag.md](docs/graphrag.md) — GraphRAG build, graph schema, and retrieval strategies
+- [docs/scoring.md](docs/scoring.md) — Accuracy scoring and tolerance logic
 
 ---
 
@@ -293,38 +137,37 @@ Financial answers have significant formatting variation. A tolerance-based match
 
 ```
 ├── scripts/
-│   ├── test_ollama.py               Verify Ollama connection and model availability
-│   ├── download_datasets.py         Download FinQA, ConvFinQA, TAT-DQA from HuggingFace
-│   ├── build_improved_indexes.py    Build FAISS vector indexes and Neo4j knowledge graph
-│   ├── run_parallel_benchmarks.py   Run Baseline, RAG, and GraphRAG benchmarks in parallel
-│   ├── compare_all_runs.py          Print accuracy and latency comparison report
-│   └── visualize_results.py         Generate 4-panel benchmark results chart (PNG)
+│   ├── download_datasets.py         Download FinQA, ConvFinQA, TAT-DQA
+│   ├── build_improved_indexes.py    Build FAISS indexes and Neo4j graph
+│   ├── run_parallel_benchmarks.py   Run Baseline, RAG, GraphRAG benchmarks
+│   ├── compare_all_runs.py          Print accuracy and latency report
+│   ├── visualize_results.py         Generate 4 result charts (PNG)
+│   ├── view_answers.py              Generate HTML answer browser
+│   └── visualize_graph.py           Visualize a slice of the Neo4j graph
 │
 ├── src/
-│   ├── models/
-│   │   └── ollama_client.py         Ollama API wrapper and prompt templates
+│   ├── models/ollama_client.py      Ollama API wrapper with qwen3 think-mode handling
 │   ├── rag/
-│   │   ├── embeddings.py            SentenceTransformer wrapper (all-MiniLM-L6-v2, 384-dim)
-│   │   ├── vector_store.py          FAISS index with cosine similarity (IndexFlatIP)
-│   │   └── retriever.py             Full RAG pipeline: embed → search → format context
+│   │   ├── embeddings.py            SentenceTransformer (all-MiniLM-L6-v2, 384-dim)
+│   │   ├── vector_store.py          FAISS IndexFlatIP cosine similarity store
+│   │   └── retriever.py             Embed → search → filter → format pipeline
 │   ├── graphrag/
-│   │   ├── neo4j_client.py          Neo4j Bolt driver wrapper and Cypher helpers
-│   │   ├── graph_builder.py         Rule-based entity and metric extraction, graph population
-│   │   └── graph_retriever.py       Five-strategy Cypher traversal and context formatting
-│   └── utils/
-│       └── chunking.py              Sentence-boundary chunker with configurable overlap
+│   │   ├── neo4j_client.py          Neo4j Bolt driver and Cypher helpers
+│   │   ├── graph_builder.py         Rule-based entity extraction and graph population
+│   │   └── graph_retriever.py       6-strategy Cypher traversal and context formatting
+│   └── utils/chunking.py            Table-aware sentence-boundary chunker
 │
 ├── data/
-│   ├── benchmarks/                  Downloaded datasets (not tracked in Git)
-│   └── vector_db/                   FAISS indexes (not tracked in Git)
+│   ├── benchmarks/                  Downloaded datasets (git-ignored)
+│   └── vector_db/                   FAISS indexes (git-ignored)
 │
 ├── results/
-│   └── metrics/
-│       ├── baseline_fast.json       Benchmark results (tracked in Git)
-│       ├── rag_fast.json
-│       └── graphrag_fast.json
+│   ├── metrics/                     JSON results per approach (tracked in git)
+│   ├── visualizations/              Generated PNG charts (git-ignored)
+│   └── answer_viewer.html           Browsable Q&A viewer
 │
-├── docker-compose.yml               Neo4j 5.15 container configuration
+├── docs/                            Detailed method documentation
+├── docker-compose.yml               Neo4j 5.15 container
 ├── requirements.txt
 └── .env.example
 ```

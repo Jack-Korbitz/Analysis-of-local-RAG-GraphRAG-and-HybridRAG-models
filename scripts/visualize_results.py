@@ -12,9 +12,9 @@ OUTPUT_DIR = Path("results/visualizations")
 METRICS_DIR = Path("results/metrics")
 
 COLORS = {
-    "Baseline": "#6c757d",
-    "RAG":      "#2196F3",
-    "GraphRAG": "#4CAF50",
+    "Baseline": "#E2E4FC",
+    "RAG":      "#8861F1",
+    "GraphRAG": "#241160",
 }
 
 MODEL_COLORS = {
@@ -128,13 +128,12 @@ def plot_accuracy_by_approach(data, ax):
             for m in all_models
         ]
         bars = ax.bar(x + offsets[i], accuracies, width, label=approach,
-                      color=COLORS[approach], edgecolor='white', linewidth=0.5)
+                      color=COLORS[approach], edgecolor='black', linewidth=0.8)
         for bar, val in zip(bars, accuracies):
             if val > 0:
                 ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
                         f'{val:.1f}%', ha='center', va='bottom', fontsize=8, fontweight='bold')
 
-    ax.set_title('Accuracy by Model and Approach', fontsize=13, fontweight='bold', pad=12)
     ax.set_ylabel('Accuracy (%)')
     ax.set_xticks(x)
     ax.set_xticklabels([m.replace(':', '\n') for m in all_models], fontsize=9)
@@ -165,13 +164,12 @@ def plot_accuracy_by_dataset(data, ax):
                 accs.append(0)
 
         bars = ax.bar(x + offsets[i], accs, width, label=approach,
-                      color=COLORS[approach], edgecolor='white', linewidth=0.5)
+                      color=COLORS[approach], edgecolor='black', linewidth=0.8)
         for bar, val in zip(bars, accs):
             if val > 0:
                 ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
                         f'{val:.1f}%', ha='center', va='bottom', fontsize=8, fontweight='bold')
 
-    ax.set_title('Accuracy by Dataset and Approach', fontsize=13, fontweight='bold', pad=12)
     ax.set_ylabel('Accuracy (%)')
     ax.set_xticks(x)
     ax.set_xticklabels([d.upper() for d in datasets], fontsize=9)
@@ -195,12 +193,11 @@ def plot_latency(data, ax):
             for m in all_models
         ]
         bars = ax.bar(x + offsets[i], latencies, width, label=approach,
-                      color=COLORS[approach], edgecolor='white', linewidth=0.5)
+                      color=COLORS[approach], edgecolor='black', linewidth=0.8)
         for bar, val in zip(bars, latencies):
             ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.1,
                     f'{val:.1f}s', ha='center', va='bottom', fontsize=7)
 
-    ax.set_title('Avg Latency per Question by Model', fontsize=13, fontweight='bold', pad=12)
     ax.set_ylabel('Latency (seconds)')
     ax.set_xticks(x)
     ax.set_xticklabels([m.replace(':', '\n') for m in all_models], fontsize=9)
@@ -218,18 +215,33 @@ def plot_overall_summary(data, ax):
 
     bars = ax.bar(approaches, [overall[a] for a in approaches],
                   color=[COLORS[a] for a in approaches],
-                  edgecolor='white', linewidth=0.5, width=0.5)
+                  edgecolor='black', linewidth=0.8, width=0.5)
 
     for bar, approach in zip(bars, approaches):
         val = overall[approach]
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.3,
                 f'{val:.1f}%', ha='center', va='bottom', fontsize=12, fontweight='bold')
 
-    ax.set_title('Overall Accuracy by Approach', fontsize=13, fontweight='bold', pad=12)
     ax.set_ylabel('Accuracy (%)')
     ax.set_ylim(0, max(55, max(overall.values()) * 1.2))
     ax.grid(axis='y', alpha=0.3)
     ax.set_axisbelow(True)
+
+
+def add_legend(fig):
+    legend_handles = [
+        mpatches.Patch(color=COLORS[a], label=a) for a in ["Baseline", "RAG", "GraphRAG"]
+    ]
+    fig.legend(handles=legend_handles, loc='lower center', ncol=3,
+               fontsize=11, frameon=True, framealpha=0.9,
+               bbox_to_anchor=(0.5, 0.01))
+
+
+def save_figure(fig, path):
+    plt.tight_layout(rect=[0, 0.07, 1, 1])
+    fig.savefig(path, dpi=150, bbox_inches='tight', facecolor=fig.get_facecolor())
+    print(f"Saved: {path}")
+    plt.close(fig)
 
 
 def main():
@@ -242,30 +254,21 @@ def main():
 
     print(f"Loaded: {list(data.keys())}")
 
-    fig, axes = plt.subplots(2, 2, figsize=(16, 11))
-    fig.suptitle('GraphRAG Benchmark Results', fontsize=16, fontweight='bold', y=0.98)
-    fig.patch.set_facecolor('#f8f9fa')
-    for ax in axes.flat:
-        ax.set_facecolor('#ffffff')
-
-    plot_overall_summary(data, axes[0, 0])
-    plot_accuracy_by_approach(data, axes[0, 1])
-    plot_accuracy_by_dataset(data, axes[1, 0])
-    plot_latency(data, axes[1, 1])
-
-    legend_handles = [
-        mpatches.Patch(color=COLORS[a], label=a) for a in ["Baseline", "RAG", "GraphRAG"]
+    plots = [
+        ("overall_accuracy.png",    "Overall Accuracy by Approach",        plot_overall_summary),
+        ("accuracy_by_model.png",   "Accuracy by Model and Approach",      plot_accuracy_by_approach),
+        ("accuracy_by_dataset.png", "Accuracy by Dataset and Approach",    plot_accuracy_by_dataset),
+        ("latency_by_model.png",    "Avg Latency per Question by Model",   plot_latency),
     ]
-    fig.legend(handles=legend_handles, loc='lower center', ncol=3,
-               fontsize=11, frameon=True, framealpha=0.9,
-               bbox_to_anchor=(0.5, 0.01))
 
-    plt.tight_layout(rect=[0, 0.07, 1, 0.96])
-
-    out_path = OUTPUT_DIR / "benchmark_results.png"
-    plt.savefig(out_path, dpi=150, bbox_inches='tight', facecolor=fig.get_facecolor())
-    print(f"Saved: {out_path}")
-    plt.show()
+    for filename, title, plot_fn in plots:
+        fig, ax = plt.subplots(figsize=(10, 6))
+        fig.patch.set_facecolor('#f8f9fa')
+        ax.set_facecolor('#ffffff')
+        fig.suptitle(title, fontsize=14, fontweight='bold', y=1.01)
+        plot_fn(data, ax)
+        add_legend(fig)
+        save_figure(fig, OUTPUT_DIR / filename)
 
 
 if __name__ == "__main__":
