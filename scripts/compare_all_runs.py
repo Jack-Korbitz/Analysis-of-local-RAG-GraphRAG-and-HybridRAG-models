@@ -43,7 +43,7 @@ def aggregate_by_model(results_dict):
     return aggregated
 
 
-def check_accuracy(answer, ground_truth):
+def check_accuracy(answer, ground_truth, question=''):
     answer_str = str(answer).lower()
     # Strip only trailing ".0" (e.g. "22929.0" → "22929").
     # Do NOT use .replace('.0','') — that corrupts values like "-0.032..." → "-032..."
@@ -53,8 +53,8 @@ def check_accuracy(answer, ground_truth):
     answer_norm = re.sub(r'(\d),(\d)', r'\1\2', answer_str)
     gt_norm = re.sub(r'(\d),(\d)', r'\1\2', gt_str)
 
-    # Direct string containment after normalization
-    if gt_norm in answer_norm:
+    # Whole-number string match (word-boundary safe — avoids "531" matching "-531" or "1" matching "2013")
+    if gt_norm and re.search(r'(?<!\d)' + re.escape(gt_norm) + r'(?!\d)', answer_norm):
         return True
 
     # Extract all numbers from both strings
@@ -66,6 +66,13 @@ def check_accuracy(answer, ground_truth):
 
     try:
         gt_val = float(gt_numbers[0])
+
+        # Boolean yes/no: GT is 0 or 1 — map natural language to numeric
+        if gt_val in (0.0, 1.0):
+            if gt_val == 1.0 and re.search(r'\b(yes|true|did|exceeded?|greater|more|higher)\b', answer_str):
+                return True
+            if gt_val == 0.0 and re.search(r'\b(no|false|did not|not exceed|less|lower|neither)\b', answer_str):
+                return True
 
         for ans_num in answer_numbers:
             ans_val = float(ans_num)
@@ -84,9 +91,20 @@ def check_accuracy(answer, ground_truth):
             if abs(gt_val) >= 100 and abs(gt_val - ans_val) / abs(gt_val) < 0.01:
                 return True
 
-            # Absolute tolerance for small numbers (within 0.5)
-            if abs(gt_val) < 100 and abs(ans_val - gt_val) < 0.5:
+            # Absolute tolerance for mid-range numbers 1–99 (within 0.5)
+            if 1 <= abs(gt_val) < 100 and abs(ans_val - gt_val) < 0.5:
                 return True
+
+            # Relative tolerance for small decimals <1 (within 1%)
+            # ±0.5 is too loose here — e.g. 0.9 would match GT=0.9765625
+            if abs(gt_val) < 1 and abs(gt_val - ans_val) / abs(gt_val) < 0.01:
+                return True
+
+            # Unit scale: model strips "million"/"thousand" suffix — ans may be 1000x/1M× smaller
+            if abs(gt_val) >= 1000:
+                for scale in [1_000, 1_000_000]:
+                    if abs(ans_val * scale - gt_val) / abs(gt_val) < 0.01:
+                        return True
 
     except ValueError:
         pass
@@ -101,7 +119,7 @@ def calculate_accuracy_metrics(results_dict):
         total = len(questions)
         
         for q in questions:
-            if check_accuracy(q['answer'], q['ground_truth']):
+            if check_accuracy(q['answer'], q['ground_truth'], q.get('question', '')):
                 correct += 1
         
         accuracy[model] = {

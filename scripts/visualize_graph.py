@@ -12,7 +12,7 @@ OUTPUT_PATH = Path("results/visualizations/knowledge_graph.png")
 # ─────────────────────────────────────────────
 #  ADJUST THESE VALUES BEFORE RUNNING
 # ─────────────────────────────────────────────
-NUM_COMPANIES  = 306       # 1 – 306 total companies in graph
+NUM_COMPANIES  = 20       # 1 – 306 total companies in graph
 YEAR_TO_SHOW   = 2018     # 1998 – 2022
 NODE_SPACING   = 2.0      # higher = more spread out (try 3.0 – 8.0)
 FIGURE_SIZE    = (32, 22) # width x height in inches
@@ -27,7 +27,7 @@ NODE_COLORS = {
 NODE_SIZES = {
     "Company":  1000,
     "Metric":   300,
-    "Year":     800,
+    "Year":     600,
     "Document": 200,
 }
 

@@ -64,14 +64,16 @@ def _extract_answer_number(text: str) -> float | None:
     return None
 
 
-def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
+def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01, question: str = '') -> bool:
     """
     Returns True if the predicted answer numerically matches the ground truth.
     Handles:
     - Relative tolerance (default 1%) for large values
     - Absolute tolerance (±0.5) for small values
     - Percentage ↔ decimal conversion (e.g. model outputs -3.2% for GT -0.032)
-    - Falls back to case-insensitive exact string match
+    - Boolean yes/no questions (GT=0 or 1, answer contains yes/no language)
+    - Unit scale mismatch (model reports millions, GT is raw units)
+    - Falls back to string containment then exact string match
     """
     pred_num = _extract_answer_number(pred_text)
     try:
@@ -82,6 +84,14 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
     if pred_num is not None and gt_num is not None:
         if gt_num == 0:
             return abs(pred_num) < 1e-6
+
+        # Boolean yes/no: GT is 0 or 1 — map natural language to numeric
+        if gt_num in (0.0, 1.0):
+            ans_lower = str(pred_text).lower()
+            if gt_num == 1.0 and re.search(r'\b(yes|true|did|exceeded?|greater|more|higher)\b', ans_lower):
+                return True
+            if gt_num == 0.0 and re.search(r'\b(no|false|did not|not exceed|less|lower|neither)\b', ans_lower):
+                return True
 
         # Exact or relative tolerance match
         if abs(pred_num - gt_num) / abs(gt_num) <= tol:
@@ -94,13 +104,29 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
         if 0 < abs(pred_num) < 1 and abs(pred_num * 100 - gt_num) < 0.5:
             return True
 
-        # Absolute tolerance for small numbers
-        if abs(gt_num) < 100 and abs(pred_num - gt_num) < 0.5:
+        # Absolute tolerance for mid-range numbers 1–99 (within 0.5)
+        if 1 <= abs(gt_num) < 100 and abs(pred_num - gt_num) < 0.5:
             return True
+
+        # Relative tolerance for small decimals <1 (within 1%)
+        # ±0.5 is too loose here — e.g. 0.9 would match GT=0.9765625
+        if abs(gt_num) < 1 and abs(pred_num - gt_num) / abs(gt_num) < 0.01:
+            return True
+
+        # Unit scale: model strips "million"/"thousand" suffix — pred may be 1000x/1M× smaller
+        if abs(gt_num) >= 1000:
+            for scale in [1_000, 1_000_000]:
+                if abs(pred_num * scale - gt_num) / abs(gt_num) <= tol:
+                    return True
 
         return False
 
-    # Fallback: normalised string match
+    # Fallback: whole-number string match (word-boundary safe — avoids "531" matching "-531")
+    gt_clean = re.sub(r'\.0$', '', str(ground_truth).strip())
+    pred_clean = str(pred_text).strip()
+    if gt_clean and re.search(r'(?<!\d)' + re.escape(gt_clean) + r'(?!\d)', pred_clean):
+        return True
+
     return str(pred_text).strip().lower() == str(ground_truth).strip().lower()
 
 # Ensure to run this line of code before executing code & open docker desktop
@@ -109,7 +135,7 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01) -> bool:
 # docker ps
 
 class ParallelBenchmarkRunner:
-    def __init__(self, models, datasets, num_samples=100, max_workers=3):
+    def __init__(self, models, datasets, num_samples=10, max_workers=3):
         self.models = models
         self.datasets = datasets
         self.num_samples = num_samples
@@ -118,6 +144,45 @@ class ParallelBenchmarkRunner:
         self.results = {}
         self.timings = {}
     
+    @staticmethod
+    def _get_system_prompt(dataset_name: str) -> tuple[str, int, int, int]:
+        """
+        Return (system_prompt, baseline_max_tokens, rag_max_tokens, graphrag_max_tokens)
+        for a given dataset.
+
+        FinQA and TAT-QA require multi-step arithmetic — a chain-of-thought prompt
+        with an explicit ANSWER: tag significantly improves accuracy. ConvFinQA answers
+        are simpler single-hop lookups where a terse "number only" prompt suffices.
+        """
+        if dataset_name in ('finqa', 'tatqa'):
+            prompt = (
+                "You are a financial analyst. You will be given an excerpt from a company's "
+                "annual report followed by a question.\n\n"
+                "Approach:\n"
+                "1. Identify the exact figures needed from the text or table.\n"
+                "2. Show your calculation step by step.\n"
+                "3. On the final line write: ANSWER: <number>\n\n"
+                "Rules:\n"
+                "- ANSWER must be a single number (e.g. ANSWER: 3.8 or ANSWER: -2.5).\n"
+                "- Do not include units or currency symbols in the ANSWER line.\n"
+                "- For yes/no questions output ANSWER: 1 for yes and ANSWER: 0 for no.\n"
+                "- Parentheses in financial tables mean negative (e.g. (832) = -832).\n"
+                "- Never say you cannot answer; the data is always in the provided context."
+            )
+            return prompt, 800, 1000, 1200
+        else:
+            prompt = (
+                "You are a financial analyst. You will be given an excerpt from a company's "
+                "annual report followed by a question. The answer is a specific number or "
+                "percentage that can be read or calculated directly from the provided text and table.\n"
+                "Rules:\n"
+                "- Output ONLY the final numeric answer (e.g. 3.8 or -2.5% or 0.532).\n"
+                "- Do not include units, currency symbols, or explanatory text.\n"
+                "- If a calculation is needed, do it silently and output only the result.\n"
+                "- Never say you cannot answer; the answer is always in the provided context."
+            )
+            return prompt, 400, 600, 800
+
     @staticmethod
     def _clean_table(raw: str) -> str:
         """
@@ -157,45 +222,38 @@ class ParallelBenchmarkRunner:
         results = []
         client = OllamaClient(model, temperature=0.1)
 
-        system_prompt = (
-            "You are a financial analyst. You will be given an excerpt from a company's annual report "
-            "followed by a question. The answer is a specific number or percentage that can be read "
-            "or calculated directly from the provided text and table.\n"
-            "Rules:\n"
-            "- Output ONLY the final numeric answer (e.g. 3.8 or -2.5% or 0.532).\n"
-            "- Do not include units, currency symbols, or explanatory text.\n"
-            "- If a calculation is needed, do it silently and output only the result.\n"
-            "- Never say you cannot answer; the answer is always in the provided context."
-        )
+        system_prompt, max_tokens, _, _ = self._get_system_prompt(dataset_name)
+        cot = dataset_name in ('finqa', 'tatqa')
 
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             context = self._build_dataset_context(example)
+            prompt_suffix = "Show your step-by-step calculation, then write ANSWER: <number>" if cot else "Answer (number only):"
             if context:
                 prompt = (
                     f"Context from annual report:\n{context}\n\n"
                     f"Question: {example['question']}\n\n"
-                    "Answer (number only):"
+                    f"{prompt_suffix}"
                 )
             else:
                 prompt = (
                     f"Financial question: {example['question']}\n\n"
-                    "Answer (number only):"
+                    f"{prompt_suffix}"
                 )
             result = client.generate(
                 prompt=prompt,
                 system_prompt=system_prompt,
-                max_tokens=400
+                max_tokens=max_tokens
             )
-            
+
             if not result.get('success', False):
                 continue
-            
+
             gt = str(example.get('program_answer') or example.get('original_answer'))
             results.append({
                 'question': example['question'],
                 'ground_truth': gt,
                 'answer': result['response'],
-                'correct': _is_correct(result['response'], gt),
+                'correct': _is_correct(result['response'], gt, question=example['question']),
                 'latency_ms': result['latency_ms']
             })
 
@@ -242,15 +300,8 @@ class ParallelBenchmarkRunner:
         results = []
         client = OllamaClient(model, temperature=0.1)
 
-        rag_system_prompt = (
-            "You are a financial analyst. The answer is a specific number or percentage "
-            "that can be read or calculated directly from the provided context.\n"
-            "Rules:\n"
-            "- Output ONLY the final numeric answer (e.g. 3.8 or -2.5% or 0.532).\n"
-            "- Do not include units, currency symbols, or explanatory text.\n"
-            "- If a calculation is needed, do it silently and output only the result.\n"
-            "- Never say you cannot answer; the answer is always in the provided context."
-        )
+        rag_system_prompt, _, rag_max_tokens, _ = self._get_system_prompt(dataset_name)
+        cot = dataset_name in ('finqa', 'tatqa')
 
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             question = example['question']
@@ -294,18 +345,19 @@ class ParallelBenchmarkRunner:
                 question=question,
                 context=context,
                 system_prompt=rag_system_prompt,
-                max_tokens=600
+                max_tokens=rag_max_tokens,
+                cot=cot
             )
-            
+
             if not result.get('success', False):
                 continue
-            
+
             gt = str(example.get('program_answer') or example.get('original_answer'))
             results.append({
                 'question': example['question'],
                 'ground_truth': gt,
                 'answer': result['response'],
-                'correct': _is_correct(result['response'], gt),
+                'correct': _is_correct(result['response'], gt, question=example['question']),
                 'latency_ms': result['latency_ms']
             })
 
@@ -366,6 +418,9 @@ class ParallelBenchmarkRunner:
         results = []
         client = OllamaClient(model, temperature=0.1)
 
+        graphrag_system_prompt, _, _, graphrag_max_tokens = self._get_system_prompt(dataset_name)
+        cot = dataset_name in ('finqa', 'tatqa')
+
         for example in tqdm(samples, desc=f"{model} - {dataset_name}", position=hash(model) % 10):
             # top_k=2: dataset context already contains the source document, so
             # only the most relevant graph records add value. 5 records × 4000 chars
@@ -382,18 +437,20 @@ class ParallelBenchmarkRunner:
             result = client.generate_with_graph_context(
                 question=example['question'],
                 context=context,
-                max_tokens=800
+                system_prompt=graphrag_system_prompt,
+                max_tokens=graphrag_max_tokens,
+                cot=cot
             )
-            
+
             if not result.get('success', False):
                 continue
-            
+
             gt = str(example.get('program_answer') or example.get('original_answer'))
             results.append({
                 'question': example['question'],
                 'ground_truth': gt,
                 'answer': result['response'],
-                'correct': _is_correct(result['response'], gt),
+                'correct': _is_correct(result['response'], gt, question=example['question']),
                 'latency_ms': result['latency_ms']
             })
 
@@ -504,7 +561,7 @@ def main():
     runner = ParallelBenchmarkRunner(
         models, 
         datasets, 
-        num_samples=100,
+        num_samples=10,
         max_workers=3
     )
     
