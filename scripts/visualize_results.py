@@ -12,9 +12,9 @@ OUTPUT_DIR = Path("results/visualizations")
 METRICS_DIR = Path("results/metrics")
 
 COLORS = {
-    "Baseline": "#E2E4FC",
-    "RAG":      "#8861F1",
-    "GraphRAG": "#241160",
+    "Baseline": "#bfad8a",
+    "RAG":      "#8c7b23",
+    "GraphRAG": "#154001",
 }
 
 MODEL_COLORS = {

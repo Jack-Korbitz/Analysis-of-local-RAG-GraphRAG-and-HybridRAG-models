@@ -23,12 +23,13 @@ One FAISS index is built per dataset (finqa, convfinqa, tatqa). Indexes are save
 
 ### Step 1 — Context Extraction
 
-Each dataset example is read and its document context is assembled. All three dataset formats are supported:
+All available splits (train, dev, test) are concatenated before indexing to maximise corpus coverage. For ConvFinQA, which only has a single `turn_0` split, that split is used in full. Each dataset example is read and its document context is assembled:
 
-| Dataset | Fields used |
-|---|---|
-| FinQA / ConvFinQA | `pre_text` + `table` + `post_text` |
-| TAT-DQA | `context` |
+| Dataset | Splits indexed | Fields used |
+|---|---|---|
+| FinQA | train + dev + test (8,281 docs) | `pre_text` + `table` + `post_text` |
+| ConvFinQA | turn_0 (3,458 docs) | `pre_text` + `table` + `post_text` |
+| TAT-DQA | train + dev + test (11,349 docs) | `context` |
 
 ### Step 2 — Table-Aware Chunking (`src/utils/chunking.py`)
 
@@ -126,7 +127,7 @@ RAG gets more tokens than baseline to accommodate the retrieved context.
 
 ## Output Format
 
-Results are saved to `results/metrics/rag_fast.json` with the same structure as baseline:
+Results are saved to `results/metrics/rag.json` with the same structure as baseline:
 
 ```json
 {

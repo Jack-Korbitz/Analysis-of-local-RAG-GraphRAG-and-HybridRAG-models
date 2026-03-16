@@ -5,7 +5,7 @@ from src.rag.retriever import RAGRetriever
 from src.graphrag.neo4j_client import Neo4jClient
 from src.graphrag.graph_builder import GraphBuilder
 from src.utils.chunking import DocumentChunker
-from datasets import load_from_disk
+from datasets import load_from_disk, concatenate_datasets
 from tqdm import tqdm
 
 
@@ -21,8 +21,8 @@ def build_rag_indexes(datasets, max_examples=2000):
         retriever.vector_store.clear()
 
         dataset = load_from_disk(dataset_path)
-        split = list(dataset.keys())[0]
-        examples = dataset[split].select(range(min(max_examples, len(dataset[split]))))
+        all_data = concatenate_datasets(list(dataset.values()))
+        examples = all_data.select(range(min(max_examples, len(all_data))))
 
         print(f"Chunking {len(examples)} documents...")
         chunker = DocumentChunker(chunk_size=600, chunk_overlap=100)

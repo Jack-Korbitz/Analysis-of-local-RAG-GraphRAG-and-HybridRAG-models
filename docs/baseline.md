@@ -89,7 +89,7 @@ qwen3 uses internal chain-of-thought ("thinking") tokens that consume the token 
 
 ## Output Format
 
-Each completed question produces one record in `results/metrics/baseline_fast.json`:
+Each completed question produces one record in `results/metrics/baseline.json`:
 
 ```json
 {

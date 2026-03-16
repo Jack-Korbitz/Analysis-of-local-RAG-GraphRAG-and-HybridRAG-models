@@ -5,7 +5,7 @@ sys.path.insert(0, str(project_root))
 
 from src.graphrag.neo4j_client import Neo4jClient
 from src.models.ollama_client import OllamaClient
-from datasets import load_from_disk
+from datasets import load_from_disk, concatenate_datasets
 from tqdm import tqdm
 import json
 import re
@@ -459,8 +459,7 @@ If no metrics found, return {{"metrics": []}}"""
         self.neo4j.create_indexes()
 
         dataset = load_from_disk(dataset_path)
-        split_name = list(dataset.keys())[0]
-        data = dataset[split_name]
+        data = concatenate_datasets(list(dataset.values()))
 
         examples = data.select(range(min(max_examples, len(data))))
 

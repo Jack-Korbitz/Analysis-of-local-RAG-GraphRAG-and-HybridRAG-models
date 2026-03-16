@@ -23,12 +23,13 @@ The graph is cleared and rebuilt from scratch each time. Build time depends on d
 
 ### Step 1 — Context Extraction (`src/graphrag/graph_builder.py`)
 
-Each dataset example is read and its full document context is assembled. All three dataset formats are supported:
+All available splits (train, dev, test) are concatenated before graph building to maximise coverage. For ConvFinQA, which has only a single `turn_0` split, that split is used in full:
 
-| Dataset | Fields used for context |
-|---|---|
-| FinQA / ConvFinQA | `pre_text` + `table` + `post_text` |
-| TAT-DQA | `context` |
+| Dataset | Splits indexed | Fields used for context |
+|---|---|---|
+| FinQA | train + dev + test (8,281 docs) | `pre_text` + `table` + `post_text` |
+| ConvFinQA | turn_0 (3,458 docs) | `pre_text` + `table` + `post_text` |
+| TAT-DQA | train + dev + test (11,349 docs) | `context` |
 
 Up to 4,000 characters of context are stored per document node.
 
@@ -127,10 +128,12 @@ CREATE (d)-[:FROM_YEAR]->(y)
 
 | Node type | Approximate count |
 |---|---|
-| Company | 306 |
-| Document | 18,000+ |
-| Metric | 43,000+ |
-| Year | 25 |
+| Company | 1,000+ |
+| Document | 23,000+ |
+| Metric | 100,000+ |
+| Year | 30+ |
+
+Counts are higher than earlier runs because the graph is now built from all splits (train + dev + test) across all three datasets.
 
 ---
 
@@ -218,7 +221,7 @@ GraphRAG gets the most tokens because it passes both graph records and the sourc
 
 ## Output Format
 
-Results are saved to `results/metrics/graphrag_fast.json` with the same structure as baseline and RAG:
+Results are saved to `results/metrics/graphrag.json` with the same structure as baseline and RAG:
 
 ```json
 {

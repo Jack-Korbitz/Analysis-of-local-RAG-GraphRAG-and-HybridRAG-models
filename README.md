@@ -34,13 +34,15 @@ All models run locally via [Ollama](https://ollama.ai).
 
 ## Datasets
 
-All sourced from [G4KMU/t2-ragbench](https://huggingface.co/datasets/G4KMU/t2-ragbench) on HuggingFace:
+All sourced from [G4KMU/t2-ragbench](https://huggingface.co/datasets/G4KMU/t2-ragbench) on HuggingFace — a unified benchmark of 23,088 question-context-answer triples from 7,318 real financial reports:
 
-| Dataset | Description |
-|---|---|
-| **FinQA** | Single-turn financial document QA requiring arithmetic over tables |
-| **ConvFinQA** | Multi-turn follow-up questions on financial documents |
-| **TAT-DQA** | Table-and-text financial QA requiring table comprehension |
+| Dataset | QA Pairs | Eval split | Description |
+|---|---|---|---|
+| **FinQA** | 8,281 | test (1,147) | Single-turn financial document QA requiring arithmetic over tables |
+| **ConvFinQA** | 3,458 | turn_0 | First-turn financial multi-turn QA |
+| **TAT-DQA** | 11,349 | test (1,144) | Table-and-text financial QA requiring table comprehension |
+
+**Index building** uses all available splits (train + dev + test) to maximise document corpus coverage. **Evaluation** uses the held-out test split (or the single `turn_0` split for ConvFinQA), with 100 questions sampled per dataset.
 
 ---
 
@@ -94,8 +96,8 @@ python scripts/view_answers.py             # 6. Generate browsable HTML viewer
 
 Sample size is set in `run_parallel_benchmarks.py`:
 ```python
-runner = ParallelBenchmarkRunner(models, datasets, num_samples=10)
-# 3 models × 3 datasets × 10 = 90 questions per approach
+runner = ParallelBenchmarkRunner(models, datasets, num_samples=100)
+# 3 models × 3 datasets × 100 = 900 questions per approach
 ```
 
 ---

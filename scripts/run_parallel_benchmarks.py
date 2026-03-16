@@ -135,7 +135,7 @@ def _is_correct(pred_text: str, ground_truth: str, tol: float = 0.01, question: 
 # docker ps
 
 class ParallelBenchmarkRunner:
-    def __init__(self, models, datasets, num_samples=10, max_workers=3):
+    def __init__(self, models, datasets, num_samples=100, max_workers=3):
         self.models = models
         self.datasets = datasets
         self.num_samples = num_samples
@@ -144,6 +144,17 @@ class ParallelBenchmarkRunner:
         self.results = {}
         self.timings = {}
     
+    @staticmethod
+    def _get_eval_split(dataset, dataset_name: str) -> str:
+        """Return the canonical T²-RAGBench evaluation split for each dataset."""
+        if dataset_name == 'convfinqa':
+            return 'turn_0'
+        if 'test' in dataset:
+            return 'test'
+        if 'dev' in dataset:
+            return 'dev'
+        return list(dataset.keys())[0]
+
     @staticmethod
     def _get_system_prompt(dataset_name: str) -> tuple[str, int, int, int]:
         """
@@ -262,7 +273,7 @@ class ParallelBenchmarkRunner:
         tasks = []
         for dataset_name, dataset_path in self.datasets.items():
             dataset = load_from_disk(dataset_path)
-            split = list(dataset.keys())[0]
+            split = self._get_eval_split(dataset, dataset_name)
             samples = list(dataset[split].select(range(min(self.num_samples, len(dataset[split])))))
             
             for model in self.models:
@@ -380,7 +391,7 @@ class ParallelBenchmarkRunner:
         tasks = []
         for dataset_name, dataset_path in self.datasets.items():
             dataset = load_from_disk(dataset_path)
-            split = list(dataset.keys())[0]
+            split = self._get_eval_split(dataset, dataset_name)
             samples = list(dataset[split].select(range(min(self.num_samples, len(dataset[split])))))
             
             for model in self.models:
@@ -471,7 +482,7 @@ class ParallelBenchmarkRunner:
         tasks = []
         for dataset_name, dataset_path in self.datasets.items():
             dataset = load_from_disk(dataset_path)
-            split = list(dataset.keys())[0]
+            split = self._get_eval_split(dataset, dataset_name)
             samples = list(dataset[split].select(range(min(self.num_samples, len(dataset[split])))))
             
             for model in self.models:
@@ -553,7 +564,7 @@ def main():
     runner = ParallelBenchmarkRunner(
         models, 
         datasets, 
-        num_samples=10,
+        num_samples=100,
         max_workers=3
     )
     
