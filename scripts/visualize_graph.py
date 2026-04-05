@@ -1,4 +1,5 @@
 import sys
+import textwrap
 sys.path.append('.')
 
 import matplotlib.pyplot as plt
@@ -12,73 +13,76 @@ OUTPUT_PATH = Path("results/visualizations/knowledge_graph.png")
 # ─────────────────────────────────────────────
 #  ADJUST THESE VALUES BEFORE RUNNING
 # ─────────────────────────────────────────────
-NUM_COMPANIES  = 20       # 1 – 306 total companies in graph
-YEAR_TO_SHOW   = 2018     # 1998 – 2022
-NODE_SPACING   = 2.0      # higher = more spread out (try 3.0 – 8.0)
-FIGURE_SIZE    = (32, 22) # width x height in inches
+NUM_YEARS    = 10     # number of most recent years to show
+NODE_SPACING = 3.0
+FIGURE_SIZE  = (26, 18)
 # ─────────────────────────────────────────────
 
 NODE_COLORS = {
-    "Company":  "#2196F3",
-    "Metric":   "#4CAF50",
-    "Year":     "#FF9800",
-    "Document": "#9E9E9E",
+    "Company": "#003087",   # LM navy blue
+    "Metric":  "#009CDE",   # LM bright blue
+    "Year":    "#6D6E71",   # LM silver grey
 }
 NODE_SIZES = {
-    "Company":  1000,
-    "Metric":   300,
-    "Year":     600,
-    "Document": 200,
+    "Company": 8000,
+    "Metric":  4000,
+    "Year":    4000,
 }
 
 METRIC_LABELS = {
-    "revenue":            "Revenue",
-    "net_income":         "Net Income",
-    "interest_expense":   "Interest Exp.",
-    "operating_expenses": "Op. Expenses",
-    "total_assets":       "Total Assets",
-    "gross_profit":       "Gross Profit",
-    "operating_income":   "Op. Income",
+    "revenue":              "Revenue",
+    "net_income":           "Net Income",
+    "interest_expense":     "Interest Exp.",
+    "operating_expenses":   "Op. Expenses",
+    "total_assets":         "Total Assets",
+    "gross_profit":         "Gross Profit",
+    "operating_income":     "Op. Income",
     "cash_and_equivalents": "Cash",
 }
 
 
-def fetch_subgraph(neo4j: Neo4jClient, companies: list, year: int):
-    """One metric-type node per company for the selected year, one shared Year node."""
+def find_company_with_most_years(neo4j: Neo4jClient, n: int):
+    """Find the company with the most distinct years, return it and its top-n years."""
+    rows = neo4j.query_graph("""
+        MATCH (c:Company)-[:HAS_METRIC]->(:Metric)-[:FOR_YEAR]->(y:Year)
+        RETURN c.name AS company, count(DISTINCT y.value) AS yr_count
+        ORDER BY yr_count DESC LIMIT 1
+    """, {})
+    company = rows[0]["company"]
+
+    year_rows = neo4j.query_graph("""
+        MATCH (c:Company {name: $company})-[:HAS_METRIC]->(:Metric)-[:FOR_YEAR]->(y:Year)
+        RETURN DISTINCT y.value AS year
+        ORDER BY year DESC LIMIT $n
+    """, {"company": company, "n": n})
+    years = sorted(r["year"] for r in year_rows)
+    return company, years
+
+
+def fetch_subgraph(neo4j: Neo4jClient, company: str, years: list):
     nodes = {}
     edges = []
 
-    y_id = f"year_{year}"
-    nodes[y_id] = {"type": "Year", "display": str(year)}
+    c_id = f"company_{company}"
+    nodes[c_id] = {"type": "Company", "display": company}
 
-    rows = neo4j.query_graph("""
-        MATCH (c:Company)-[:HAS_METRIC]->(m:Metric)-[:FOR_YEAR]->(y:Year {value: $year})
-        WHERE c.name IN $companies
-        RETURN c.name AS company, m.name AS metric
-        ORDER BY c.name, m.name
-    """, {"companies": companies, "year": year})
+    for year in years:
+        y_id = f"year_{year}"
+        nodes[y_id] = {"type": "Year", "display": str(year)}
 
-    seen = set()
-    for row in rows:
-        company = row["company"]
-        mname   = row["metric"]
+        metric_rows = neo4j.query_graph("""
+            MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)-[:FOR_YEAR]->(y:Year {value: $year})
+            RETURN DISTINCT m.name AS metric
+            ORDER BY m.name
+        """, {"company": company, "year": year})
 
-        key = (company, mname)
-        if key in seen:
-            continue
-        seen.add(key)
-
-        c_id = f"company_{company}"
-        m_id = f"metric_{company}_{mname}"
-
-        if c_id not in nodes:
-            nodes[c_id] = {"type": "Company", "display": company}
-
-        label = METRIC_LABELS.get(mname, mname.replace("_", " ").title())
-        nodes[m_id] = {"type": "Metric", "display": label}
-
-        edges.append((c_id, m_id, "HAS_METRIC"))
-        edges.append((m_id, y_id, "FOR_YEAR"))
+        for row in metric_rows:
+            mname = row["metric"]
+            m_id  = f"metric_{mname}_{year}"
+            label = METRIC_LABELS.get(mname, mname.replace("_", " ").title())
+            nodes[m_id] = {"type": "Metric", "display": label}
+            edges.append((c_id, m_id, "HAS_METRIC"))
+            edges.append((m_id, y_id, "FOR_YEAR"))
 
     return nodes, edges
 
@@ -92,58 +96,65 @@ def build_nx_graph(nodes, edges):
     return G
 
 
-def draw(G: nx.DiGraph, output_path: Path):
+def draw(G: nx.DiGraph, company: str, years: list, output_path: Path):
     fig, ax = plt.subplots(figsize=FIGURE_SIZE)
-    fig.patch.set_facecolor("#1a1a2e")
-    ax.set_facecolor("#1a1a2e")
+    fig.patch.set_facecolor("#ffffff")
+    ax.set_facecolor("#ffffff")
 
-    company_nodes = [n for n, d in G.nodes(data=True) if d["type"] == "Company"]
-    metric_nodes  = [n for n, d in G.nodes(data=True) if d["type"] == "Metric"]
-    year_nodes    = [n for n, d in G.nodes(data=True) if d["type"] == "Year"]
+    metric_nodes = [n for n, d in G.nodes(data=True) if d["type"] == "Metric"]
+    year_nodes   = [n for n, d in G.nodes(data=True) if d["type"] == "Year"]
 
-    pos = nx.spring_layout(G, k=NODE_SPACING, iterations=120, seed=42)
+    pos = nx.spring_layout(G, k=NODE_SPACING, iterations=150, seed=42)
 
-    has_metric_edges = [(u, v) for u, v, d in G.edges(data=True) if d["rel"] == "HAS_METRIC"]
-    for_year_edges   = [(u, v) for u, v, d in G.edges(data=True) if d["rel"] == "FOR_YEAR"]
-
-    nx.draw_networkx_edges(G, pos, edgelist=has_metric_edges, ax=ax,
-                           edge_color="#2196F3", alpha=0.3, arrows=False, width=0.6)
-    nx.draw_networkx_edges(G, pos, edgelist=for_year_edges, ax=ax,
-                           edge_color="#FF9800", alpha=0.3, arrows=False, width=0.6)
+    edge_styles = {
+        "HAS_METRIC": NODE_COLORS["Metric"],
+        "FOR_YEAR":   NODE_COLORS["Year"],
+    }
+    for rel, color in edge_styles.items():
+        edgelist = [(u, v) for u, v, d in G.edges(data=True) if d["rel"] == rel]
+        if edgelist:
+            nx.draw_networkx_edges(G, pos, edgelist=edgelist, ax=ax,
+                                   edge_color=color, alpha=0.8, arrows=True,
+                                   arrowsize=14, width=1.5)
 
     for node_type, color in NODE_COLORS.items():
-        if node_type == "Document":
-            continue
         subset = [n for n, d in G.nodes(data=True) if d["type"] == node_type]
         if not subset:
             continue
         nx.draw_networkx_nodes(G, pos, nodelist=subset, ax=ax,
                                node_color=color,
                                node_size=NODE_SIZES[node_type],
-                               alpha=0.9)
+                               alpha=1.0)
 
-    # Company and Year nodes get labels; metric nodes are too numerous for full labels
-    company_labels = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Company"}
-    year_labels    = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Year"}
-    metric_labels  = {n: d["display"] for n, d in G.nodes(data=True) if d["type"] == "Metric"}
-
-    nx.draw_networkx_labels(G, pos, labels=company_labels, ax=ax,
-                            font_size=5.5, font_color="white", font_weight="bold")
-    nx.draw_networkx_labels(G, pos, labels=year_labels, ax=ax,
-                            font_size=6, font_color="white", font_weight="bold")
-    nx.draw_networkx_labels(G, pos, labels=metric_labels, ax=ax,
-                            font_size=3.5, font_color="white")
+    font_cfg = {
+        "Company": dict(size=14, weight="bold", wrap=8),
+        "Year":    dict(size=13, weight="bold", wrap=6),
+        "Metric":  dict(size=10, weight="bold", wrap=10),
+    }
+    for n, d in G.nodes(data=True):
+        ntype = d["type"]
+        if ntype not in font_cfg:
+            continue
+        cfg = font_cfg[ntype]
+        x, y = pos[n]
+        wrapped = textwrap.fill(d["display"], width=cfg["wrap"])
+        ax.text(x, y, wrapped, ha="center", va="center",
+                fontsize=cfg["size"], fontweight=cfg["weight"],
+                color="white", multialignment="center",
+                zorder=5)
 
     legend_handles = [
-        mpatches.Patch(color=NODE_COLORS["Company"],  label=f"Company ({len(company_nodes)})"),
-        mpatches.Patch(color=NODE_COLORS["Metric"],   label=f"Financial Metric ({len(metric_nodes)})"),
-        mpatches.Patch(color=NODE_COLORS["Year"],     label=f"Year ({len(year_nodes)})"),
+        mpatches.Patch(color=NODE_COLORS["Company"], label="Company (1)"),
+        mpatches.Patch(color=NODE_COLORS["Metric"],  label=f"Financial Metric ({len(metric_nodes)})"),
+        mpatches.Patch(color=NODE_COLORS["Year"],    label=f"Year ({len(year_nodes)})"),
     ]
-    ax.legend(handles=legend_handles, loc="lower right", fontsize=11,
-              facecolor="#2a2a4a", edgecolor="white", labelcolor="white")
+    ax.legend(handles=legend_handles, loc="lower right", fontsize=20,
+              facecolor="#ffffff", edgecolor="#333333", labelcolor="#333333",
+              handleheight=2, handlelength=3)
 
-    ax.set_title("GraphRAG Knowledge Graph — Financial Entity Structure",
-                 fontsize=18, fontweight="bold", color="white", pad=20)
+    year_range = f"{years[0]}–{years[-1]}"
+    ax.set_title(f"GraphRAG Knowledge Graph",
+                 fontsize=40, fontweight="bold", color="#333333", pad=20)
     ax.axis("off")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -157,19 +168,14 @@ def draw(G: nx.DiGraph, output_path: Path):
 def main():
     neo4j = Neo4jClient()
 
-    top = neo4j.query_graph("""
-        MATCH (c:Company)-[:HAS_METRIC]->(m:Metric)
-        RETURN c.name AS company, count(m) AS cnt
-        ORDER BY cnt DESC LIMIT $n
-    """, {"n": NUM_COMPANIES})
-    companies = [r["company"] for r in top]
-    print(f"Visualizing {len(companies)} companies | year={YEAR_TO_SHOW} | spacing={NODE_SPACING}")
+    company, years = find_company_with_most_years(neo4j, NUM_YEARS)
+    print(f"Company: {company} | Years: {years}")
 
-    nodes, edges = fetch_subgraph(neo4j, companies, year=YEAR_TO_SHOW)
+    nodes, edges = fetch_subgraph(neo4j, company, years)
     print(f"  Nodes: {len(nodes)}  Edges: {len(edges)}")
 
     G = build_nx_graph(nodes, edges)
-    draw(G, OUTPUT_PATH)
+    draw(G, company, years, OUTPUT_PATH)
     neo4j.close()
 
 

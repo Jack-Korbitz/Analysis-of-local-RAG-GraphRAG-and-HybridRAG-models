@@ -93,42 +93,138 @@ If no metrics found, return {{"metrics": []}}"""
         ]
         
         metric_keywords = {
-            'revenue': 'revenue',
-            'net revenue': 'revenue',
+            # ── Revenue ──────────────────────────────────────────────────
+            'total net revenue': 'net_revenue',
+            'net revenue': 'net_revenue',
             'total revenue': 'revenue',
-            'sales': 'revenue',
-            'total sales': 'revenue',
+            'revenue': 'revenue',
             'net sales': 'revenue',
+            'total sales': 'revenue',
+            # ── Net income ───────────────────────────────────────────────
             'net income': 'net_income',
             'net earnings': 'net_income',
-            'earnings': 'net_income',
-            'profit': 'net_income',
             'net profit': 'net_income',
+            # ── EPS ──────────────────────────────────────────────────────
+            'diluted earnings per share': 'earnings_per_share',
+            'basic earnings per share': 'earnings_per_share',
+            'earnings per share': 'earnings_per_share',
+            'diluted eps': 'earnings_per_share',
+            'basic eps': 'earnings_per_share',
+            # ── Gross / operating ────────────────────────────────────────
+            'gross profit': 'gross_profit',
+            'gross margin': 'gross_profit',
+            'income from operations': 'operating_income',
+            'operating income': 'operating_income',
+            'ebitda': 'ebitda',
+            'income before income tax': 'income_before_tax',
+            'income before taxes': 'income_before_tax',
+            'income before tax': 'income_before_tax',
+            'pretax income': 'income_before_tax',
+            # ── Expenses ─────────────────────────────────────────────────
+            'total operating expenses': 'operating_expenses',
+            'operating expenses': 'operating_expenses',
+            'operating costs': 'operating_expenses',
+            'cost of goods sold': 'cost_of_goods_sold',
+            'cost of sales': 'cost_of_goods_sold',
+            'cost of revenue': 'cost_of_goods_sold',
+            'cogs': 'cost_of_goods_sold',
+            'research and development': 'research_development',
+            'research & development': 'research_development',
+            'selling, general and administrative': 'selling_general_admin',
+            'selling general and administrative': 'selling_general_admin',
+            'sg&a': 'selling_general_admin',
             'interest expense': 'interest_expense',
             'interest paid': 'interest_expense',
             'interest cost': 'interest_expense',
-            'operating expense': 'operating_expenses',
-            'operating cost': 'operating_expenses',
-            'total assets': 'total_assets',
-            'assets': 'total_assets',
-            'cash': 'cash_and_equivalents',
-            'cash and cash equivalents': 'cash_and_equivalents',
-            'cash and equivalents': 'cash_and_equivalents',
+            'depreciation and amortization': 'depreciation',
             'depreciation': 'depreciation',
+            'amortization': 'depreciation',
+            'capital expenditures': 'capital_expenditures',
             'capital expenditure': 'capital_expenditures',
             'capex': 'capital_expenditures',
-            'cost of goods sold': 'cost_of_goods_sold',
-            'cost of sales': 'cost_of_goods_sold',
-            'cogs': 'cost_of_goods_sold',
-            'cost of revenue': 'cost_of_goods_sold',
-            'gross profit': 'gross_profit',
-            'operating income': 'operating_income',
-            'ebitda': 'ebitda',
-            'total operating expenses': 'operating_expenses',
-            'fuel expense': 'fuel_expense',
             'aircraft fuel expense': 'fuel_expense',
+            'fuel expense': 'fuel_expense',
+            'fuel costs': 'fuel_expense',
+            # ── Tax ──────────────────────────────────────────────────────
+            'provision for income taxes': 'tax_expense',
+            'income tax expense': 'tax_expense',
+            'income tax': 'tax_expense',
+            'deferred income tax assets': 'deferred_tax_asset',
+            'deferred tax assets': 'deferred_tax_asset',
+            'deferred income tax liabilities': 'deferred_tax_liability',
+            'deferred tax liabilities': 'deferred_tax_liability',
+            'deferred income tax': 'deferred_tax',
+            'deferred tax': 'deferred_tax',
+            # ── Stock compensation / awards ───────────────────────────────
+            'stock-based compensation': 'stock_compensation',
+            'share-based compensation': 'stock_compensation',
+            'stock compensation expense': 'stock_compensation',
+            'restricted stock units': 'stock_awards',
+            'stock awards': 'stock_awards',
+            'restricted stock': 'stock_awards',
+            # ── Employee benefits ─────────────────────────────────────────
+            'net periodic pension cost': 'pension',
+            'pension expense': 'pension',
+            'pension cost': 'pension',
+            'other post-retirement benefit': 'post_retirement_benefits',
+            'postretirement benefit': 'post_retirement_benefits',
+            'benefit obligation': 'post_retirement_benefits',
+            # ── Balance sheet — assets ────────────────────────────────────
+            'total assets': 'total_assets',
+            'total current assets': 'current_assets',
+            'current assets': 'current_assets',
+            'cash and cash equivalents': 'cash_and_equivalents',
+            'cash and equivalents': 'cash_and_equivalents',
+            'accounts receivable': 'accounts_receivable',
+            'trade receivables': 'accounts_receivable',
+            'inventories': 'inventory',
+            'inventory': 'inventory',
+            'goodwill': 'goodwill',
+            'other intangible assets': 'intangible_assets',
+            'intangible assets': 'intangible_assets',
+            # ── Balance sheet — equity ────────────────────────────────────
+            "total shareholders' equity": 'shareholders_equity',
+            'total shareholders equity': 'shareholders_equity',
+            'total stockholders equity': 'shareholders_equity',
+            "shareholders' equity": 'shareholders_equity',
+            'shareholders equity': 'shareholders_equity',
+            'stockholders equity': 'shareholders_equity',
+            'accumulated deficit': 'retained_earnings',
+            'retained earnings': 'retained_earnings',
+            # ── Balance sheet — liabilities ───────────────────────────────
+            'total liabilities': 'total_liabilities',
+            'total current liabilities': 'current_liabilities',
+            'current liabilities': 'current_liabilities',
+            'total long-term debt': 'long_term_debt',
+            'long-term debt': 'long_term_debt',
+            'long term debt': 'long_term_debt',
+            'total debt': 'total_debt',
+            'current portion of long-term debt': 'short_term_debt',
+            'short-term debt': 'short_term_debt',
+            'short term debt': 'short_term_debt',
+            'notes payable': 'short_term_debt',
+            'accounts payable': 'accounts_payable',
+            'trade payables': 'accounts_payable',
+            # ── Leases ────────────────────────────────────────────────────
+            'operating lease right-of-use': 'operating_lease',
+            'operating lease liability': 'operating_lease',
+            'operating lease': 'operating_lease',
+            'finance lease right-of-use': 'finance_lease',
+            'finance lease liability': 'finance_lease',
+            'finance lease': 'finance_lease',
+            'right-of-use asset': 'operating_lease',
+            'total lease obligation': 'lease_obligation',
+            'lease obligation': 'lease_obligation',
+            'rental expense': 'lease_obligation',
+            # ── Cash flow ─────────────────────────────────────────────────
+            'net cash used in operating': 'cash_flow_operations',
+            'net cash provided by operating': 'cash_flow_operations',
+            'cash provided by operating activities': 'cash_flow_operations',
+            'free cash flow': 'free_cash_flow',
+            'dividends paid': 'dividends_paid',
+            'dividends': 'dividends_paid',
         }
-        
+
         for line in lines:
             if '|' not in line:
                 continue
@@ -141,36 +237,36 @@ If no metrics found, return {{"metrics": []}}"""
                     
                     try:
                         value = float(value_str)
-                        
-                        # Skip years
-                        if 1900 <= value <= 2100:
+
+                        # Skip year values: only integers in the year range with no decimal portion
+                        if value == int(value) and 1900 <= value <= 2100:
                             continue
-                        
+
                         # Skip very small values
                         if abs(value) < 0.01:
                             continue
-                        
-                        matched = False
-                        for keyword, metric_name in metric_keywords.items():
-                            if keyword in label:
-                                normalized_value = abs(value)
 
-                                if 'billion' in line.lower():
-                                    normalized_value = normalized_value * 1000
-                                elif 'thousand' in line.lower():
-                                    normalized_value = normalized_value / 1000
-                                
-                                if normalized_value > 0:
-                                    metrics.append({
-                                        'name': metric_name,
-                                        'value': round(normalized_value, 2),
-                                        'unit': 'millions'
-                                    })
-                                    matched = True
-                                    break
-                        
-                        if matched:
-                            break
+                        # Longest-match wins to avoid "assets" beating "current assets"
+                        best_keyword = ''
+                        best_metric = None
+                        for keyword, metric_name in metric_keywords.items():
+                            if keyword in label and len(keyword) > len(best_keyword):
+                                best_keyword = keyword
+                                best_metric = metric_name
+
+                        if best_metric:
+                            normalized_value = abs(value)
+                            if 'billion' in line.lower():
+                                normalized_value = normalized_value * 1000
+                            elif 'thousand' in line.lower():
+                                normalized_value = normalized_value / 1000
+                            if normalized_value > 0:
+                                metrics.append({
+                                    'name': best_metric,
+                                    'value': round(normalized_value, 2),
+                                    'unit': 'millions'
+                                })
+                                break
                             
                     except (ValueError, AttributeError):
                         continue
@@ -190,16 +286,18 @@ If no metrics found, return {{"metrics": []}}"""
             (r'interest\s+paid\s+\$\s+([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'interest_expense'),
             
             # Revenue patterns
-            (r'revenue[s]?\s+would\s+(?:change|increase|decrease)\s+(?:by|to)\s+\$\s+([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
-            (r'(?:total\s+|net\s+)?revenue[s]?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
+            (r'net\s+revenue[s]?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_revenue'),
+            (r'net\s+revenue[s]?\s+(?:increased|decreased|grew)\s+(?:to|by)\s+\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_revenue'),
+            (r'total\s+revenue[s]?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
+            (r'revenue[s]?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
             (r'(?:total\s+)?sales\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
             (r'revenue[s]?\s+(?:increased|decreased|grew)\s+(?:to|by)\s+\$\s+([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'revenue'),
-            
+
             # Net income patterns
             (r'net\s+income\s+would\s+(?:change|increase|decrease)\s+(?:by|to)\s+\$\s+([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
             (r'net\s+income\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
             (r'net\s+earnings?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
-            (r'profit\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
+            (r'net\s+profit\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
             (r'net\s+income\s+(?:increased|decreased)\s+(?:to|by)\s+\$\s+([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'net_income'),
             
             # Operating expenses
@@ -225,16 +323,58 @@ If no metrics found, return {{"metrics": []}}"""
             (r'gross\s+profit\s+\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'gross_profit'),
             (r'operating\s+income\s+\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'operating_income'),
             (r'ebitda\s+\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'ebitda'),
+            # Debt — long-term vs total are different
+            (r'(?:total\s+)?long[- ]term\s+debt\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'long_term_debt'),
+            (r'total\s+debt\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'total_debt'),
+            (r'short[- ]term\s+(?:debt|borrowings?)\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'short_term_debt'),
+            # Balance sheet
+            (r'total\s+liabilities\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'total_liabilities'),
+            (r'(?:total\s+)?current\s+assets\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'current_assets'),
+            (r'(?:total\s+)?current\s+liabilities\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'current_liabilities'),
+            (r'(?:total\s+)?(?:shareholders?|stockholders?)[\'s]?\s+equity\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'shareholders_equity'),
+            (r'retained\s+earnings?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'retained_earnings'),
+            (r'accounts\s+receivable\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'accounts_receivable'),
+            (r'accounts\s+payable\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'accounts_payable'),
+            (r'inventor(?:y|ies)\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'inventory'),
+            (r'goodwill\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'goodwill'),
+            (r'intangible\s+assets?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'intangible_assets'),
+            # Income statement extras
+            (r'income\s+before\s+(?:income\s+)?tax(?:es)?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'income_before_tax'),
+            (r'research\s+and\s+development\s+(?:expense[s]?\s+)?(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'research_development'),
+            (r'selling[,]?\s+general\s+and\s+administrative\s+(?:expense[s]?\s+)?(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'selling_general_admin'),
+            # Tax
+            (r'(?:income\s+)?tax\s+expense\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'tax_expense'),
+            (r'provision\s+for\s+income\s+taxes?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'tax_expense'),
+            (r'deferred\s+(?:income\s+)?tax\s+assets?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'deferred_tax_asset'),
+            (r'deferred\s+(?:income\s+)?tax\s+liabilit\w+\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'deferred_tax_liability'),
+            # Stock compensation
+            (r'stock[- ]based\s+compensation\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'stock_compensation'),
+            (r'share[- ]based\s+compensation\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'stock_compensation'),
+            (r'(?:restricted\s+stock|stock\s+award|rsu)\s+(?:was|were|of|valued\s+at)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'stock_awards'),
+            # Pension vs OPEB — separate
+            (r'net\s+periodic\s+pension\s+cost\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'pension'),
+            (r'pension\s+(?:expense|cost)\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'pension'),
+            (r'(?:other\s+)?post(?:[-\s])?retirement\s+benefit\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'post_retirement_benefits'),
+            (r'benefit\s+obligation\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'post_retirement_benefits'),
+            # Leases — split by type
+            (r'operating\s+lease\s+(?:obligation|liability|expense|cost)?\s*(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'operating_lease'),
+            (r'finance\s+lease\s+(?:obligation|liability|expense|cost)?\s*(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'finance_lease'),
+            (r'(?:total\s+)?rental\s+expense[s]?\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'lease_obligation'),
+            # Cash flow
+            (r'(?:net\s+)?cash\s+(?:provided\s+by|used\s+in|from)\s+operating\s+activit\w+\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'cash_flow_operations'),
+            (r'free\s+cash\s+flow\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'free_cash_flow'),
+            (r'dividends?\s+paid\s+(?:was|were|of|totaled?)?\s*\$\s*([\d,]+\.?\d*)\s*(million|billion|thousand)?', 'dividends_paid'),
         ]
-        
+
         for pattern, metric_name in patterns:
             matches = re.findall(pattern, text_lower)
             for match in matches:
                 try:
                     value_str = match[0].replace(',', '').strip()
                     value = float(value_str)
-                    
-                    if 1900 <= value <= 2100:
+
+                    # Only skip exact integers that look like years
+                    if value == int(value) and 1900 <= value <= 2100:
                         continue
                     
                     unit = match[1] if len(match) > 1 and match[1] else 'unknown'
@@ -309,32 +449,130 @@ If no metrics found, return {{"metrics": []}}"""
         else:
             return round(value, 2)
 
-    # Metric keyword map reused by multi-year parser
+    # Metric keyword map reused by multi-year table parser (longest-match wins)
     _TABLE_METRIC_MAP = {
+        # Revenue
+        'total net revenue': 'net_revenue',
         'net revenue': 'net_revenue',
         'total revenue': 'revenue',
-        'net sales': 'revenue',
         'revenue': 'revenue',
-        'sales': 'revenue',
+        'net sales': 'revenue',
+        'total sales': 'revenue',
+        # Net income
         'net income': 'net_income',
         'net earnings': 'net_income',
         'net profit': 'net_income',
-        'interest expense': 'interest_expense',
-        'interest cost': 'interest_expense',
+        # EPS
+        'diluted earnings per share': 'earnings_per_share',
+        'basic earnings per share': 'earnings_per_share',
+        'earnings per share': 'earnings_per_share',
+        # Income statement
+        'gross profit': 'gross_profit',
+        'gross margin': 'gross_profit',
+        'income from operations': 'operating_income',
+        'operating income': 'operating_income',
+        'ebitda': 'ebitda',
+        'income before income tax': 'income_before_tax',
+        'income before taxes': 'income_before_tax',
+        'income before tax': 'income_before_tax',
+        'pretax income': 'income_before_tax',
+        # Expenses
         'total operating expenses': 'operating_expenses',
         'operating expenses': 'operating_expenses',
         'operating costs': 'operating_expenses',
-        'total assets': 'total_assets',
-        'cash and cash equivalents': 'cash_and_equivalents',
-        'cash and equivalents': 'cash_and_equivalents',
-        'depreciation': 'depreciation',
-        'capital expenditures': 'capital_expenditures',
-        'capital expenditure': 'capital_expenditures',
-        'gross profit': 'gross_profit',
-        'operating income': 'operating_income',
         'cost of goods sold': 'cost_of_goods_sold',
         'cost of sales': 'cost_of_goods_sold',
         'cost of revenue': 'cost_of_goods_sold',
+        'research and development': 'research_development',
+        'research & development': 'research_development',
+        'selling, general and administrative': 'selling_general_admin',
+        'selling general and administrative': 'selling_general_admin',
+        'sg&a': 'selling_general_admin',
+        'interest expense': 'interest_expense',
+        'interest cost': 'interest_expense',
+        'depreciation and amortization': 'depreciation',
+        'depreciation': 'depreciation',
+        'amortization': 'depreciation',
+        'capital expenditures': 'capital_expenditures',
+        'capital expenditure': 'capital_expenditures',
+        'capex': 'capital_expenditures',
+        'aircraft fuel expense': 'fuel_expense',
+        'fuel expense': 'fuel_expense',
+        # Tax
+        'provision for income taxes': 'tax_expense',
+        'income tax expense': 'tax_expense',
+        'income tax': 'tax_expense',
+        'deferred income tax assets': 'deferred_tax_asset',
+        'deferred tax assets': 'deferred_tax_asset',
+        'deferred income tax liabilities': 'deferred_tax_liability',
+        'deferred tax liabilities': 'deferred_tax_liability',
+        'deferred income tax': 'deferred_tax',
+        'deferred tax': 'deferred_tax',
+        # Stock
+        'stock-based compensation': 'stock_compensation',
+        'share-based compensation': 'stock_compensation',
+        'restricted stock units': 'stock_awards',
+        'stock awards': 'stock_awards',
+        'restricted stock': 'stock_awards',
+        # Employee benefits
+        'net periodic pension cost': 'pension',
+        'pension expense': 'pension',
+        'pension cost': 'pension',
+        'other post-retirement benefit': 'post_retirement_benefits',
+        'postretirement benefit': 'post_retirement_benefits',
+        'benefit obligation': 'post_retirement_benefits',
+        # Balance sheet — assets
+        'total assets': 'total_assets',
+        'total current assets': 'current_assets',
+        'current assets': 'current_assets',
+        'cash and cash equivalents': 'cash_and_equivalents',
+        'cash and equivalents': 'cash_and_equivalents',
+        'accounts receivable': 'accounts_receivable',
+        'trade receivables': 'accounts_receivable',
+        'inventories': 'inventory',
+        'inventory': 'inventory',
+        'goodwill': 'goodwill',
+        'other intangible assets': 'intangible_assets',
+        'intangible assets': 'intangible_assets',
+        # Balance sheet — equity
+        "total shareholders' equity": 'shareholders_equity',
+        'total shareholders equity': 'shareholders_equity',
+        'total stockholders equity': 'shareholders_equity',
+        "shareholders' equity": 'shareholders_equity',
+        'shareholders equity': 'shareholders_equity',
+        'stockholders equity': 'shareholders_equity',
+        'accumulated deficit': 'retained_earnings',
+        'retained earnings': 'retained_earnings',
+        # Balance sheet — liabilities
+        'total liabilities': 'total_liabilities',
+        'total current liabilities': 'current_liabilities',
+        'current liabilities': 'current_liabilities',
+        'total long-term debt': 'long_term_debt',
+        'long-term debt': 'long_term_debt',
+        'long term debt': 'long_term_debt',
+        'total debt': 'total_debt',
+        'current portion of long-term debt': 'short_term_debt',
+        'short-term debt': 'short_term_debt',
+        'notes payable': 'short_term_debt',
+        'accounts payable': 'accounts_payable',
+        'trade payables': 'accounts_payable',
+        # Leases — split by type
+        'operating lease right-of-use': 'operating_lease',
+        'operating lease liability': 'operating_lease',
+        'operating lease': 'operating_lease',
+        'finance lease right-of-use': 'finance_lease',
+        'finance lease liability': 'finance_lease',
+        'finance lease': 'finance_lease',
+        'right-of-use asset': 'operating_lease',
+        'total lease obligation': 'lease_obligation',
+        'lease obligation': 'lease_obligation',
+        'rental expense': 'lease_obligation',
+        # Cash flow
+        'net cash used in operating': 'cash_flow_operations',
+        'net cash provided by operating': 'cash_flow_operations',
+        'free cash flow': 'free_cash_flow',
+        'dividends paid': 'dividends_paid',
+        'dividends': 'dividends_paid',
     }
 
     def parse_table_year_columns(self, text: str) -> list:
@@ -402,7 +640,7 @@ If no metrics found, return {{"metrics": []}}"""
                 val_str = cells[col_idx].replace(',', '').replace('$', '').replace('(', '-').replace(')', '').strip()
                 try:
                     val = float(val_str)
-                    if abs(val) < 0.01 or 1900 <= val <= 2100:
+                    if abs(val) < 0.01:
                         continue
                     results.append((year, metric_name, round(abs(val), 2)))
                 except ValueError:
@@ -494,7 +732,7 @@ If no metrics found, return {{"metrics": []}}"""
 
                 self.neo4j.create_document(
                     doc_id=doc_id,
-                    text=context[:4000],
+                    text=context[:8000],
                     properties={
                         'company': company,
                         'year': year,

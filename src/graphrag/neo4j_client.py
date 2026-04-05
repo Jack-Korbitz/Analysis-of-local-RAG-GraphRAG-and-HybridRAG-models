@@ -132,15 +132,17 @@ class Neo4jClient:
         company: str,
         properties: Dict = None
     ):
-        """Create a Metric and link it to Company and Year"""
+        """Create a Metric and link it to Company and Year.
+        MERGE on (company, year, name, value) so the same number from multiple
+        document fragments doesn't produce duplicate Metric nodes."""
         with self.driver.session() as session:
             query = """
             MATCH (c:Company {name: $company})
             MERGE (y:Year {value: $year})
-            CREATE (m:Metric {name: $name, value: $value})
+            MERGE (m:Metric {name: $name, value: $value, _company: $company, _year: $year})
             SET m += $properties
-            CREATE (c)-[:HAS_METRIC]->(m)
-            CREATE (m)-[:FOR_YEAR]->(y)
+            MERGE (c)-[:HAS_METRIC]->(m)
+            MERGE (m)-[:FOR_YEAR]->(y)
             RETURN m.name as name
             """
             result = session.run(

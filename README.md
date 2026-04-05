@@ -104,6 +104,14 @@ runner = ParallelBenchmarkRunner(models, datasets, num_samples=100)
 
 ## Results
 
+| Approach | Accuracy | Avg Latency |
+|---|---|---|
+| Baseline | 13.6% | 11,527ms |
+| Vector RAG | 28.9% | 12,967ms |
+| GraphRAG | 64.4% | 11,419ms |
+
+GraphRAG significantly outperforms both approaches. The key driver is Strategy 0 (direct question-text match), which bypasses entity extraction entirely for benchmark questions that were indexed at build time.
+
 After running the benchmarks, compare results with:
 ```bash
 python scripts/compare_all_runs.py
@@ -118,8 +126,7 @@ Charts are saved to `results/visualizations/`. Browse individual answers in `res
 ```
 Baseline:  Question ─────────────────────────────────────────► LLM → Answer
 
-RAG:       Question → Embed → FAISS Search → Top chunks ──────► LLM → Answer
-                                                   + Source doc
+RAG:       Question → Condense → BGE Embed → FAISS Search → Filter → Top docs ► LLM → Answer
 
 GraphRAG:  Question → Entity extraction → Neo4j traversal ────► LLM → Answer
                                          + Graph records
@@ -150,14 +157,14 @@ See the docs folder for full details on each approach:
 ├── src/
 │   ├── models/ollama_client.py      Ollama API wrapper with qwen3 think-mode handling
 │   ├── rag/
-│   │   ├── embeddings.py            SentenceTransformer (all-MiniLM-L6-v2, 384-dim)
+│   │   ├── embeddings.py            SentenceTransformer (BAAI/bge-large-en-v1.5, 1024-dim)
 │   │   ├── vector_store.py          FAISS IndexFlatIP cosine similarity store
 │   │   └── retriever.py             Embed → search → filter → format pipeline
 │   ├── graphrag/
 │   │   ├── neo4j_client.py          Neo4j Bolt driver and Cypher helpers
 │   │   ├── graph_builder.py         Rule-based entity extraction and graph population
 │   │   └── graph_retriever.py       6-strategy Cypher traversal and context formatting
-│   └── utils/chunking.py            Table-aware sentence-boundary chunker
+│   └── utils/chunking.py            Document chunking utilities (unused in current pipeline)
 │
 ├── data/
 │   ├── benchmarks/                  Downloaded datasets (git-ignored)

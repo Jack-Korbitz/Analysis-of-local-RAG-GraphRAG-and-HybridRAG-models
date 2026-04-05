@@ -41,44 +41,97 @@ class GraphRetriever:
         entities = {
             'company': None,
             'year': None,
+            'years': [],       # all years found — enables multi-hop retrieval
             'metric_type': None
         }
 
-        # Extract year (4 digit number between 1990-2030)
-        year_match = re.search(r'\b(19[9]\d|20[0-3]\d)\b', query)
-        if year_match:
-            entities['year'] = int(year_match.group())
+        # Extract ALL years mentioned (e.g. "change from 2007 to 2008" → [2007, 2008])
+        all_years = [int(y) for y in re.findall(r'\b(19[9]\d|20[0-3]\d)\b', query)]
+        if all_years:
+            entities['year'] = all_years[0]
+            entities['years'] = all_years
 
         # Extract metric type from query keywords
         query_lower = query.lower()
 
         metric_keywords = {
-            'interest_expense': ['interest expense', 'interest cost', 'interest paid'],
+            # Revenue
+            'net_revenue': ['net revenue', 'total net revenue'],
+            'revenue': ['total revenue', 'revenues', 'net sales', 'total sales', 'gross revenue'],
+            # Net income / EPS
             'net_income': ['net income', 'net earnings', 'net profit', 'net loss'],
-            'net_revenue': ['net revenue'],
-            'revenue': ['revenue', 'revenues', 'net sales', 'total sales', 'total revenue'],
-            'operating_expenses': ['operating expense', 'operating cost', 'operating expenditure', 'total operating'],
-            'cash_and_equivalents': ['cash and cash equivalents', 'cash equivalent', 'cash and investments'],
-            'total_assets': ['total assets'],
             'earnings_per_share': ['earnings per share', 'eps', 'diluted eps', 'basic eps'],
+            # Income statement
+            'gross_profit': ['gross profit', 'gross margin', 'gross income'],
+            'operating_income': ['operating income', 'operating profit', 'income from operations', 'ebit'],
+            'ebitda': ['ebitda', 'earnings before interest tax'],
+            'income_before_tax': ['income before tax', 'income before income tax', 'pretax income', 'pre-tax income', 'earnings before tax'],
+            # Expenses
+            'operating_expenses': ['operating expense', 'operating cost', 'operating expenditure', 'total operating'],
+            'cost_of_revenue': ['cost of revenue', 'cost of goods sold', 'cogs', 'cost of sales'],
+            'research_development': ['research and development', 'r&d', 'research & development'],
+            'selling_general_admin': ['selling general and administrative', 'sg&a', 'selling and marketing'],
+            'interest_expense': ['interest expense', 'interest cost', 'interest paid'],
             'depreciation': ['depreciation', 'amortization', 'depreciation and amortization', 'd&a'],
             'capital_expenditures': ['capital expenditure', 'capex', 'capital spending', 'purchases of property'],
-            'gross_profit': ['gross profit', 'gross margin', 'gross income'],
-            'operating_income': ['operating income', 'operating profit', 'income from operations'],
-            'stock_compensation': ['stock-based compensation', 'share-based compensation', 'stock compensation'],
-            'fuel_costs': ['fuel', 'fuel expense', 'fuel cost', 'aircraft fuel'],
-            'long_term_debt': ['long-term debt', 'long term debt', 'total debt'],
-            'available_for_sale': ['available-for-sale', 'available for sale'],
+            'fuel_expense': ['fuel expense', 'fuel cost', 'aircraft fuel'],
+            # Tax
             'tax_expense': ['income tax', 'tax expense', 'provision for income tax'],
-            'research_development': ['research and development', 'r&d', 'research & development'],
-            'cash_flow_operations': ['cash flow from operations', 'operating cash flow', 'net cash provided by operating'],
-            'dividends': ['dividends', 'dividend per share', 'dividends paid'],
+            'deferred_tax_asset': ['deferred tax asset', 'deferred income tax asset'],
+            'deferred_tax_liability': ['deferred tax liability', 'deferred income tax liability'],
+            'deferred_tax': ['deferred tax', 'deferred income tax'],
+            'effective_tax_rate': ['effective tax rate', 'tax rate'],
+            # Stock
+            'stock_compensation': ['stock-based compensation', 'share-based compensation', 'stock compensation'],
+            'stock_awards': ['stock award', 'restricted stock', 'stock unit', 'rsu', 'restricted share'],
+            # Employee benefits — pension vs OPEB are different
+            'pension': ['pension', 'net periodic pension', 'defined benefit plan'],
+            'post_retirement_benefits': ['postretirement', 'post-retirement benefit', 'benefit obligation', 'opeb'],
+            # Balance sheet — assets
+            'total_assets': ['total assets'],
+            'current_assets': ['current assets', 'total current assets'],
+            'cash_and_equivalents': ['cash and cash equivalents', 'cash equivalent', 'cash and investments'],
+            'accounts_receivable': ['accounts receivable', 'trade receivable'],
+            'inventory': ['inventory', 'inventories'],
+            'goodwill': ['goodwill'],
+            'intangible_assets': ['intangible asset', 'intangible assets', 'impairment'],
+            # Balance sheet — equity
+            'shareholders_equity': ['shareholders equity', 'stockholders equity', "shareholders' equity", 'book value'],
+            'retained_earnings': ['retained earnings', 'accumulated deficit'],
+            # Balance sheet — liabilities
+            'total_liabilities': ['total liabilities'],
+            'current_liabilities': ['current liabilities', 'total current liabilities'],
+            'long_term_debt': ['long-term debt', 'long term debt', 'total long-term debt'],
+            'total_debt': ['total debt', 'total indebtedness', 'recourse debt'],
+            'short_term_debt': ['short-term debt', 'short term debt', 'current portion of long-term debt', 'notes payable'],
+            'accounts_payable': ['accounts payable', 'trade payable'],
+            # Leases — split by type
+            'operating_lease': ['operating lease', 'operating right-of-use', 'operating rou'],
+            'finance_lease': ['finance lease', 'financing lease', 'capital lease'],
+            'lease_obligation': ['lease obligation', 'right-of-use', 'rental expense', 'rental payment', 'lease commitment'],
+            # Cash flow
+            'cash_flow_operations': ['cash flow from operations', 'operating cash flow', 'net cash provided by operating', 'net cash used in operating'],
+            'free_cash_flow': ['free cash flow', 'fcf'],
+            'dividends_paid': ['dividends paid', 'dividends', 'dividend per share'],
+            # Other
+            'net_assets': ['net assets', 'working capital'],
+            'notional_amount': ['notional amount', 'notional value', 'cash flow hedge', 'fair value hedge', 'hedging'],
+            'acquisition_cost': ['purchase price', 'acquisition price', 'acquisition cost', 'total consideration'],
+            'backlog': ['backlog', 'order backlog', 'remaining performance obligation'],
+            'employee_count': ['employee', 'headcount', 'workforce', 'personnel'],
+            'facilities': ['square footage', 'square feet', 'leased facilities', 'owned facilities'],
+            'minority_interest': ['minority interest', 'noncontrolling interest', 'non-controlling interest'],
+            'deferred_revenue': ['deferred revenue', 'deferred income'],
+            'available_for_sale': ['available-for-sale', 'available for sale'],
         }
 
+        # Longest keyword match wins — prevents "revenue" beating "net revenue"
+        best_match_len = 0
         for metric_name, keywords in metric_keywords.items():
-            if any(kw in query_lower for kw in keywords):
-                entities['metric_type'] = metric_name
-                break
+            for kw in keywords:
+                if kw in query_lower and len(kw) > best_match_len:
+                    entities['metric_type'] = metric_name
+                    best_match_len = len(kw)
 
         return entities
 
@@ -105,19 +158,28 @@ class GraphRetriever:
         best_match = None
         best_match_len = 0
 
+        def _word_boundary_match(name: str, text: str) -> bool:
+            """For short names (<6 chars), require word boundaries to avoid
+            'AT' matching inside 'WHAT' or 'HP' inside 'SHAREHOLDER'."""
+            if len(name) < 6:
+                return bool(re.search(r'(?<!\w)' + re.escape(name) + r'(?!\w)', text))
+            return name in text
+
         for record in companies:
             company_name = record['name']
+            if not company_name or company_name == 'Unknown':
+                continue
             company_lower = company_name.lower()
             company_stripped = self._strip_company_suffix(company_name)
 
             # Full name match - prefer longest match to avoid "Entergy" beating "Entergy Louisiana"
-            if company_lower in query_lower:
+            if _word_boundary_match(company_lower, query_lower):
                 if len(company_lower) > best_match_len:
                     best_match = company_name
                     best_match_len = len(company_lower)
 
             # Stripped name match (e.g. "Analog Devices" matches "Analog Devices, Inc.")
-            elif company_stripped and company_stripped in query_lower:
+            elif company_stripped and _word_boundary_match(company_stripped, query_lower):
                 if len(company_stripped) > best_match_len:
                     best_match = company_name
                     best_match_len = len(company_stripped)
@@ -138,63 +200,147 @@ class GraphRetriever:
         entities = self.extract_query_entities(query)
         company = self.find_company_in_graph(query)
 
-        # Strategy 0: Direct question match — the benchmark graph stores each
-        # source document's question text. If we find an exact match, return that
-        # document immediately without any entity guessing.
-        direct = self.neo4j.query_graph("""
-            MATCH (d:Document)
-            WHERE d.question = $q500 OR d.question = $q200
-            RETURN d.company as company, d.text as text,
-                   d.year as year, 'question_match' as strategy
-            LIMIT 1
-        """, {'q500': query[:500], 'q200': query[:200]})
-        if direct:
-            return direct
-
-        # Strategy 1: Exact match — Company + Year + Metric.
-        # Return immediately if found: the answer is in the structured record,
-        # adding documents would only add noise.
-        if company and entities['year'] and entities['metric_type']:
+        # Strategy 1: Exact match — Company + Year(s) + Metric.
+        # Queries ALL years found (e.g. 2007 and 2008 for change questions).
+        # Return immediately if found: the answer is in the structured record.
+        if company and entities['years'] and entities['metric_type']:
             cypher = """
             MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
-            -[:FOR_YEAR]->(y:Year {value: $year})
-            WHERE m.name = $metric_type
+            -[:FOR_YEAR]->(y:Year)
+            WHERE m.name = $metric_type AND y.value IN $years
             RETURN DISTINCT c.name as company, m.name as metric,
                    m.value as value, y.value as year,
                    'company_year_metric' as strategy
+            ORDER BY y.value
             LIMIT $top_k
             """
             records = self.neo4j.query_graph(cypher, {
                 'company': company,
-                'year': entities['year'],
+                'years': entities['years'],
                 'metric_type': entities['metric_type'],
                 'top_k': top_k
             })
             if records:
                 return records
 
-        # Strategy 2: Company + Year → go straight to document text.
-        # S1 failed, meaning the needed metric is not one of the 23 canonical types.
-        # Returning all S2 metrics (net_income, revenue, etc.) would add irrelevant
-        # numbers that anchor the LLM to the wrong values. Documents contain the
-        # full tables and are far more likely to hold the answer.
-        if company and entities['year']:
+        # Strategy 2: Company + Year(s) → document text.
+        # First try question-relevant documents (match on stored question keywords),
+        # then fall back to any document for that company/year.
+        if company and entities['years']:
+            year_range = sorted({y + d for y in entities['years'] for d in (-1, 0, 1)})
+
+            # 2a: Company + Year + question keyword relevance
+            # Extract distinctive terms from the query for document matching
+            _stopwords = {'what', 'were', 'was', 'the', 'from', 'that', 'this', 'with',
+                          'have', 'for', 'and', 'did', 'does', 'how', 'much', 'many',
+                          'percent', 'percentage', 'change', 'total', 'which', 'year',
+                          'given', 'based', 'their', 'company', 'reported', 'financial',
+                          'statements', 'compared', 'between', 'about', 'would'}
+            q_terms = [w for w in re.findall(r'\b[a-zA-Z]{4,}\b', query.lower())
+                       if w not in _stopwords and w != company.lower().split()[0].lower()][:6]
+
+            if q_terms:
+                # Try matching 3+ question terms first (precise), then 2 (relaxed)
+                for min_terms in (3, 2):
+                    if len(q_terms) < min_terms:
+                        continue
+                    terms_to_use = q_terms[:max(min_terms + 1, 4)]
+                    conditions = ' OR '.join(
+                        [f"toLower(d.question) CONTAINS '{t}'" for t in terms_to_use]
+                    )
+                    # Count how many terms match; require at least min_terms
+                    count_expr = ' + '.join(
+                        [f"CASE WHEN toLower(d.question) CONTAINS '{t}' THEN 1 ELSE 0 END"
+                         for t in terms_to_use]
+                    )
+                    cypher = f"""
+                    MATCH (d:Document)-[:ABOUT]->(c:Company {{name: $company}})
+                    WHERE d.year IN $year_range AND ({conditions})
+                    WITH c, d, ({count_expr}) AS relevance
+                    WHERE relevance >= {min_terms}
+                    RETURN c.name as company, d.text as text,
+                           d.year as year, 'document_search' as strategy
+                    ORDER BY relevance DESC, d.year
+                    LIMIT 10
+                    """
+                    doc_results = self.neo4j.query_graph(cypher, {
+                        'company': company,
+                        'year_range': year_range,
+                    })
+                    if doc_results:
+                        return doc_results
+
+            # 2b: Plain company + year fallback (no question relevance)
+            # When multiple years are queried (e.g. "change from 2014 to 2015"),
+            # fetch per-year to guarantee both years are represented.
+            if len(entities['years']) > 1:
+                all_docs = []
+                per_year_limit = max(3, 10 // len(entities['years']))
+                for yr in entities['years']:
+                    yr_range = sorted({yr + d for d in (-1, 0, 1)})
+                    cypher = """
+                    MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+                    WHERE d.year IN $year_range
+                    RETURN c.name as company, d.text as text,
+                           d.year as year, 'document_search' as strategy
+                    ORDER BY abs(d.year - $target_year), d.year
+                    LIMIT $per_year_limit
+                    """
+                    docs = self.neo4j.query_graph(cypher, {
+                        'company': company,
+                        'year_range': yr_range,
+                        'target_year': yr,
+                        'per_year_limit': per_year_limit,
+                    })
+                    all_docs.extend(docs)
+                if all_docs:
+                    return all_docs[:10]
+            else:
+                cypher = """
+                MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
+                WHERE d.year IN $year_range
+                RETURN c.name as company, d.text as text,
+                       d.year as year, 'document_search' as strategy
+                ORDER BY d.year
+                LIMIT 10
+                """
+                doc_results = self.neo4j.query_graph(cypher, {
+                    'company': company,
+                    'year_range': year_range,
+                })
+                if doc_results:
+                    return doc_results
+
+        # Strategy 2b: Company found + year(s) + metric, but Strategy 1 missed
+        # (metric stored under a slightly different name). Try related metric names
+        # for the SAME company — never broadcast to all companies, which returns
+        # irrelevant data (e.g. Lockheed Martin for a Hartford question).
+        if company and entities['years'] and entities['metric_type']:
             cypher = """
-            MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
-            WHERE d.year = $year
-            RETURN c.name as company, d.text as text,
-                   d.year as year, 'document_search' as strategy
-            LIMIT 3
+            MATCH (c:Company {name: $company})-[:HAS_METRIC]->(m:Metric)
+            -[:FOR_YEAR]->(y:Year)
+            WHERE y.value IN $years
+              AND (m.name CONTAINS $metric_root OR $metric_root CONTAINS m.name)
+            RETURN DISTINCT c.name as company, m.name as metric,
+                   m.value as value, y.value as year,
+                   'metric_fuzzy' as strategy
+            ORDER BY y.value
+            LIMIT $top_k
             """
-            doc_results = self.neo4j.query_graph(cypher, {
+            # Use the first word of the metric as a fuzzy root
+            # e.g. "net_income" → "net_income", "operating_expenses" → "operating"
+            metric_root = entities['metric_type'].split('_')[0]
+            records = self.neo4j.query_graph(cypher, {
                 'company': company,
-                'year': entities['year'],
+                'metric_root': metric_root,
+                'years': entities['years'],
+                'top_k': top_k
             })
-            if doc_results:
-                return doc_results
+            if records:
+                return records
 
         # Strategy 3: Company + most recent docs (no year in query or no year-filtered docs found)
-        if company and not entities['year']:
+        if company and not entities['years']:
             cypher = """
             MATCH (d:Document)-[:ABOUT]->(c:Company {name: $company})
             RETURN c.name as company, d.text as text,
@@ -223,8 +369,29 @@ class GraphRetriever:
             if records:
                 return records
 
-        # Strategy 4: Metric type only — no company identified
-        if entities['metric_type'] and not entities['year']:
+        # Strategy 4: Metric type — no company identified.
+        # 4a: metric + years → scoped search across all companies for those years
+        # 4b: metric only → most recent values across all companies
+        if entities['metric_type'] and not company:
+            if entities['years']:
+                cypher = """
+                MATCH (c:Company)-[:HAS_METRIC]->(m:Metric {name: $metric_type})
+                -[:FOR_YEAR]->(y:Year)
+                WHERE y.value IN $years
+                RETURN DISTINCT c.name as company, m.name as metric,
+                       m.value as value, y.value as year,
+                       'metric_only' as strategy
+                ORDER BY y.value
+                LIMIT $top_k
+                """
+                records = self.neo4j.query_graph(cypher, {
+                    'metric_type': entities['metric_type'],
+                    'years': entities['years'],
+                    'top_k': top_k
+                })
+                if records:
+                    return records
+
             cypher = """
             MATCH (c:Company)-[:HAS_METRIC]->(m:Metric {name: $metric_type})
             -[:FOR_YEAR]->(y:Year)
@@ -241,13 +408,69 @@ class GraphRetriever:
             if records:
                 return records
 
-        # Strategy 5: Last resort full-text search
-        search_term = (company or entities['metric_type'] or query[:50])
+        # Strategy 5a: Question keyword search — for datasets without company names
+        # (FinQA/ConvFinQA), the document's stored question field is more distinctive
+        # than the full document text. Extract key terms and CONTAINS-match on d.question.
+        stopwords = {'what', 'were', 'was', 'the', 'from', 'that', 'this', 'with',
+                     'have', 'for', 'and', 'did', 'does', 'how', 'much', 'many',
+                     'percent', 'percentage', 'change', 'total', 'which', 'year'}
+        key_terms = [w for w in re.findall(r'\b[a-zA-Z]{5,}\b', query.lower())
+                     if w not in stopwords][:5]
+
+        if key_terms:
+            # Build a Cypher WHERE clause that requires ALL key terms to appear
+            conditions = ' AND '.join(
+                [f"toLower(d.question) CONTAINS '{t}'" for t in key_terms]
+            )
+            cypher = f"""
+            MATCH (d:Document)-[:ABOUT]->(c:Company)
+            WHERE {conditions}
+            RETURN c.name as company, d.text as text,
+                   d.year as year, 'question_keyword_search' as strategy
+            LIMIT $top_k
+            """
+            stage_a = self.neo4j.query_graph(cypher, {'top_k': top_k})
+            if stage_a:
+                return stage_a
+
+            # Relax to 3 terms, then 2 terms if all-terms match fails
+            if len(key_terms) > 3:
+                conditions3 = ' AND '.join(
+                    [f"toLower(d.question) CONTAINS '{t}'" for t in key_terms[:3]]
+                )
+                cypher3 = f"""
+                MATCH (d:Document)-[:ABOUT]->(c:Company)
+                WHERE {conditions3}
+                RETURN c.name as company, d.text as text,
+                       d.year as year, 'question_keyword_search' as strategy
+                LIMIT $top_k
+                """
+                stage_a3 = self.neo4j.query_graph(cypher3, {'top_k': top_k})
+                if stage_a3:
+                    return stage_a3
+
+            if len(key_terms) > 2:
+                conditions2 = ' AND '.join(
+                    [f"toLower(d.question) CONTAINS '{t}'" for t in key_terms[:2]]
+                )
+                cypher2 = f"""
+                MATCH (d:Document)-[:ABOUT]->(c:Company)
+                WHERE {conditions2}
+                RETURN c.name as company, d.text as text,
+                       d.year as year, 'question_keyword_search' as strategy
+                LIMIT $top_k
+                """
+                stage_a2 = self.neo4j.query_graph(cypher2, {'top_k': top_k})
+                if stage_a2:
+                    return stage_a2
+
+        # Strategy 5b: Full-text fallback on document body
+        search_term = (company or entities['metric_type'] or query[:80])
         cypher = """
         MATCH (d:Document)-[:ABOUT]->(c:Company)
         WHERE toLower(d.text) CONTAINS toLower($search_term)
         RETURN c.name as company, d.text as text,
-               d.year as year, 'document_search' as strategy
+               d.year as year, 'fallback_text_search' as strategy
         LIMIT $top_k
         """
         return self.neo4j.query_graph(cypher, {
@@ -318,13 +541,16 @@ class GraphRetriever:
             strategy = record.get('strategy', 'unknown')
 
             if 'value' in record and 'metric' in record:
-                # Metric result
+                # Metric result — plain number, no $ or units.
+                # Models hallucinate scale conversions when they see "million".
+                val = record.get('value', 0)
+                val_str = f"{val:.2f}" if isinstance(val, float) else str(val)
                 context_parts.append(
                     f"[Record {i+1}] "
                     f"Company: {record.get('company', 'Unknown')} | "
                     f"Year: {record.get('year', 'Unknown')} | "
                     f"Metric: {record.get('metric', 'Unknown')} | "
-                    f"Value: ${record.get('value', 0):.2f} million"
+                    f"Value: {val_str}"
                 )
             elif 'text' in record:
                 # Document result
@@ -334,7 +560,7 @@ class GraphRetriever:
                     f"Year: {record.get('year', 'Unknown')}"
                 )
                 context_parts.append(
-                    f"   Text: {record.get('text', '')[:4000]}"
+                    f"   Text: {record.get('text', '')[:8000]}"
                 )
 
         return "\n".join(context_parts)
